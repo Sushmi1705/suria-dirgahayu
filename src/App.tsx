@@ -1,0 +1,674 @@
+import { useState, useEffect, useRef } from 'react';
+import './App.css';
+import {
+  MenuIcon,
+  CloseIcon
+} from './components/Icons';
+
+// Import constants
+import { SERVICES_DATA } from './constants/data';
+
+// Import page components
+import Home from './pages/Home';
+import About from './pages/About';
+import Quality from './pages/Quality';
+import Journey from './pages/Journey';
+import Services from './pages/Services';
+import Wizard from './pages/Wizard';
+import Contact from './pages/Contact';
+
+interface Toast {
+  id: string;
+  type: 'success' | 'error';
+  message: string;
+}
+
+function App() {
+  const [theme] = useState<'light' | 'dark'>('light');
+
+  const [currentPath, setCurrentPath] = useState<'home' | 'about' | 'services' | 'wizard' | 'contact' | 'quality' | 'journey'>(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/about')) return 'about';
+    if (hash.startsWith('#/services')) return 'services';
+    if (hash.startsWith('#/wizard')) return 'wizard';
+    if (hash.startsWith('#/contact')) return 'contact';
+    if (hash.startsWith('#/quality')) return 'quality';
+    if (hash.startsWith('#/journey')) return 'journey';
+    return 'home';
+  });
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [megaMenuHovered, setMegaMenuHovered] = useState(false);
+  const [activeService, setActiveService] = useState<string>('demolition');
+  const [serviceTransitioning, setServiceTransitioning] = useState(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+
+  // Project Configurator Multi-Step Wizard States
+  const [wizardStep, setWizardStep] = useState<number>(1);
+  const [wizardIndustry, setWizardIndustry] = useState<string>('manufacturing');
+  const [wizardServices, setWizardServices] = useState<string[]>(['mechanical']);
+  const [wizardScale, setWizardScale] = useState<number>(3);
+
+  // Contact Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    serviceCategory: 'engineering',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Apply Theme
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Custom Hash Router Event Listener
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      let path: 'home' | 'about' | 'services' | 'wizard' | 'contact' | 'quality' | 'journey' = 'home';
+      if (hash.startsWith('#/about')) path = 'about';
+      else if (hash.startsWith('#/services')) path = 'services';
+      else if (hash.startsWith('#/wizard')) path = 'wizard';
+      else if (hash.startsWith('#/contact')) path = 'contact';
+      else if (hash.startsWith('#/quality')) path = 'quality';
+      else if (hash.startsWith('#/journey')) path = 'journey';
+      
+      setCurrentPath(path);
+      setMobileMenuOpen(false);
+      
+      // Only scroll to top if not targeting a specific sub-page anchor
+      if (!hash.includes('#why-choose') && !hash.includes('#timeline')) {
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Global Scroll-Driven Reveal Animation Observer (UP and DOWN support)
+  useEffect(() => {
+    const querySelectors = [
+      'section.section h2',
+      'section.section h3',
+      'section.section p:not(.page-subtitle)',
+      'section.section .grid-cols-2',
+      'section.section .grid-cols-3',
+      'section.section .grid-cols-4',
+      'section.section .contact-layout',
+      'section.section .map-section-container',
+      'section.section .timeline-container',
+      'section.section .services-explorer-layout',
+      'section.section .wizard-container',
+      'section.section .value-card',
+      'section.section .cred-card',
+      'section.section .timeline-item',
+      'section.section .client-card',
+      'section.section .contact-method-card',
+      'section.section .form-card'
+    ];
+
+    const elementsToAnimate = document.querySelectorAll(querySelectors.join(', '));
+    elementsToAnimate.forEach((el) => {
+      // Exclude page headers which animate on load
+      if (el.closest('.page-header-section') || el.closest('.hero-section')) {
+        return;
+      }
+      el.classList.add('reveal');
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-active');
+          } else {
+            // Remove active class when scrolling out of view (supports up/down animations)
+            entry.target.classList.remove('reveal-active');
+          }
+        });
+      },
+      { threshold: 0.05, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [currentPath]);
+
+  // Canvas Drifting Particles Background VFX (Global Backdrop)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+    }> = [];
+
+    const particleCount = Math.min(45, Math.floor((width * height) / 25000));
+
+    // Initialize particles
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 2 + 1
+      });
+    }
+
+    let mouse = { x: -1000, y: -1000 };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    };
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      // Color scheme based on dark/light theme
+      const nodeColor = theme === 'dark' ? 'rgba(255, 173, 1, 0.45)' : 'rgba(0, 21, 67, 0.25)';
+      const lineColor = theme === 'dark' ? 'rgba(255, 173, 1, 0.08)' : 'rgba(0, 21, 67, 0.06)';
+      const mouseLineColor = theme === 'dark' ? 'rgba(255, 173, 1, 0.22)' : 'rgba(0, 21, 67, 0.15)';
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
+        
+        // Gravity well logic: attract particles gently to cursor
+        if (mouse.x > 0) {
+          const dx = mouse.x - p1.x;
+          const dy = mouse.y - p1.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 220) {
+            const force = (220 - dist) / 2600;
+            p1.vx += (dx / dist) * force;
+            p1.vy += (dy / dist) * force;
+          }
+        }
+
+        // Limit maximum particle speed
+        const speed = Math.hypot(p1.vx, p1.vy);
+        if (speed > 1.2) {
+          p1.vx = (p1.vx / speed) * 1.2;
+          p1.vy = (p1.vy / speed) * 1.2;
+        }
+
+        // Move particle
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        // Wrap borders
+        if (p1.x < 0) p1.x = width;
+        if (p1.x > width) p1.x = 0;
+        if (p1.y < 0) p1.y = height;
+        if (p1.y > height) p1.y = 0;
+
+        // Draw node
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = nodeColor;
+        ctx.fill();
+
+        // Connect with other nodes
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+          if (dist < 140) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = (1 - dist / 140) * 0.75;
+            ctx.stroke();
+          }
+        }
+
+        // Connect with mouse cursor
+        if (mouse.x > 0) {
+          const mDist = Math.hypot(p1.x - mouse.x, p1.y - mouse.y);
+          if (mDist < 180) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = mouseLineColor;
+            ctx.lineWidth = (1 - mDist / 180) * 1.25;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [theme]);
+
+
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    const id = Date.now().toString();
+    setToasts(prev => [...prev, { id, type, message }]);
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+    }, 4000);
+  };
+
+  // Switch Active Service with animation
+  const handleSwitchService = (serviceId: string) => {
+    if (serviceId === activeService) return;
+    setServiceTransitioning(true);
+    setTimeout(() => {
+      setActiveService(serviceId);
+      setServiceTransitioning(false);
+    }, 250);
+  };
+
+  // Pre-select service from dropdown and redirect
+  const handleSelectServiceFromMenu = (serviceId: string) => {
+    setActiveService(serviceId);
+    setMegaMenuHovered(false);
+    setMobileMenuOpen(false);
+    window.location.hash = `#/services`;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      showToast('Please fill in all required fields.', 'error');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      showToast(`Thank you, ${formData.name}! Your request has been received. Our senior engineer will contact you shortly.`);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        serviceCategory: 'engineering',
+        message: ''
+      });
+      setWizardStep(1);
+    }, 1500);
+  };
+
+  const renderPage = () => {
+    switch (currentPath) {
+      case 'about':
+        return <About />;
+      case 'quality':
+        return <Quality />;
+      case 'journey':
+        return <Journey />;
+      case 'services':
+        return (
+          <Services
+            activeService={activeService}
+            handleSwitchService={handleSwitchService}
+            serviceTransitioning={serviceTransitioning}
+            setWizardServices={setWizardServices}
+            setWizardStep={setWizardStep}
+            showToast={showToast}
+          />
+        );
+      case 'wizard':
+        return (
+          <Wizard
+            wizardStep={wizardStep}
+            setWizardStep={setWizardStep}
+            wizardIndustry={wizardIndustry}
+            setWizardIndustry={setWizardIndustry}
+            wizardServices={wizardServices}
+            setWizardServices={setWizardServices}
+            wizardScale={wizardScale}
+            setWizardScale={setWizardScale}
+            setFormData={setFormData}
+            showToast={showToast}
+          />
+        );
+      case 'contact':
+        return (
+          <Contact
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleContactSubmit={handleContactSubmit}
+            isSubmitting={isSubmitting}
+          />
+        );
+      case 'home':
+      default:
+        return <Home />;
+    }
+  };
+
+  const isAboutActive = currentPath === 'about';
+
+  return (
+    <>
+      {/* Toast Notification Container */}
+      <div className="toast-container">
+        {toasts.map(toast => (
+          <div key={toast.id} className={`toast toast-${toast.type} glass`}>
+            <span>{toast.message}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Global Fixed Background Particle Canvas */}
+      <canvas ref={canvasRef} className="canvas-vfx-global" />
+
+      {/* Header Shell */}
+      <header className="header glass">
+        <div className="container header-container">
+          <a href="#/" className="logo">
+            <img 
+              src={theme === 'dark' ? '/logo-dark.svg' : '/logo.svg'} 
+              className="logo-img" 
+              alt="Suria Dirgahayu Logo" 
+            />
+            <span className="logo-text">SURIA DIRGAHAYU</span>
+          </a>
+          
+          <nav className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+            <a href="#/" className={`nav-link ${currentPath === 'home' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Home</a>
+            <a href="#/about" className={`nav-link ${isAboutActive ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>About Us</a>
+            
+            {/* Mega Dropdown trigger */}
+            <div 
+              className="mega-menu-trigger-wrap"
+              onMouseEnter={() => setMegaMenuHovered(true)}
+              onMouseLeave={() => setMegaMenuHovered(false)}
+            >
+              <a href="#/services" className={`nav-link dropdown-trigger-link ${currentPath === 'services' ? 'active-link' : ''}`}>
+                Our Services
+                <svg className="dropdown-arrow-svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '6px', transition: 'transform 0.25s ease', display: 'inline-block', verticalAlign: 'middle' }}>
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </a>
+              
+              {/* Mega Dropdown Panel */}
+              <div className={`mega-menu-dropdown ${megaMenuHovered ? 'active' : ''}`}>
+                <div className="mega-menu-container">
+                  <div className="mega-menu-sidebar">
+                    <div className="mega-sidebar-title">Our Capabilities</div>
+                    <div className="mega-sidebar-badge">NAVY & GOLD THEME</div>
+                    <p className="mega-sidebar-desc">
+                      Multi-disciplinary services designed to address engineering, refurbishment, and credit requirements for heavy industrial projects.
+                    </p>
+                    <a href="#/wizard" className="btn btn-primary" style={{ padding: '0.65rem 1.15rem', fontSize: '0.85rem' }} onClick={() => setMegaMenuHovered(false)}>
+                      Project Configurator
+                    </a>
+                  </div>
+                  <div className="mega-menu-grid-categorized">
+                    <div className="mega-menu-column">
+                      <div className="mega-column-header">Heavy Engineering</div>
+                      <div className="mega-menu-items">
+                        {[
+                          SERVICES_DATA.find(s => s.id === 'demolition')!,
+                          SERVICES_DATA.find(s => s.id === 'civil')!,
+                          SERVICES_DATA.find(s => s.id === 'fabrication')!
+                        ].map((s, idx) => {
+                          const IconComp = s.icon;
+                          return (
+                            <a 
+                              key={s.id} 
+                              href="#/services" 
+                              className="mega-menu-item"
+                              onClick={() => handleSelectServiceFromMenu(s.id)}
+                              style={{ '--i': idx } as React.CSSProperties}
+                            >
+                              <div className="mega-item-icon-box">
+                                <IconComp size={16} />
+                              </div>
+                              <div className="mega-item-text">
+                                <div className="mega-item-title">{s.title}</div>
+                                <div className="mega-item-desc">{s.shortDesc}</div>
+                              </div>
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="mega-menu-column">
+                      <div className="mega-column-header">Systems & MRO</div>
+                      <div className="mega-menu-items">
+                        {[
+                          SERVICES_DATA.find(s => s.id === 'mechanical')!,
+                          SERVICES_DATA.find(s => s.id === 'electrical')!,
+                          SERVICES_DATA.find(s => s.id === 'scaffolding')!
+                        ].map((s, idx) => {
+                          const IconComp = s.icon;
+                          return (
+                            <a 
+                              key={s.id} 
+                              href="#/services" 
+                              className="mega-menu-item"
+                              onClick={() => handleSelectServiceFromMenu(s.id)}
+                              style={{ '--i': idx + 3 } as React.CSSProperties}
+                            >
+                              <div className="mega-item-icon-box">
+                                <IconComp size={16} />
+                              </div>
+                              <div className="mega-item-text">
+                                <div className="mega-item-title">{s.title}</div>
+                                <div className="mega-item-desc">{s.shortDesc}</div>
+                              </div>
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="mega-menu-column">
+                      <div className="mega-column-header">Specialist Support</div>
+                      <div className="mega-menu-items">
+                        {[
+                          SERVICES_DATA.find(s => s.id === 'manpower')!,
+                          SERVICES_DATA.find(s => s.id === 'renovation')!,
+                          SERVICES_DATA.find(s => s.id === 'debt')!
+                        ].map((s, idx) => {
+                          const IconComp = s.icon;
+                          return (
+                            <a 
+                              key={s.id} 
+                              href="#/services" 
+                              className="mega-menu-item"
+                              onClick={() => handleSelectServiceFromMenu(s.id)}
+                              style={{ '--i': idx + 6 } as React.CSSProperties}
+                            >
+                              <div className="mega-item-icon-box">
+                                <IconComp size={16} />
+                              </div>
+                              <div className="mega-item-text">
+                                <div className="mega-item-title">{s.title}</div>
+                                <div className="mega-item-desc">{s.shortDesc}</div>
+                              </div>
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <a href="#/wizard" className={`nav-link ${currentPath === 'wizard' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Project Wizard</a>
+            <a href="#/quality" className={`nav-link ${currentPath === 'quality' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Quality</a>
+            <a href="#/journey" className={`nav-link ${currentPath === 'journey' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Journey</a>
+            <a href="#/contact" className={`nav-link ${currentPath === 'contact' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Contact</a>
+          </nav>
+
+          <div className="header-actions">
+            <a href="#/contact" className="btn btn-primary nav-cta-btn">
+              Consult an Expert
+            </a>
+            <button 
+              className="mobile-menu-toggle" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Navigation Menu"
+            >
+              {mobileMenuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Dynamic Page Routing Mount */}
+      <main style={{ flex: 1, zIndex: 2, position: 'relative' }}>
+        {renderPage()}
+      </main>
+
+      {/* Footer Shell */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div className="footer-brand">
+              <div className="logo" style={{ marginBottom: '0.5rem', paddingLeft: 0 }}>
+                {/* Dynamically select logo variant based on theme context */}
+                <img 
+                  src={theme === 'dark' ? '/logo-dark.svg' : '/logo.svg'} 
+                  className="logo-img" 
+                  style={{ height: '36px' }} 
+                  alt="Suria Dirgahayu Logo" 
+                />
+                <span className="logo-text">SURIA DIRGAHAYU</span>
+              </div>
+              <p className="footer-desc">
+                Suria Dirgahayu Sdn. Bhd. is a multi-disciplinary engineering contractor and services partner committed to safety, engineering quality, and corporate integrity.
+              </p>
+              {/* Cockpit HUD Diagnostics Widget */}
+              <div className="footer-hud-console blueprint-panel brackets-tl-br">
+                <div className="footer-hud-grid">
+                  <div className="footer-hud-item">
+                    <span className="footer-hud-lbl">SYS.CORE</span>
+                    <span className="footer-hud-val"><span className="hud-pulse"></span> ONLINE</span>
+                  </div>
+                  <div className="footer-hud-item">
+                    <span className="footer-hud-lbl">SEC.LAT</span>
+                    <span className="footer-hud-val">12MS</span>
+                  </div>
+                  <div className="footer-hud-item">
+                    <span className="footer-hud-lbl">CIDB.CAP</span>
+                    <span className="footer-hud-val">G7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="footer-col">
+              <div className="footer-col-title">Engineering Focus</div>
+              <ul className="footer-list">
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('demolition')}>Demolition Works</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('mechanical')}>Mechanical MRO</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('civil')}>Civil Construction</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('scaffolding')}>Scaffolding Systems</a></li>
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <div className="footer-col-title">Other Services</div>
+              <ul className="footer-list">
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('electrical')}>Electrical Solutions</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('manpower')}>Technical Manpower</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('renovation')}>Renovations</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('debt')}>Receivables Recovery</a></li>
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <div className="footer-col-title">Licensing & HSE</div>
+              <div className="footer-status-stack">
+                <div className="footer-status-item">
+                  <span className="status-indicator indicator-active"><span className="indicator-pulse"></span></span>
+                  <div className="status-text-block">
+                    <div className="status-main">CIDB Malaysia</div>
+                    <div className="status-sub">Grade G7 Cap</div>
+                  </div>
+                </div>
+                <div className="footer-status-item">
+                  <span className="status-indicator indicator-active"><span className="indicator-pulse"></span></span>
+                  <div className="status-text-block">
+                    <div className="status-main">Suruhanjaya Tenaga</div>
+                    <div className="status-sub">ST-1 & ST-3 Lic</div>
+                  </div>
+                </div>
+                <div className="footer-status-item">
+                  <span className="status-indicator indicator-active"><span className="indicator-pulse"></span></span>
+                  <div className="status-text-block">
+                    <div className="status-main">OSHA Standards</div>
+                    <div className="status-sub">100% Compliant</div>
+                  </div>
+                </div>
+                <div className="footer-status-item">
+                  <span className="status-indicator indicator-active"><span className="indicator-pulse"></span></span>
+                  <div className="status-text-block">
+                    <div className="status-main">ISO 9001 Audited</div>
+                    <div className="status-sub">Quality Assured</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <div>© {new Date().getFullYear()} Suria Dirgahayu Sdn. Bhd. All rights reserved.</div>
+            <div style={{ display: 'flex', gap: '2rem' }}>
+              <a href="#/about" style={{ color: 'inherit' }}>Company Register</a>
+              <a href="#/contact" style={{ color: 'inherit' }}>Estimates Hotline</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+export default App;
