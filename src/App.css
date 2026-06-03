@@ -3785,7 +3785,7 @@ select.floating-input ~ .floating-label {
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Suria Solar Fusion Energy Core centerpiece styles */
+/* Holographic Mechanical Turbine & Gear centerpiece styles */
 .energy-core-container {
   overflow: visible !important;
 }
@@ -3795,7 +3795,7 @@ select.floating-input ~ .floating-label {
   width: 280px;
   height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 173, 1, 0.14) 0%, rgba(0, 176, 217, 0.07) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 173, 1, 0.14) 0%, rgba(1, 107, 173, 0.08) 50%, transparent 70%);
   filter: blur(15px);
   pointer-events: none;
   z-index: 0;
@@ -3805,36 +3805,6 @@ select.floating-input ~ .floating-label {
 @keyframes energy-core-glow-pulse {
   0%, 100% { opacity: 0.6; transform: scale(0.95); }
   50% { opacity: 1; transform: scale(1.08); }
-}
-
-.solar-core-pulse {
-  animation: solar-core-pulse-key 4s ease-in-out infinite;
-  transform-origin: 60px 60px;
-}
-
-@keyframes solar-core-pulse-key {
-  0%, 100% { transform: scale(0.92); opacity: 0.9; }
-  50% { transform: scale(1.08); opacity: 1; }
-}
-
-.solar-orbit-line-1 {
-  animation: orbit-flow-key 15s linear infinite;
-  transform-origin: 60px 60px;
-}
-
-.solar-orbit-line-2 {
-  animation: orbit-flow-key 12s linear infinite reverse;
-  transform-origin: 60px 60px;
-}
-
-.solar-orbit-line-3 {
-  animation: orbit-flow-key 9s linear infinite;
-  transform-origin: 60px 60px;
-}
-
-@keyframes orbit-flow-key {
-  0% { stroke-dashoffset: 360; }
-  100% { stroke-dashoffset: 0; }
 }
 
 .core-node-pulse {

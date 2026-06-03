@@ -101,121 +101,111 @@ export default function Home() {
 
           <div className="hero-visual">
             <div className="radar-container energy-core-container">
-              <div className="energy-core-glow"></div>
+              <div className="energy-core-glow" style={{ background: 'radial-gradient(circle, rgba(223, 161, 22, 0.12) 0%, rgba(1, 107, 173, 0.06) 50%, transparent 70%)' }}></div>
               <svg className="radar-svg" viewBox="0 0 120 120" fill="none">
                 <defs>
-                  {/* Glowing Solar Core Gradients */}
-                  <radialGradient id="solarCoreGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#ffffff" />
-                    <stop offset="25%" stopColor="#ffd875" />
-                    <stop offset="65%" stopColor="var(--secondary)" />
-                    <stop offset="100%" stopColor="transparent" />
-                  </radialGradient>
-
-                  <radialGradient id="solarFlareGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="var(--secondary)" stopOpacity="1" />
-                    <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
-                  </radialGradient>
-                  
-                  <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="var(--secondary)" stopOpacity="0.9" />
-                    <stop offset="50%" stopColor="var(--primary)" stopOpacity="0.45" />
+                  {/* Glowing Turbine Gradient */}
+                  <linearGradient id="turbineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="var(--secondary)" stopOpacity="0.8" />
+                    <stop offset="50%" stopColor="var(--primary)" stopOpacity="0.4" />
                     <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0.1" />
                   </linearGradient>
 
-                  <filter id="coreGlow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur stdDeviation="5" result="blur" />
+                  <radialGradient id="hubGlowGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#ffffff" />
+                    <stop offset="35%" stopColor="#ffd875" stopOpacity="0.8" />
+                    <stop offset="75%" stopColor="var(--secondary)" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                  </radialGradient>
+
+                  <filter id="gearCoreGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.5" result="blur" />
                     <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-                  <filter id="solarFlare" x="-40%" y="-40%" width="180%" height="180%">
-                    <feGaussianBlur stdDeviation="2.5" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
                   </filter>
                 </defs>
 
-                {/* Outer Coordinate Grid Ring */}
-                <circle cx="60" cy="60" r="54" stroke="var(--primary)" strokeWidth="0.35" strokeDasharray="4 2" opacity="0.3" />
-                <circle cx="60" cy="60" r="50" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.2" />
+                {/* Outer Concentric Technical Measurement Scales */}
+                <circle cx="60" cy="60" r="57" stroke="var(--secondary)" strokeWidth="0.45" strokeDasharray="3 9" opacity="0.35" className="anim-rotate-cw" style={{ transformOrigin: '60px 60px' }} />
+                <circle cx="60" cy="60" r="54" stroke="var(--primary)" strokeWidth="0.3" strokeDasharray="15 3" opacity="0.25" className="anim-rotate-ccw" style={{ transformOrigin: '60px 60px' }} />
+                <circle cx="60" cy="60" r="50" stroke="var(--secondary)" strokeWidth="0.3" opacity="0.15" />
 
-                {/* 3D Tilted Energy Orbit Rings */}
-                {/* Orbit 1 (Horizontal tilt) */}
-                <ellipse cx="60" cy="60" rx="46" ry="15" stroke="url(#orbitGrad)" strokeWidth="0.8" opacity="0.65" transform="rotate(-15 60 60)" strokeDasharray="180" strokeDashoffset="0" className="solar-orbit-line-1" />
+                {/* Outer Large Ring Gear (MRO Gearbox Enclosure) */}
+                <circle cx="60" cy="60" r="45" stroke="var(--secondary)" strokeWidth="1.2" strokeDasharray="2 3" opacity="0.4" className="anim-rotate-cw" style={{ transformOrigin: '60px 60px', animationDuration: '40s' }} />
                 
-                {/* Orbit 2 (Vertical-diagonal tilt) */}
-                <ellipse cx="60" cy="60" rx="42" ry="11" stroke="url(#orbitGrad)" strokeWidth="0.8" opacity="0.6" transform="rotate(35 60 60)" strokeDasharray="160" strokeDashoffset="40" className="solar-orbit-line-2" />
+                {/* Structural Spokes / Scaffolding support lines */}
+                <line x1="60" y1="60" x2="20" y2="20" stroke="var(--primary)" strokeWidth="0.35" opacity="0.15" strokeDasharray="3 3" />
+                <line x1="60" y1="60" x2="100" y2="20" stroke="var(--primary)" strokeWidth="0.35" opacity="0.15" strokeDasharray="3 3" />
+                <line x1="60" y1="60" x2="20" y2="100" stroke="var(--primary)" strokeWidth="0.35" opacity="0.15" strokeDasharray="3 3" />
+                <line x1="60" y1="60" x2="100" y2="100" stroke="var(--primary)" strokeWidth="0.35" opacity="0.15" strokeDasharray="3 3" />
+                <line x1="60" y1="6" x2="60" y2="114" stroke="var(--secondary)" strokeWidth="0.2" opacity="0.2" strokeDasharray="1 4" />
+                <line x1="6" y1="60" x2="114" y2="60" stroke="var(--secondary)" strokeWidth="0.2" opacity="0.2" strokeDasharray="1 4" />
+
+                {/* Planetary Gear System Orbit Track */}
+                <circle cx="60" cy="60" r="30" stroke="var(--secondary)" strokeWidth="0.25" strokeDasharray="4 4" opacity="0.2" />
+
+                {/* Interlocking Planetary Gears (Revolving Clockwise + Spinning Counter-Clockwise) */}
+                <g className="anim-rotate-cw" style={{ transformOrigin: '60px 60px', animationDuration: '24s' }}>
+                  {/* Planetary Satellite Gear 1 (Top, 0°) */}
+                  <g transform="translate(60, 30)">
+                    <circle cx="0" cy="0" r="7.5" stroke="var(--secondary)" strokeWidth="0.8" opacity="0.75" />
+                    <circle cx="0" cy="0" r="7.5" stroke="var(--secondary)" strokeWidth="2.5" strokeDasharray="1.5 2" opacity="0.65" className="anim-rotate-ccw" style={{ transformOrigin: '0px 0px', animationDuration: '6s' }} />
+                    <circle cx="0" cy="0" r="2.2" fill="var(--primary)" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.8" />
+                  </g>
+                  {/* Planetary Satellite Gear 2 (Bottom Right, 120°) */}
+                  <g transform="rotate(120 60 60) translate(60, 30)">
+                    <circle cx="0" cy="0" r="7.5" stroke="var(--secondary)" strokeWidth="0.8" opacity="0.75" />
+                    <circle cx="0" cy="0" r="7.5" stroke="var(--secondary)" strokeWidth="2.5" strokeDasharray="1.5 2" opacity="0.65" className="anim-rotate-ccw" style={{ transformOrigin: '0px 0px', animationDuration: '6s' }} />
+                    <circle cx="0" cy="0" r="2.2" fill="var(--primary)" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.8" />
+                  </g>
+                  {/* Planetary Satellite Gear 3 (Bottom Left, 240°) */}
+                  <g transform="rotate(240 60 60) translate(60, 30)">
+                    <circle cx="0" cy="0" r="7.5" stroke="var(--secondary)" strokeWidth="0.8" opacity="0.75" />
+                    <circle cx="0" cy="0" r="7.5" stroke="var(--secondary)" strokeWidth="2.5" strokeDasharray="1.5 2" opacity="0.65" className="anim-rotate-ccw" style={{ transformOrigin: '0px 0px', animationDuration: '6s' }} />
+                    <circle cx="0" cy="0" r="2.2" fill="var(--primary)" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.8" />
+                  </g>
+                </g>
+
+                {/* Spinning Mechanical Turbine Runner Blades (Rotor MRO) */}
+                <g className="anim-rotate-ccw" style={{ transformOrigin: '60px 60px', animationDuration: '18s' }}>
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(45 60 60)" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(90 60 60)" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(135 60 60)" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(180 60 60)" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(225 60 60)" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(270 60 60)" />
+                  <path d="M 60,60 Q 52,43 60,17 Q 68,43 60,60" fill="url(#turbineGrad)" fillOpacity="0.08" stroke="var(--secondary)" strokeWidth="0.65" opacity="0.7" transform="rotate(315 60 60)" />
+                </g>
+
+                {/* Central Sun Gear (Rotor Shaft) - Spinning Counter-Clockwise */}
+                <circle cx="60" cy="60" r="14" fill="url(#hubGlowGrad)" filter="url(#gearCoreGlow)" opacity="0.9" />
+                <circle cx="60" cy="60" r="14" stroke="var(--secondary)" strokeWidth="1" opacity="0.8" />
+                <circle cx="60" cy="60" r="14" stroke="var(--secondary)" strokeWidth="4.5" strokeDasharray="3.2 2" opacity="0.8" className="anim-rotate-ccw" style={{ transformOrigin: '60px 60px', animationDuration: '10s' }} />
                 
-                {/* Orbit 3 (Opposite diagonal tilt) */}
-                <ellipse cx="60" cy="60" rx="38" ry="8" stroke="url(#orbitGrad)" strokeWidth="0.65" opacity="0.55" transform="rotate(-55 60 60)" strokeDasharray="120" strokeDashoffset="80" className="solar-orbit-line-3" />
+                {/* Central Bearing Bolt */}
+                <circle cx="60" cy="60" r="6.2" fill="var(--bg-primary)" stroke="var(--secondary)" strokeWidth="1.5" />
+                <polygon points="60,57.5 62.5,61.5 57.5,61.5" fill="var(--secondary)" />
 
-                {/* Tech HUD crosshairs overlay */}
-                <line x1="60" y1="6" x2="60" y2="114" stroke="var(--secondary)" strokeWidth="0.25" opacity="0.25" strokeDasharray="2 3" />
-                <line x1="6" y1="60" x2="114" y2="60" stroke="var(--secondary)" strokeWidth="0.25" opacity="0.25" strokeDasharray="2 3" />
-
-                {/* Outer rotating compass scales */}
-                <g className="anim-rotate-cw" style={{ transformOrigin: '60px 60px' }}>
-                  <circle cx="60" cy="60" r="58" stroke="var(--secondary)" strokeWidth="0.65" strokeDasharray="1 10" opacity="0.4" />
-                  <circle cx="60" cy="60" r="56" stroke="var(--primary)" strokeWidth="0.4" strokeDasharray="60 3" opacity="0.2" />
-                </g>
-                <g className="anim-rotate-ccw" style={{ transformOrigin: '60px 60px' }}>
-                  <circle cx="60" cy="60" r="52" stroke="var(--secondary)" strokeWidth="0.55" strokeDasharray="2 6" opacity="0.3" />
-                </g>
-
-                {/* Solar Flares & Magnetic Arcs linking orbits to core */}
-                <path d="M 60,60 Q 45,35 30,35" stroke="var(--secondary)" strokeWidth="0.5" strokeDasharray="5 5" opacity="0.45" className="energy-arc-pulse" />
-                <path d="M 60,60 Q 80,45 85,25" stroke="var(--secondary)" strokeWidth="0.4" strokeDasharray="3 3" opacity="0.3" />
-                <path d="M 60,60 Q 75,75 72,90" stroke="var(--secondary)" strokeWidth="0.5" strokeDasharray="6 2" opacity="0.35" />
-
-                {/* Rotating Laser Scan Line (Faint, high-tech sweep) */}
-                <g className="anim-rotate-cw" style={{ transformOrigin: '60px 60px' }}>
-                  <line x1="60" y1="60" x2="60" y2="6" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.6" />
-                  <polygon points="60,60 60,6 68,7" fill="url(#solarFlareGrad)" opacity="0.2" />
-                </g>
-
-                {/* Flowing energy particles (orbit nodes) */}
-                {/* Particle 1 on Orbit 1 */}
-                <circle cx="60" cy="60" r="2.5" fill="var(--secondary)" filter="url(#solarFlare)">
-                  <animateMotion 
-                    path="M 14,60 A 46,15 0 1,0 106,60 A 46,15 0 1,0 14,60" 
-                    dur="7s" 
-                    repeatCount="indefinite" 
-                    rotate="auto"
-                  />
-                </circle>
-                
-                {/* Particle 2 on Orbit 2 */}
-                <circle cx="60" cy="60" r="2" fill="var(--secondary)" filter="url(#solarFlare)">
-                  <animateMotion 
-                    path="M 18,60 A 42,11 0 1,0 102,60 A 42,11 0 1,0 18,60" 
-                    dur="5s" 
-                    repeatCount="indefinite" 
-                    rotate="auto"
-                  />
-                </circle>
-
-                {/* Floating telemetry text labels at orbit intersections */}
+                {/* Active MRO Telemetry readout overlays */}
                 <g opacity="0.8">
                   <circle cx="28" cy="32" r="1.5" fill="var(--secondary)" className="core-node-pulse" />
-                  <text x="32" y="34.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[SOLAR_PV // 88.5%]</text>
+                  <text x="32" y="34.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[SYS_LOAD // 82.5%]</text>
                 </g>
                 
                 <g opacity="0.85">
                   <circle cx="92" cy="74" r="1.5" fill="var(--secondary)" className="core-node-pulse" />
-                  <text x="96" y="76.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[GRID_VOLT // OK]</text>
+                  <text x="96" y="76.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[ROTOR_RPM // 1500]</text>
                 </g>
 
                 <g opacity="0.75">
                   <circle cx="82" cy="28" r="1" fill="var(--secondary)" className="core-node-pulse" />
-                  <text x="86" y="30.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[MRO // SYS_1]</text>
+                  <text x="86" y="30.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[MRO_VIB // NOMINAL]</text>
                 </g>
 
-                {/* Central Pulsing Solar Core */}
-                <circle cx="60" cy="60" r="13" fill="url(#solarCoreGrad)" filter="url(#coreGlow)" className="solar-core-pulse" />
-                {/* Core ring */}
-                <circle cx="60" cy="60" r="13" stroke="var(--secondary)" strokeWidth="0.8" opacity="0.6" />
-                <circle cx="60" cy="60" r="17" stroke="var(--secondary)" strokeWidth="0.3" strokeDasharray="3 3" opacity="0.4" className="anim-rotate-cw" />
+                <g opacity="0.8">
+                  <circle cx="24" cy="90" r="1" fill="var(--secondary)" className="core-node-pulse" />
+                  <text x="28" y="92.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[BEARING_TEMP // 42°C]</text>
+                </g>
               </svg>
             </div>
           </div>
