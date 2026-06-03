@@ -100,60 +100,122 @@ export default function Home() {
           </div>
 
           <div className="hero-visual">
-            <div className="radar-container anim-pulse-slow">
-              <div className="radar-backdrop"></div>
-              <div className="radar-ping"></div>
-              <svg className="radar-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+            <div className="radar-container energy-core-container">
+              <div className="energy-core-glow"></div>
+              <svg className="radar-svg" viewBox="0 0 120 120" fill="none">
                 <defs>
-                  <linearGradient id="radarSweepGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="var(--secondary)" stopOpacity="0.6" />
-                    <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0" />
+                  {/* Glowing Solar Core Gradients */}
+                  <radialGradient id="solarCoreGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#ffffff" />
+                    <stop offset="25%" stopColor="#ffd875" />
+                    <stop offset="65%" stopColor="var(--secondary)" />
+                    <stop offset="100%" stopColor="transparent" />
+                  </radialGradient>
+
+                  <radialGradient id="solarFlareGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="var(--secondary)" stopOpacity="1" />
+                    <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+                  </radialGradient>
+                  
+                  <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="var(--secondary)" stopOpacity="0.9" />
+                    <stop offset="50%" stopColor="var(--primary)" stopOpacity="0.45" />
+                    <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0.1" />
                   </linearGradient>
+
+                  <filter id="coreGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                  <filter id="solarFlare" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
                 </defs>
 
-                {/* Radar target sweep crosshairs */}
-                <line x1="50" y1="0" x2="50" y2="100" stroke="var(--secondary)" strokeWidth="0.15" opacity="0.35" />
-                <line x1="0" y1="50" x2="100" y2="50" stroke="var(--secondary)" strokeWidth="0.15" opacity="0.35" />
-                
-                {/* Counter-rotating grid tracks */}
-                <circle cx="50" cy="50" r="48" stroke="var(--secondary)" strokeWidth="0.4" strokeDasharray="3 3" opacity="0.4" className="anim-rotate-cw" />
-                <circle cx="50" cy="50" r="38" stroke="var(--secondary)" strokeWidth="0.6" opacity="0.2" />
-                <circle cx="50" cy="50" r="28" stroke="var(--secondary)" strokeWidth="0.4" strokeDasharray="10 4" opacity="0.5" className="anim-rotate-ccw" />
-                <circle cx="50" cy="50" r="18" stroke="var(--secondary)" strokeWidth="0.6" opacity="0.3" />
-                <circle cx="50" cy="50" r="8" stroke="var(--secondary)" strokeWidth="0.4" strokeDasharray="2 2" opacity="0.4" />
-                
-                {/* Holographic scanner compass ticks */}
-                <path d="M50 2 L50 6 M50 98 L50 94 M2 50 L6 50 M98 50 L94 50" stroke="var(--secondary)" strokeWidth="0.8" opacity="0.7" />
+                {/* Outer Coordinate Grid Ring */}
+                <circle cx="60" cy="60" r="54" stroke="var(--primary)" strokeWidth="0.35" strokeDasharray="4 2" opacity="0.3" />
+                <circle cx="60" cy="60" r="50" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.2" />
 
-                {/* Scanning Radar Laser Sweep Wedge */}
-                <g className="anim-rotate-cw" style={{ transformOrigin: '50px 50px' }}>
-                  <line x1="50" y1="50" x2="50" y2="2" stroke="var(--secondary)" strokeWidth="0.6" opacity="0.8" />
-                  <polygon points="50,50 50,2 62,3" fill="url(#radarSweepGrad)" opacity="0.4" />
+                {/* 3D Tilted Energy Orbit Rings */}
+                {/* Orbit 1 (Horizontal tilt) */}
+                <ellipse cx="60" cy="60" rx="46" ry="15" stroke="url(#orbitGrad)" strokeWidth="0.8" opacity="0.65" transform="rotate(-15 60 60)" strokeDasharray="180" strokeDashoffset="0" className="solar-orbit-line-1" />
+                
+                {/* Orbit 2 (Vertical-diagonal tilt) */}
+                <ellipse cx="60" cy="60" rx="42" ry="11" stroke="url(#orbitGrad)" strokeWidth="0.8" opacity="0.6" transform="rotate(35 60 60)" strokeDasharray="160" strokeDashoffset="40" className="solar-orbit-line-2" />
+                
+                {/* Orbit 3 (Opposite diagonal tilt) */}
+                <ellipse cx="60" cy="60" rx="38" ry="8" stroke="url(#orbitGrad)" strokeWidth="0.65" opacity="0.55" transform="rotate(-55 60 60)" strokeDasharray="120" strokeDashoffset="80" className="solar-orbit-line-3" />
+
+                {/* Tech HUD crosshairs overlay */}
+                <line x1="60" y1="6" x2="60" y2="114" stroke="var(--secondary)" strokeWidth="0.25" opacity="0.25" strokeDasharray="2 3" />
+                <line x1="6" y1="60" x2="114" y2="60" stroke="var(--secondary)" strokeWidth="0.25" opacity="0.25" strokeDasharray="2 3" />
+
+                {/* Outer rotating compass scales */}
+                <g className="anim-rotate-cw" style={{ transformOrigin: '60px 60px' }}>
+                  <circle cx="60" cy="60" r="58" stroke="var(--secondary)" strokeWidth="0.65" strokeDasharray="1 10" opacity="0.4" />
+                  <circle cx="60" cy="60" r="56" stroke="var(--primary)" strokeWidth="0.4" strokeDasharray="60 3" opacity="0.2" />
+                </g>
+                <g className="anim-rotate-ccw" style={{ transformOrigin: '60px 60px' }}>
+                  <circle cx="60" cy="60" r="52" stroke="var(--secondary)" strokeWidth="0.55" strokeDasharray="2 6" opacity="0.3" />
+                </g>
+
+                {/* Solar Flares & Magnetic Arcs linking orbits to core */}
+                <path d="M 60,60 Q 45,35 30,35" stroke="var(--secondary)" strokeWidth="0.5" strokeDasharray="5 5" opacity="0.45" className="energy-arc-pulse" />
+                <path d="M 60,60 Q 80,45 85,25" stroke="var(--secondary)" strokeWidth="0.4" strokeDasharray="3 3" opacity="0.3" />
+                <path d="M 60,60 Q 75,75 72,90" stroke="var(--secondary)" strokeWidth="0.5" strokeDasharray="6 2" opacity="0.35" />
+
+                {/* Rotating Laser Scan Line (Faint, high-tech sweep) */}
+                <g className="anim-rotate-cw" style={{ transformOrigin: '60px 60px' }}>
+                  <line x1="60" y1="60" x2="60" y2="6" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.6" />
+                  <polygon points="60,60 60,6 68,7" fill="url(#solarFlareGrad)" opacity="0.2" />
+                </g>
+
+                {/* Flowing energy particles (orbit nodes) */}
+                {/* Particle 1 on Orbit 1 */}
+                <circle cx="60" cy="60" r="2.5" fill="var(--secondary)" filter="url(#solarFlare)">
+                  <animateMotion 
+                    path="M 14,60 A 46,15 0 1,0 106,60 A 46,15 0 1,0 14,60" 
+                    dur="7s" 
+                    repeatCount="indefinite" 
+                    rotate="auto"
+                  />
+                </circle>
+                
+                {/* Particle 2 on Orbit 2 */}
+                <circle cx="60" cy="60" r="2" fill="var(--secondary)" filter="url(#solarFlare)">
+                  <animateMotion 
+                    path="M 18,60 A 42,11 0 1,0 102,60 A 42,11 0 1,0 18,60" 
+                    dur="5s" 
+                    repeatCount="indefinite" 
+                    rotate="auto"
+                  />
+                </circle>
+
+                {/* Floating telemetry text labels at orbit intersections */}
+                <g opacity="0.8">
+                  <circle cx="28" cy="32" r="1.5" fill="var(--secondary)" className="core-node-pulse" />
+                  <text x="32" y="34.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[SOLAR_PV // 88.5%]</text>
                 </g>
                 
-                {/* Pulsing Sonar target nodes */}
-                <circle cx="30" cy="35" r="1.5" fill="var(--secondary)">
-                  <animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite" />
-                </circle>
-                <text x="33" y="36.5" fontSize="2.2" fill="var(--secondary)" opacity="0.75" fontFamily="monospace" fontWeight="bold">[MRO // DET-1]</text>
-                
-                <circle cx="72" cy="65" r="1.5" fill="var(--secondary)">
-                  <animate attributeName="opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite" />
-                </circle>
-                <text x="75" y="66.5" fontSize="2.2" fill="var(--secondary)" opacity="0.75" fontFamily="monospace" fontWeight="bold">[LV-GRID // DET-2]</text>
-                
-                <circle cx="65" cy="22" r="1" fill="var(--secondary)">
-                  <animate attributeName="opacity" values="0.1;0.9;0.1" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <text x="68" y="23.5" fontSize="2.2" fill="var(--secondary)" opacity="0.6" fontFamily="monospace" fontWeight="bold">[HSE // DET-3]</text>
+                <g opacity="0.85">
+                  <circle cx="92" cy="74" r="1.5" fill="var(--secondary)" className="core-node-pulse" />
+                  <text x="96" y="76.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[GRID_VOLT // OK]</text>
+                </g>
 
-                {/* Angle vectors */}
-                <line x1="50" y1="50" x2="22" y2="22" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.25" strokeDasharray="4 2" />
-                <line x1="50" y1="50" x2="80" y2="20" stroke="var(--secondary)" strokeWidth="0.4" opacity="0.15" />
-                
-                {/* Center logo highlight */}
-                <circle cx="50" cy="50" r="4.5" fill="var(--bg-primary)" stroke="var(--secondary)" strokeWidth="1.2" />
-                <polygon points="50,47.5 52,51.5 48,51.5" fill="var(--secondary)" />
+                <g opacity="0.75">
+                  <circle cx="82" cy="28" r="1" fill="var(--secondary)" className="core-node-pulse" />
+                  <text x="86" y="30.5" fontSize="2.3" fill="var(--secondary)" fontFamily="monospace" fontWeight="bold">[MRO // SYS_1]</text>
+                </g>
+
+                {/* Central Pulsing Solar Core */}
+                <circle cx="60" cy="60" r="13" fill="url(#solarCoreGrad)" filter="url(#coreGlow)" className="solar-core-pulse" />
+                {/* Core ring */}
+                <circle cx="60" cy="60" r="13" stroke="var(--secondary)" strokeWidth="0.8" opacity="0.6" />
+                <circle cx="60" cy="60" r="17" stroke="var(--secondary)" strokeWidth="0.3" strokeDasharray="3 3" opacity="0.4" className="anim-rotate-cw" />
               </svg>
             </div>
           </div>
