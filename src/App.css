@@ -2556,7 +2556,7 @@ select.floating-input ~ .floating-label {
     right: 0 !important;
     width: 360px !important;
     height: 100vh !important;
-    background-color: var(--bg-glass) !important;
+    background-color: var(--bg-secondary) !important;
     backdrop-filter: blur(28px) !important;
     -webkit-backdrop-filter: blur(28px) !important;
     border-left: 1px solid var(--border-color) !important;
@@ -2576,7 +2576,7 @@ select.floating-input ~ .floating-label {
   }
 
   [data-theme="dark"] .nav-links {
-    background-color: rgba(1, 6, 20, 0.95) !important;
+    background-color: var(--bg-secondary) !important;
     border-left: 1.5px solid rgba(255, 173, 1, 0.15) !important;
     box-shadow: -15px 0 45px rgba(0, 0, 0, 0.95) !important;
   }
