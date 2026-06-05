@@ -85,9 +85,9 @@ export default function Services({
 
       <section className="tm-section">
         <div className="tm-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: '3rem', alignItems: 'stretch' }}>
+          <div className="tm-services-explorer-layout">
             {/* Left Nav (Clean sidebar glassmorphic tabs, ash colour removed) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div className="tm-services-sidebar">
               {SERVICES_DATA.map(s => {
                 const Icon = s.icon;
                 const isActive = s.id === activeService;

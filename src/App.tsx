@@ -38,6 +38,7 @@ function App() {
   });
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [megaMenuHovered, setMegaMenuHovered] = useState(false);
   const [activeService, setActiveService] = useState<string>('demolition');
   const [serviceTransitioning, setServiceTransitioning] = useState(false);
@@ -68,6 +69,28 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Reset mobile sub-menus when the navigation drawer is closed
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      setMobileServicesOpen(false);
+    }
+  }, [mobileMenuOpen]);
+
+  // Lock background body scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('no-scroll');
+    }
+    return () => {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('no-scroll');
+    };
+  }, [mobileMenuOpen]);
+
   // Custom Hash Router Event Listener
   useEffect(() => {
     const handleHashChange = () => {
@@ -82,6 +105,7 @@ function App() {
       
       setCurrentPath(path);
       setMobileMenuOpen(false);
+      setMobileServicesOpen(false);
       
       // Only scroll to top if not targeting a specific sub-page anchor
       if (!hash.includes('#why-choose') && !hash.includes('#timeline')) {
@@ -405,8 +429,17 @@ function App() {
       {/* Global Fixed Background Particle Canvas */}
       <canvas ref={canvasRef} className="canvas-vfx-global" />
 
+      {/* Mobile Drawer Backdrop Overlay */}
+      <div 
+        className={`mobile-drawer-backdrop ${mobileMenuOpen ? 'active' : ''}`}
+        onClick={() => {
+          setMobileMenuOpen(false);
+          setMobileServicesOpen(false);
+        }}
+      />
+
       {/* Header Shell */}
-      <header className="header glass">
+      <header className={`header glass ${mobileMenuOpen ? 'header-mobile-menu-open' : ''}`}>
         <div className="container header-container">
           <a href="#/" className="logo">
             <img 
@@ -418,24 +451,73 @@ function App() {
           </a>
           
           <nav className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-            <a href="#/" className={`nav-link ${currentPath === 'home' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Home</a>
-            <a href="#/about" className={`nav-link ${isAboutActive ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>About Us</a>
+            {/* Mobile Drawer Branding Header inside Drawer */}
+            <div className="mobile-drawer-header">
+              <a href="#/" className="logo" onClick={() => setMobileMenuOpen(false)}>
+                <img 
+                  src={theme === 'dark' ? '/logo-dark.svg' : '/logo.svg'} 
+                  className="logo-img" 
+                  style={{ height: '32px' }} 
+                  alt="Suria Dirgahayu Logo" 
+                />
+                <span className="logo-text">SURIA DIRGAHAYU</span>
+              </a>
+            </div>
+
+            <a 
+              href="#/" 
+              className={`nav-link ${currentPath === 'home' ? 'active-link' : ''}`} 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ '--link-index': 1 } as React.CSSProperties}
+            >
+              <span className="nav-num">01</span> Home
+            </a>
+            
+            <a 
+              href="#/about" 
+              className={`nav-link ${isAboutActive ? 'active-link' : ''}`} 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ '--link-index': 2 } as React.CSSProperties}
+            >
+              <span className="nav-num">02</span> About Us
+            </a>
             
             {/* Mega Dropdown trigger */}
             <div 
               className="mega-menu-trigger-wrap"
               onMouseEnter={() => setMegaMenuHovered(true)}
               onMouseLeave={() => setMegaMenuHovered(false)}
+              style={{ '--link-index': 3 } as React.CSSProperties}
             >
-              <a href="#/services" className={`nav-link dropdown-trigger-link ${currentPath === 'services' ? 'active-link' : ''}`}>
-                Our Services
-                <svg className="dropdown-arrow-svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '6px', transition: 'transform 0.25s ease', display: 'inline-block', verticalAlign: 'middle' }}>
+              <a 
+                href="#/services" 
+                className={`nav-link dropdown-trigger-link ${currentPath === 'services' ? 'active-link' : ''}`}
+                onClick={(e) => {
+                  if (window.innerWidth <= 900) {
+                    e.preventDefault();
+                    setMobileServicesOpen(!mobileServicesOpen);
+                  }
+                }}
+              >
+                <span><span className="nav-num">03</span> Our Services</span>
+                <svg 
+                  className={`dropdown-arrow-svg ${mobileServicesOpen ? 'arrow-rotated' : ''}`} 
+                  viewBox="0 0 24 24" 
+                  width="12" 
+                  height="12" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="3" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  style={{ marginLeft: '6px', transition: 'transform 0.25s ease', display: 'inline-block', verticalAlign: 'middle' }}
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </a>
               
               {/* Mega Dropdown Panel */}
-              <div className={`mega-menu-dropdown ${megaMenuHovered ? 'active' : ''}`}>
+              <div className={`mega-menu-dropdown ${(megaMenuHovered && window.innerWidth > 900) || mobileServicesOpen ? 'active' : ''}`}>
                 <div className="mega-menu-container">
                   <div className="mega-menu-sidebar">
                     <div className="mega-sidebar-title">Our Capabilities</div>
@@ -539,11 +621,58 @@ function App() {
                 </div>
               </div>
             </div>
+ 
+            <a 
+              href="#/wizard" 
+              className={`nav-link ${currentPath === 'wizard' ? 'active-link' : ''}`} 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ '--link-index': 4 } as React.CSSProperties}
+            >
+              <span className="nav-num">04</span> Project Wizard
+            </a>
+            
+            <a 
+              href="#/quality" 
+              className={`nav-link ${currentPath === 'quality' ? 'active-link' : ''}`} 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ '--link-index': 5 } as React.CSSProperties}
+            >
+              <span className="nav-num">05</span> Quality
+            </a>
+            
+            <a 
+              href="#/journey" 
+              className={`nav-link ${currentPath === 'journey' ? 'active-link' : ''}`} 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ '--link-index': 6 } as React.CSSProperties}
+            >
+              <span className="nav-num">06</span> Journey
+            </a>
+            
+            <a 
+              href="#/contact" 
+              className={`nav-link ${currentPath === 'contact' ? 'active-link' : ''}`} 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ '--link-index': 7 } as React.CSSProperties}
+            >
+              <span className="nav-num">07</span> Contact
+            </a>
 
-            <a href="#/wizard" className={`nav-link ${currentPath === 'wizard' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Project Wizard</a>
-            <a href="#/quality" className={`nav-link ${currentPath === 'quality' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Quality</a>
-            <a href="#/journey" className={`nav-link ${currentPath === 'journey' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Journey</a>
-            <a href="#/contact" className={`nav-link ${currentPath === 'contact' ? 'active-link' : ''}`} onClick={() => setMobileMenuOpen(false)}>Contact</a>
+            {/* Mobile Drawer HUD telemetry Diagnostic Panel at the bottom */}
+            <div className="mobile-drawer-hud blueprint-panel brackets-tl-br">
+              <div className="mobile-hud-row">
+                <span className="hud-label">CIDB.CAP</span>
+                <span className="hud-value">GRADE G7</span>
+              </div>
+              <div className="mobile-hud-row">
+                <span className="hud-label">ST.LICENSE</span>
+                <span className="hud-value">ST-1 & ST-3</span>
+              </div>
+              <div className="mobile-hud-row">
+                <span className="hud-label">SYS.CORE</span>
+                <span className="hud-value"><span className="hud-pulse" style={{ width: '6px', height: '6px' }}></span> ONLINE</span>
+              </div>
+            </div>
           </nav>
 
           <div className="header-actions">
@@ -552,7 +681,10 @@ function App() {
             </a>
             <button 
               className="mobile-menu-toggle" 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                if (mobileMenuOpen) setMobileServicesOpen(false);
+              }}
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
@@ -562,7 +694,7 @@ function App() {
       </header>
 
       {/* Dynamic Page Routing Mount */}
-      <main style={{ flex: 1, zIndex: 2, position: 'relative' }}>
+      <main style={{ flex: 1, zIndex: 2, position: 'relative', paddingTop: '72px' }}>
         {renderPage()}
       </main>
 

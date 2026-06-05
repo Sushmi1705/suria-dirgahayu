@@ -54,7 +54,7 @@ export default function Contact() {
 
       <section className="tm-section">
         <div className="tm-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', maxWidth: '1000px', margin: '0 auto' }}>
+          <div className="tm-contact-layout">
             
             {/* Left side details */}
             <div style={{ textAlign: 'left' }}>

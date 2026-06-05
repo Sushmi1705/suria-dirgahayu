@@ -132,9 +132,17 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  position: relative;
   font-family: var(--font-sans);
   color: var(--text-main);
   background-color: var(--bg-primary);

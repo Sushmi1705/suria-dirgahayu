@@ -93,7 +93,7 @@ export default function Home({ handleSelectService }: HomeProps) {
             <p className="tm-hero-desc tm-reveal tm-delay-200">
               We provide professional <span className="tm-desc-highlight">engineering procurement, construction, and commissioning (EPCC)</span> services in civil structures, mechanical maintenance, ST cabling, and custom metal fabrications.
             </p>
-            <div className="tm-reveal tm-delay-300" style={{ display: 'flex', gap: '1.25rem', marginTop: '0.5rem' }}>
+            <div className="tm-reveal tm-delay-300 tm-hero-buttons" style={{ display: 'flex', gap: '1.25rem', marginTop: '0.5rem' }}>
               <a href="#/wizard" className="tm-btn tm-btn-primary">
                 Project Configurator
               </a>
