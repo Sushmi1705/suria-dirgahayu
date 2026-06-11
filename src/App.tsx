@@ -14,8 +14,9 @@ import About from './pages/About';
 import Quality from './pages/Quality';
 import Journey from './pages/Journey';
 import Services from './pages/Services';
-import Wizard from './pages/Wizard';
+import Esg from './pages/Esg';
 import Contact from './pages/Contact';
+import CursorTrailer from './components/CursorTrailer';
 
 interface Toast {
   id: string;
@@ -26,11 +27,11 @@ interface Toast {
 function App() {
   const [theme] = useState<'light' | 'dark'>('light');
 
-  const [currentPath, setCurrentPath] = useState<'home' | 'about' | 'services' | 'wizard' | 'contact' | 'quality' | 'journey'>(() => {
+  const [currentPath, setCurrentPath] = useState<'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey'>(() => {
     const hash = window.location.hash;
     if (hash.startsWith('#/about')) return 'about';
     if (hash.startsWith('#/services')) return 'services';
-    if (hash.startsWith('#/wizard')) return 'wizard';
+    if (hash.startsWith('#/esg')) return 'esg';
     if (hash.startsWith('#/contact')) return 'contact';
     if (hash.startsWith('#/quality')) return 'quality';
     if (hash.startsWith('#/journey')) return 'journey';
@@ -40,15 +41,10 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [megaMenuHovered, setMegaMenuHovered] = useState(false);
-  const [activeService, setActiveService] = useState<string>('demolition');
+  const [activeService, setActiveService] = useState<string>('construction');
   const [serviceTransitioning, setServiceTransitioning] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  // Project Configurator Multi-Step Wizard States
-  const [wizardStep, setWizardStep] = useState<number>(1);
-  const [wizardIndustry, setWizardIndustry] = useState<string>('manufacturing');
-  const [wizardServices, setWizardServices] = useState<string[]>(['mechanical']);
-  const [wizardScale, setWizardScale] = useState<number>(3);
 
   // Contact Form State
   const [formData, setFormData] = useState({
@@ -95,10 +91,10 @@ function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      let path: 'home' | 'about' | 'services' | 'wizard' | 'contact' | 'quality' | 'journey' = 'home';
+      let path: 'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey' = 'home';
       if (hash.startsWith('#/about')) path = 'about';
       else if (hash.startsWith('#/services')) path = 'services';
-      else if (hash.startsWith('#/wizard')) path = 'wizard';
+      else if (hash.startsWith('#/esg')) path = 'esg';
       else if (hash.startsWith('#/contact')) path = 'contact';
       else if (hash.startsWith('#/quality')) path = 'quality';
       else if (hash.startsWith('#/journey')) path = 'journey';
@@ -203,11 +199,18 @@ function App() {
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      
+      const dx = e.clientX / window.innerWidth - 0.5;
+      const dy = e.clientY / window.innerHeight - 0.5;
+      document.documentElement.style.setProperty('--mouse-dx', dx.toString());
+      document.documentElement.style.setProperty('--mouse-dy', dy.toString());
     };
 
     const handleMouseLeave = () => {
       mouse.x = -1000;
       mouse.y = -1000;
+      document.documentElement.style.setProperty('--mouse-dx', '0');
+      document.documentElement.style.setProperty('--mouse-dy', '0');
     };
 
     const handleResize = () => {
@@ -360,7 +363,6 @@ function App() {
         serviceCategory: 'engineering',
         message: ''
       });
-      setWizardStep(1);
     }, 1500);
   };
 
@@ -378,26 +380,11 @@ function App() {
             activeService={activeService}
             handleSwitchService={handleSwitchService}
             serviceTransitioning={serviceTransitioning}
-            setWizardServices={setWizardServices}
-            setWizardStep={setWizardStep}
             showToast={showToast}
           />
         );
-      case 'wizard':
-        return (
-          <Wizard
-            wizardStep={wizardStep}
-            setWizardStep={setWizardStep}
-            wizardIndustry={wizardIndustry}
-            setWizardIndustry={setWizardIndustry}
-            wizardServices={wizardServices}
-            setWizardServices={setWizardServices}
-            wizardScale={wizardScale}
-            setWizardScale={setWizardScale}
-            setFormData={setFormData}
-            showToast={showToast}
-          />
-        );
+      case 'esg':
+        return <Esg />;
       case 'contact':
         return (
           <Contact
@@ -417,6 +404,9 @@ function App() {
 
   return (
     <>
+      {/* Premium Cursor Trailer */}
+      <CursorTrailer />
+
       {/* Toast Notification Container */}
       <div className="toast-container">
         {toasts.map(toast => (
@@ -525,18 +515,18 @@ function App() {
                     <p className="mega-sidebar-desc">
                       Multi-disciplinary services designed to address engineering, refurbishment, and credit requirements for heavy industrial projects.
                     </p>
-                    <a href="#/wizard" className="btn btn-primary" style={{ padding: '0.65rem 1.15rem', fontSize: '0.85rem' }} onClick={() => setMegaMenuHovered(false)}>
-                      Project Configurator
+                    <a href="#/esg" className="btn btn-primary" style={{ padding: '0.65rem 1.15rem', fontSize: '0.85rem' }} onClick={() => setMegaMenuHovered(false)}>
+                      ESG Pillars
                     </a>
                   </div>
                   <div className="mega-menu-grid-categorized">
                     <div className="mega-menu-column">
-                      <div className="mega-column-header">Heavy Engineering</div>
+                      <div className="mega-column-header">Engineering &amp; Design</div>
                       <div className="mega-menu-items">
                         {[
-                          SERVICES_DATA.find(s => s.id === 'demolition')!,
-                          SERVICES_DATA.find(s => s.id === 'civil')!,
-                          SERVICES_DATA.find(s => s.id === 'fabrication')!
+                          SERVICES_DATA.find(s => s.id === 'construction')!,
+                          SERVICES_DATA.find(s => s.id === 'interior-design')!,
+                          SERVICES_DATA.find(s => s.id === 'manpower')!
                         ].map((s, idx) => {
                           const IconComp = s.icon;
                           return (
@@ -560,12 +550,12 @@ function App() {
                       </div>
                     </div>
                     <div className="mega-menu-column">
-                      <div className="mega-column-header">Systems & MRO</div>
+                      <div className="mega-column-header">Technology &amp; Talent</div>
                       <div className="mega-menu-items">
                         {[
-                          SERVICES_DATA.find(s => s.id === 'mechanical')!,
-                          SERVICES_DATA.find(s => s.id === 'electrical')!,
-                          SERVICES_DATA.find(s => s.id === 'scaffolding')!
+                          SERVICES_DATA.find(s => s.id === 'it-solutions')!,
+                          SERVICES_DATA.find(s => s.id === 'ict-management')!,
+                          SERVICES_DATA.find(s => s.id === 'hr-payroll')!
                         ].map((s, idx) => {
                           const IconComp = s.icon;
                           return (
@@ -589,12 +579,11 @@ function App() {
                       </div>
                     </div>
                     <div className="mega-menu-column">
-                      <div className="mega-column-header">Specialist Support</div>
+                      <div className="mega-column-header">Business &amp; Operations</div>
                       <div className="mega-menu-items">
                         {[
-                          SERVICES_DATA.find(s => s.id === 'manpower')!,
-                          SERVICES_DATA.find(s => s.id === 'renovation')!,
-                          SERVICES_DATA.find(s => s.id === 'debt')!
+                          SERVICES_DATA.find(s => s.id === 'debt-collection')!,
+                          SERVICES_DATA.find(s => s.id === 'branding')!
                         ].map((s, idx) => {
                           const IconComp = s.icon;
                           return (
@@ -623,12 +612,12 @@ function App() {
             </div>
  
             <a 
-              href="#/wizard" 
-              className={`nav-link ${currentPath === 'wizard' ? 'active-link' : ''}`} 
+              href="#/esg" 
+              className={`nav-link ${currentPath === 'esg' ? 'active-link' : ''}`} 
               onClick={() => setMobileMenuOpen(false)}
               style={{ '--link-index': 4 } as React.CSSProperties}
             >
-              <span className="nav-num">04</span> Project Wizard
+              <span className="nav-num">04</span> ESG
             </a>
             
             <a 
@@ -661,12 +650,12 @@ function App() {
             {/* Mobile Drawer HUD telemetry Diagnostic Panel at the bottom */}
             <div className="mobile-drawer-hud blueprint-panel brackets-tl-br">
               <div className="mobile-hud-row">
-                <span className="hud-label">CIDB.CAP</span>
-                <span className="hud-value">GRADE G7</span>
+                <span className="hud-label">REG.STATUS</span>
+                <span className="hud-value">ACTIVE</span>
               </div>
               <div className="mobile-hud-row">
                 <span className="hud-label">ST.LICENSE</span>
-                <span className="hud-value">ST-1 & ST-3</span>
+                <span className="hud-value">ST-1 &amp; ST-3</span>
               </div>
               <div className="mobile-hud-row">
                 <span className="hud-label">SYS.CORE</span>
@@ -694,8 +683,10 @@ function App() {
       </header>
 
       {/* Dynamic Page Routing Mount */}
-      <main style={{ flex: 1, zIndex: 2, position: 'relative', paddingTop: '72px' }}>
-        {renderPage()}
+      <main style={{ flex: 1, zIndex: 2, position: 'relative', paddingTop: '72px', display: 'flex', flexDirection: 'column' }}>
+        <div key={currentPath} className="page-transition-container">
+          {renderPage()}
+        </div>
       </main>
 
       {/* Footer Shell */}
@@ -728,48 +719,48 @@ function App() {
                     <span className="footer-hud-val">12MS</span>
                   </div>
                   <div className="footer-hud-item">
-                    <span className="footer-hud-lbl">CIDB.CAP</span>
-                    <span className="footer-hud-val">G7</span>
+                    <span className="footer-hud-lbl">REG.STATUS</span>
+                    <span className="footer-hud-val">ACTIVE</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="footer-col">
-              <div className="footer-col-title">Engineering Focus</div>
+              <div className="footer-col-title">Services Focus</div>
               <ul className="footer-list">
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('demolition')}>Demolition Works</a></li>
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('mechanical')}>Mechanical MRO</a></li>
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('civil')}>Civil Construction</a></li>
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('scaffolding')}>Scaffolding Systems</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('construction')}>Construction Services</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('it-solutions')}>IT Solutions</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('interior-design')}>Interior Design</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('ict-management')}>ICT Management</a></li>
               </ul>
             </div>
 
             <div className="footer-col">
               <div className="footer-col-title">Other Services</div>
               <ul className="footer-list">
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('electrical')}>Electrical Solutions</a></li>
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('manpower')}>Technical Manpower</a></li>
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('renovation')}>Renovations</a></li>
-                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('debt')}>Receivables Recovery</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('manpower')}>Manpower Supply</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('hr-payroll')}>HR &amp; Payroll</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('debt-collection')}>Debt Collection</a></li>
+                <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('branding')}>Branding Solutions</a></li>
               </ul>
             </div>
 
             <div className="footer-col">
-              <div className="footer-col-title">Licensing & HSE</div>
+              <div className="footer-col-title">Licensing &amp; HSE</div>
               <div className="footer-status-stack">
                 <div className="footer-status-item">
                   <span className="status-indicator indicator-active"><span className="indicator-pulse"></span></span>
                   <div className="status-text-block">
-                    <div className="status-main">CIDB Malaysia</div>
-                    <div className="status-sub">Grade G7 Cap</div>
+                    <div className="status-main">National Licensing</div>
+                    <div className="status-sub">Fully Compliant</div>
                   </div>
                 </div>
                 <div className="footer-status-item">
                   <span className="status-indicator indicator-active"><span className="indicator-pulse"></span></span>
                   <div className="status-text-block">
                     <div className="status-main">Suruhanjaya Tenaga</div>
-                    <div className="status-sub">ST-1 & ST-3 Lic</div>
+                    <div className="status-sub">ST-1 &amp; ST-3 Lic</div>
                   </div>
                 </div>
                 <div className="footer-status-item">

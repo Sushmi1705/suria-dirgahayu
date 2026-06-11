@@ -11,7 +11,7 @@ export default function About() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <h1 className="tm-reveal">Corporate Profile</h1>
             <p className="tm-reveal tm-delay-100">
-              Learn about our operational capabilities, CIDB G7 registration, Energy Commission approvals, and safety compliances.
+              Learn about our operational capabilities, quality standards, Energy Commission approvals, and safety compliances.
             </p>
           </div>
           <div className="tm-card tm-reveal tm-delay-200" style={{ borderTop: '4px solid var(--gold)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -20,10 +20,10 @@ export default function About() {
             </div>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                <span style={{ fontWeight: 800, fontSize: '0.9rem' }}>CIDB LICENSE</span>
-                <span style={{ color: 'var(--gold)', fontWeight: 800, fontSize: '0.9rem' }}>GRADE G7</span>
+                <span style={{ fontWeight: 800, fontSize: '0.9rem' }}>QUALITY STANDARD</span>
+                <span style={{ color: 'var(--gold)', fontWeight: 800, fontSize: '0.9rem' }}>ISO 9001</span>
               </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Unlimited Tender Capacity (B, CE, ME)</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Quality Management System Certified</div>
             </div>
             <div style={{ height: '1px', backgroundColor: 'var(--border-color)' }}></div>
             <div>
@@ -85,10 +85,10 @@ export default function About() {
             {/* Certifications Widgets */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div className="tm-card" style={{ borderLeft: '4px solid var(--primary)' }}>
-                <h3 className="tm-mega-title" style={{ fontSize: '1.15rem', marginBottom: '0.25rem' }}>CIDB Malaysia</h3>
-                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase' }}>GRADE G7 LICENSING</span>
+                <h3 className="tm-mega-title" style={{ fontSize: '1.15rem', marginBottom: '0.25rem' }}>Quality Assurance</h3>
+                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase' }}>ISO 9001:2015</span>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-                  Registered under B (Building), CE (Civil Engineering), and ME (Mechanical &amp; Electrical) categories with unlimited financial tender capacity.
+                  Operating under strict quality and safety management guidelines to ensure consistent, premium project delivery.
                 </p>
               </div>
 
@@ -99,6 +99,34 @@ export default function About() {
                   Energy Commission approved wireman electrical wiring capabilities, backup power systems, and Low Voltage distribution boards.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* On-Site Team & Operations Section */}
+      <section className="tm-section" style={{ borderTop: '1px solid var(--border-color)', backgroundColor: 'rgba(1, 107, 173, 0.01)' }}>
+        <div className="tm-container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+            <div style={{ textAlign: 'left' }}>
+              <h2 className="tm-section-title" style={{ textAlign: 'left', marginBottom: '1.5rem' }}>
+                Multi-disciplinary Engineering Experts
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: '1.75' }}>
+                <p>
+                  At Suria Dirgahayu, our competent workforce is our greatest asset. Our team comprises CIDB G7 accredited engineers, Suruhanjaya Tenaga certified chargemen and wiremen, and certified welders who possess extensive hands-on experience in executing large-scale industrial projects.
+                </p>
+                <p>
+                  Through continuous training and safety compliance checks, we maintain operational excellence and zero Lost Time Injury (LTI) records on all sites.
+                </p>
+              </div>
+            </div>
+            <div className="tm-card" style={{ padding: '0.5rem', overflow: 'hidden' }}>
+              <img 
+                src="/img-team.jpg" 
+                alt="Suria Dirgahayu engineering team at industrial facility" 
+                style={{ width: '100%', borderRadius: 'var(--radius-md)', display: 'block', objectFit: 'cover' }} 
+              />
             </div>
           </div>
         </div>

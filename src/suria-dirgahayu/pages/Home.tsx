@@ -119,7 +119,7 @@ export default function Home({ handleSelectService }: HomeProps) {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', zIndex: 2 }}>
                 
-                {/* CIDB Item */}
+                {/* Credentials Item */}
                 <div className="tm-console-item">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                     <div className="tm-console-icon-wrapper">
@@ -129,10 +129,10 @@ export default function Home({ handleSelectService }: HomeProps) {
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                        <span className="tm-console-label">CIDB REGISTRATION</span>
-                        <span className="tm-console-value-accent gold-color">GRADE G7</span>
+                        <span className="tm-console-label">REGULATORY LICENSING</span>
+                        <span className="tm-console-value-accent gold-color">COMPLIANT</span>
                       </div>
-                      <div className="tm-console-subtext">Unlimited Tender Capacity (B, CE, ME)</div>
+                      <div className="tm-console-subtext">Approved and licensed operations nationwide</div>
                       <div className="tm-progress-track">
                         <div className="tm-progress-bar gold-bg" style={{ width: '100%' }}></div>
                       </div>
@@ -194,36 +194,7 @@ export default function Home({ handleSelectService }: HomeProps) {
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="tm-section tm-section-bg">
-        <div className="tm-container">
-          <div className="tm-grid-3">
-            <div className="tm-card tm-glass-spotlight tm-spotlight-border tm-reveal" onMouseMove={handleCardMouseMove} style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-              <span className="tm-card-corner-ref">01 // REGISTRY</span>
-              <h3 className="tm-stat-number text-glow-gold">G7</h3>
-              <p className="tm-stat-label">CIDB REGISTRATION</p>
-              <div className="tm-stat-divider"></div>
-              <span className="tm-stat-desc">Unlimited tender capacity for public &amp; private works</span>
-            </div>
-            
-            <div className="tm-card tm-glass-spotlight tm-spotlight-border tm-reveal tm-delay-100" onMouseMove={handleCardMouseMove} style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-              <span className="tm-card-corner-ref">02 // OSHA COMPLIANT</span>
-              <h3 className="tm-stat-number text-glow-blue">100%</h3>
-              <p className="tm-stat-label">SAFETY RATING</p>
-              <div className="tm-stat-divider"></div>
-              <span className="tm-stat-desc">Strict OSHA and HSE compliance standards</span>
-            </div>
-            
-            <div className="tm-card tm-glass-spotlight tm-spotlight-border tm-reveal tm-delay-200" onMouseMove={handleCardMouseMove} style={{ textAlign: 'center', padding: '2.5rem 2rem' }}>
-              <span className="tm-card-corner-ref">03 // ENERGY BOARD</span>
-              <h3 className="tm-stat-number text-glow-cyan">ST-1</h3>
-              <p className="tm-stat-label">ST LICENSING</p>
-              <div className="tm-stat-divider"></div>
-              <span className="tm-stat-desc">Energy Commission approved wiremen &amp; chargemen</span>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Services Grid Section */}
       <section className="tm-section">
@@ -241,30 +212,39 @@ export default function Home({ handleSelectService }: HomeProps) {
           <div className="tm-grid-3">
             {[
               {
-                id: 'demolition',
-                title: 'Heavy Engineering',
-                desc: 'Industrial plant decommissioning, safe structures demolition, structural steel dismantling and logistics.',
-                icon: SERVICES_DATA.find(s => s.id === 'demolition')!.icon
+                id: 'construction',
+                title: 'Construction Services',
+                desc: 'End-to-end building and structural engineering solutions.',
+                icon: SERVICES_DATA.find(s => s.id === 'construction')!.icon,
+                image: '/img-civil.jpg'
               },
               {
-                id: 'mechanical',
-                title: 'Systems & MRO',
-                desc: 'Mechanical maintenance, rotating machinery overhaul, EC wiremen solutions, and modular scaffolding tags.',
-                icon: SERVICES_DATA.find(s => s.id === 'mechanical')!.icon
+                id: 'it-solutions',
+                title: 'IT & Technology Solutions',
+                desc: 'Custom software development, hardware supply, server infrastructure, and network solutions.',
+                icon: SERVICES_DATA.find(s => s.id === 'it-solutions')!.icon,
+                image: '/img-electrical.jpg'
               },
               {
                 id: 'manpower',
-                title: 'Specialist Support',
-                desc: 'Technical advisors, project management teams, renovation fit-outs, and credit risk recovery operations.',
-                icon: SERVICES_DATA.find(s => s.id === 'manpower')!.icon
+                title: 'Manpower & Support',
+                desc: 'Highly skilled professionals, contract staffing, technical specialist supply, and workforce management.',
+                icon: SERVICES_DATA.find(s => s.id === 'manpower')!.icon,
+                image: '/img-hero.jpg'
               }
             ].map((b, index) => {
               const Icon = b.icon;
               return (
-                <div key={b.id} className={`tm-card tm-glass-spotlight tm-spotlight-border tm-reveal tm-delay-${index * 100}`} onMouseMove={handleCardMouseMove} onClick={() => handleSelectService(b.id)} style={{ cursor: 'pointer' }}>
-                  <div className="tm-card-icon"><Icon size={24} /></div>
+                <div key={b.id} className={`tm-card tm-glass-spotlight tm-spotlight-border tm-reveal tm-delay-${index * 100}`} onMouseMove={handleCardMouseMove} onClick={() => handleSelectService(b.id)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+                  {b.image && (
+                    <div style={{ height: '140px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', marginBottom: '1.5rem', border: '1px solid var(--border-color)', position: 'relative' }}>
+                      <img src={b.image} alt={b.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <div className="tm-card-icon" style={{ position: 'absolute', bottom: '10px', left: '10px', marginBottom: 0, width: '38px', height: '38px', borderRadius: '6px' }}><Icon size={18} /></div>
+                    </div>
+                  )}
+                  {!b.image && <div className="tm-card-icon"><Icon size={24} /></div>}
                   <h3 className="tm-mega-title" style={{ fontSize: '1.25rem', marginBottom: '0.75rem' }}>{b.title}</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem' }}>{b.desc}</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem', flex: 1 }}>{b.desc}</p>
                   <span className="tm-card-action-link">
                     Read details <span className="tm-action-arrow">→</span>
                   </span>

@@ -44,30 +44,34 @@ export default function Wizard({
     let certs = ['ISO 9001:2015 Quality Management'];
     
     if (wizardScale >= 4) {
-      certs.push('CIDB Grade G7 (No value limit)');
+      certs.push('Grade A Enterprise Standards Alignment');
     } else {
-      certs.push(`CIDB Grade G${wizardScale + 2} License`);
+      certs.push('Standard Operations Permit License');
     }
 
-    if (wizardServices.includes('electrical')) {
-      certs.push('ST Competent Wireman & Chargeman');
+    if (wizardServices.includes('it-solutions') || wizardServices.includes('ict-management')) {
+      certs.push('IT Infrastructure & Cybersecurity Certification');
     }
-    if (wizardServices.includes('scaffolding')) {
+    if (wizardServices.includes('construction') || wizardServices.includes('interior-design')) {
+      certs.push('Safety Green Card & NIOSH Certifications');
       certs.push('DOSH Scaffold Competency Tag');
     }
-    if (wizardServices.includes('mechanical') || wizardServices.includes('demolition')) {
-      certs.push('CIDB Green Card & NIOSH Certifications');
+    if (wizardServices.includes('manpower') || wizardServices.includes('hr-payroll')) {
+      certs.push('HRD Corp & Workforce Standards Audit');
     }
 
     baseTimeWeeks += wizardServices.length * 2;
     
     const steps = ['Site Assessment & Engineering Risk Registry'];
-    if (wizardServices.includes('demolition')) steps.push('Structural dismantling calculation & approvals');
-    if (wizardServices.includes('scaffolding')) steps.push('Access staging setup & BS/EN tagging');
-    if (wizardServices.includes('civil')) steps.push('Civil excavation & machine concrete pouring');
-    if (wizardServices.includes('mechanical')) steps.push('Rotating diagnostics & vibration checks');
-    if (wizardServices.includes('electrical')) steps.push('Cable terminations & Energy Commission verification');
-    steps.push('Quality handover & client inspection tag audits');
+    if (wizardServices.includes('construction')) steps.push('Civil excavation & heavy structural works');
+    if (wizardServices.includes('it-solutions')) steps.push('Software deployment & hardware installations');
+    if (wizardServices.includes('interior-design')) steps.push('Space planning & interior office fit-out works');
+    if (wizardServices.includes('ict-management')) steps.push('ICT resource outsourcing & project staffing');
+    if (wizardServices.includes('manpower')) steps.push('Specialist talent recruitment & onboarding');
+    if (wizardServices.includes('hr-payroll')) steps.push('Payroll management & HR systems integration');
+    if (wizardServices.includes('debt-collection')) steps.push('Debt recovery audit & collection management');
+    if (wizardServices.includes('branding')) steps.push('Corporate identity & digital branding rollout');
+    steps.push('Quality handover & client inspection audits');
 
     return {
       duration: `${baseTimeWeeks - 2} to ${baseTimeWeeks + 2} Weeks`,
@@ -83,7 +87,7 @@ export default function Wizard({
     const serviceNames = wizardServices.map(id => SERVICES_DATA.find(s => s.id === id)?.title).join(', ');
     setFormData((prev: any) => ({
       ...prev,
-      serviceCategory: wizardServices.includes('debt') ? 'debt' : 'engineering',
+      serviceCategory: wizardServices.includes('debt-collection') ? 'debt' : 'engineering',
       message: `Project Parameters Configured:\n- Industry Sector: ${wizardIndustry.toUpperCase()}\n- Selected Services: ${serviceNames}\n- Scale Level: ${wizardScale}/5 (Approx. estimated timeline: ${recommendation.duration})\n- Required Standards: ${recommendation.certificates.join(', ')}`
     }));
 
@@ -97,7 +101,7 @@ export default function Wizard({
   return (
     <div className="wizard-page-container">
       <section className="page-header-section">
-        <HeroBackground />
+        <HeroBackground page="wizard" />
         <div className="container page-header animate-slide-up">
           <div className="page-header-card">
             <div style={{ position: 'relative', zIndex: 5 }}>

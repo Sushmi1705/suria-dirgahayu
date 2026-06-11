@@ -8,7 +8,7 @@ export default function Journey() {
     <div className="journey-page-container">
       {/* Page Introduction Header */}
       <section className="page-header-section">
-        <HeroBackground />
+        <HeroBackground page="journey" />
         <div className="container page-header animate-slide-up">
           <div className="page-header-card">
             <div style={{ position: 'relative', zIndex: 5 }}>

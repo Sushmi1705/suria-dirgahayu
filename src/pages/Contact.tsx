@@ -26,7 +26,7 @@ export default function Contact({
   return (
     <div className="contact-page-container">
       <section className="page-header-section">
-        <HeroBackground isStatic={true} />
+        <HeroBackground isStatic={true} page="contact" />
         <div className="container page-header animate-slide-up">
           <div className="page-header-card">
             <div style={{ position: 'relative', zIndex: 5 }}>

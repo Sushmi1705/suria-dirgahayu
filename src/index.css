@@ -411,13 +411,13 @@ a {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.03);
   box-shadow: 0 12px 30px rgba(255, 173, 1, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.25);
   background: linear-gradient(135deg, #000c24 0%, #eab308 100%) !important;
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(-1px) scale(0.97);
 }
 
 .btn-secondary {
@@ -429,7 +429,7 @@ a {
 .btn-secondary:hover {
   background: var(--bg-tertiary);
   border-color: var(--border-hover);
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.03);
   box-shadow: var(--shadow-md);
 }
 
@@ -440,7 +440,32 @@ a {
 }
 
 .btn-secondary:active {
-  transform: translateY(0);
+  transform: translateY(-1px) scale(0.97);
+}
+
+/* Pulsating main CTA button glow effect */
+@keyframes navCtaPulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(255, 173, 1, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 4px 28px rgba(255, 173, 1, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px) scale(1.025);
+  }
+}
+
+.nav-cta-btn {
+  animation: navCtaPulse 3s infinite ease-in-out;
+}
+
+.nav-cta-btn:hover {
+  animation: none !important;
+  transform: translateY(-3px) scale(1.04) !important;
+  box-shadow: 0 12px 30px rgba(255, 173, 1, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+}
+
+.nav-cta-btn:active {
+  transform: translateY(-1px) scale(0.97) !important;
 }
 
 /* Custom interactive controls */
@@ -619,4 +644,109 @@ a {
 .spotlight-border:hover::after {
   opacity: 1;
 }
+
+/* Premium Solar Cursor Trailer */
+.cursor-trailer-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 999999;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease;
+}
+
+.cursor-trailer-spark {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-trailer-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 5px hsla(var(--hue-gold), 100%, 50%, 0.45));
+  transition: filter 0.25s ease;
+}
+
+.orbital-ring {
+  transform-origin: center;
+  animation: spin-slow 12s linear infinite;
+}
+
+.cursor-trailer-glow {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  filter: blur(8px);
+  opacity: 0.3;
+  z-index: -1;
+  transition: opacity 0.25s ease, filter 0.25s ease, background-color var(--transition-normal);
+  animation: cursorGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes cursorGlowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.5;
+  }
+}
+
+/* Spark star hover behavior */
+.spark-star {
+  transform-origin: center;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), fill 0.3s ease;
+}
+
+.cursor-trailer-container.hovered .spark-star {
+  transform: rotate(90deg);
+  fill: #ffffff !important;
+}
+
+/* Hover state adjustments */
+.cursor-trailer-container.hovered .cursor-trailer-svg {
+  filter: drop-shadow(0 0 10px hsla(var(--hue-gold), 100%, 50%, 0.85));
+}
+
+.cursor-trailer-container.hovered .cursor-trailer-glow {
+  filter: blur(14px);
+  opacity: 0.6;
+  animation: cursorGlowPulseHover 1.5s ease-in-out infinite;
+}
+
+@keyframes cursorGlowPulseHover {
+  0%, 100% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0.75;
+  }
+}
+
+/* Tactile 3D Tilt Card transitions */
+.tilt-card {
+  transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.tilt-card:not(:hover) {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+
 

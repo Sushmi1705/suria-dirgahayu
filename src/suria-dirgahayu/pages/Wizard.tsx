@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { SERVICES_DATA } from '../../constants/data';
 
 export default function Wizard() {
   const [step, setStep] = useState<number>(1);
   const [industry, setWizardIndustry] = useState<string>('manufacturing');
-  const [services, setWizardServices] = useState<string[]>(['mechanical']);
+  const [services, setWizardServices] = useState<string[]>(['construction']);
   const [scale, setWizardScale] = useState<number>(3);
 
   const calculateEstimate = () => {
@@ -51,7 +52,7 @@ export default function Wizard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <h1 className="tm-reveal">Project Configurator</h1>
             <p className="tm-reveal tm-delay-100">
-              Configure your civil, structural, and MRO requirements to generate a budget estimate and engineering scope proposal.
+              Configure your project parameters, industry sectors, and required services to estimate a budget scope.
             </p>
           </div>
           <div className="tm-card tm-reveal tm-delay-200" style={{ borderTop: '4px solid var(--gold)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', position: 'relative' }}>
@@ -129,14 +130,7 @@ export default function Wizard() {
               <div>
                 <h3 className="tm-mega-title" style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'var(--text-main)' }}>Select required engineering scopes:</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
-                  {[
-                    { id: 'mechanical', title: 'Mechanical MRO Overhaul' },
-                    { id: 'civil', title: 'Specialized Civil Works' },
-                    { id: 'electrical', title: 'LV Cabling & ST Distribution' },
-                    { id: 'scaffolding', title: 'Modular Scaffold & Certified Access' },
-                    { id: 'fabrication', title: 'Steel Structures & Custom Welding' },
-                    { id: 'demolition', title: 'Industrial Dismantling & Demolition' }
-                  ].map(srv => {
+                  {SERVICES_DATA.map(srv => {
                     const isSel = services.includes(srv.id);
                     return (
                       <button
@@ -193,7 +187,7 @@ export default function Wizard() {
                     <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--text-main)', margin: '0.5rem 0' }}>
                       RM {calculateEstimate().toLocaleString()}
                     </div>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>*Subject to final engineering drawing review</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>*Subject to final drawing review</span>
                   </div>
 
                   <div>
@@ -236,4 +230,3 @@ export default function Wizard() {
     </div>
   );
 }
-

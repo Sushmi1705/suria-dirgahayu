@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Scratch & Tool temporary files
+scratch_search_bundle.js
+tool_call_home_step_*
+tool_call_*
+

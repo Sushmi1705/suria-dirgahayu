@@ -16,7 +16,7 @@ export default function Quality() {
     <div className="quality-page-container">
       {/* Page Introduction Header */}
       <section className="page-header-section">
-        <HeroBackground />
+        <HeroBackground page="quality" />
         <div className="container page-header animate-slide-up">
           <div className="page-header-card">
             <div style={{ position: 'relative', zIndex: 5 }}>

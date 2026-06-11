@@ -1,12 +1,33 @@
 interface HeroBackgroundProps {
   isStatic?: boolean;
+  page?: 'home' | 'about' | 'services' | 'esg' | 'quality' | 'journey' | 'contact' | 'wizard';
+  backgroundImage?: string;
 }
 
-export default function HeroBackground({ isStatic = false }: HeroBackgroundProps) {
+export default function HeroBackground({ isStatic = false, page = 'home', backgroundImage }: HeroBackgroundProps) {
+  const bgImages = {
+    home: '/hero-home.png',
+    about: '/hero-about.png',
+    services: '/hero-services.png',
+    esg: '/hero-esg.png',
+    quality: '/hero-quality.png',
+    journey: '/hero-journey.png',
+    contact: '/hero-contact.png',
+    wizard: '/hero-wizard.png',
+  };
+
+  const bgUrl = backgroundImage || bgImages[page] || bgImages.home;
+
   return (
     <div className="hero-bg-vfx">
       {/* 1. Background Image container with optional movement animation */}
-      <div className={`hero-bg-image ${isStatic ? "" : "bg-movement-anim"}`}></div>
+      <div 
+        className={`hero-bg-image ${isStatic ? "" : "bg-movement-anim"}`}
+        style={{ backgroundImage: `url(${bgUrl})` }}
+      ></div>
+      
+      {/* Gold Highlight Overlay to paint the background details in glowing gold */}
+      <div className="hero-bg-gold-overlay"></div>
       
       {/* 2. Technical Blueprint Scale Overlay */}
       <svg 
