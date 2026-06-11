@@ -10,7 +10,7 @@ import { handleCardMouseMove, handleCardMouseLeave } from '../utils/tilt';
 import HeroBackground from '../components/HeroBackground';
 import ClientLogo from '../components/ClientLogo';
 export default function Home() {
-  const activeChoice = 'industrial';
+  const activeChoice: string = 'industrial';
   
 
 
