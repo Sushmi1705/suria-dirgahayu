@@ -16,6 +16,7 @@ import Journey from './pages/Journey';
 import Services from './pages/Services';
 import Esg from './pages/Esg';
 import Contact from './pages/Contact';
+import SunSeed from './pages/SunSeed';
 import CursorTrailer from './components/CursorTrailer';
 
 interface Toast {
@@ -27,7 +28,7 @@ interface Toast {
 function App() {
   const [theme] = useState<'light' | 'dark'>('light');
 
-  const [currentPath, setCurrentPath] = useState<'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey'>(() => {
+  const [currentPath, setCurrentPath] = useState<'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey' | 'sunseed'>(() => {
     const hash = window.location.hash;
     if (hash.startsWith('#/about')) return 'about';
     if (hash.startsWith('#/services')) return 'services';
@@ -35,6 +36,7 @@ function App() {
     if (hash.startsWith('#/contact')) return 'contact';
     if (hash.startsWith('#/quality')) return 'quality';
     if (hash.startsWith('#/journey')) return 'journey';
+    if (hash.startsWith('#/sunseed')) return 'sunseed';
     return 'home';
   });
 
@@ -91,13 +93,14 @@ function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      let path: 'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey' = 'home';
+      let path: 'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey' | 'sunseed' = 'home';
       if (hash.startsWith('#/about')) path = 'about';
       else if (hash.startsWith('#/services')) path = 'services';
       else if (hash.startsWith('#/esg')) path = 'esg';
       else if (hash.startsWith('#/contact')) path = 'contact';
       else if (hash.startsWith('#/quality')) path = 'quality';
       else if (hash.startsWith('#/journey')) path = 'journey';
+      else if (hash.startsWith('#/sunseed')) path = 'sunseed';
       
       setCurrentPath(path);
       setMobileMenuOpen(false);
@@ -337,6 +340,14 @@ function App() {
     setMegaMenuHovered(false);
     setMobileMenuOpen(false);
     window.location.hash = `#/services`;
+    
+    // Smooth scroll directly to the services explorer section
+    setTimeout(() => {
+      const element = document.getElementById('services');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 200);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -385,6 +396,8 @@ function App() {
         );
       case 'esg':
         return <Esg />;
+      case 'sunseed':
+        return <SunSeed />;
       case 'contact':
         return (
           <Contact

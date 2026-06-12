@@ -1,16 +1,146 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ChevronRightIcon,
   WrenchIcon,
   UsersIcon,
-  GlobeIcon
+  GlobeIcon,
+  ShieldIcon,
+  TrophyIcon
 } from '../components/Icons';
 import { CLIENTS } from '../constants/data';
 import { handleCardMouseMove, handleCardMouseLeave } from '../utils/tilt';
 import HeroBackground from '../components/HeroBackground';
 import ClientLogo from '../components/ClientLogo';
+
+const SUNSEED_PILL_DETAILS: Record<string, { title: string; subtitle: string; desc: string; iconColor: string }> = {
+  academy: {
+    title: 'SunSeed Academy',
+    subtitle: 'Technical Training & Vocational Skills',
+    desc: 'Empowering local workforces with ST wireman licenses, scaffolding rigging standards, OSHA safety tag compliance, and mechanical assembly courses.',
+    iconColor: '#ffad01'
+  },
+  talent: {
+    title: 'SunSeed Talent Program',
+    subtitle: 'Ethical Resource Stewardship',
+    desc: 'Managing workforce welfare, medical audits, safe housing standards, and competitive transparent wage scales for heavy industrial projects.',
+    iconColor: '#38bdf8'
+  },
+  foundation: {
+    title: 'SunSeed Foundation',
+    subtitle: 'Renewable Community Electrification',
+    desc: 'Donating microgrids and solar setups to rural boarding schools, granting student technical scholarships, and providing local family support.',
+    iconColor: '#22c55e'
+  },
+  nurturing: {
+    title: 'Nurturing Growth',
+    subtitle: 'Ecosystem Vitality & Support',
+    desc: 'Providing industrial tools, guidance, safety tags, and structural guidance before demanding high-performance output.',
+    iconColor: '#ffd875'
+  },
+  potential: {
+    title: 'Latent Potential',
+    subtitle: 'Human & Material Assets',
+    desc: 'Unlocking hidden mechanical talent and harvesting abundant solar resources to drive national industrial self-sufficiency.',
+    iconColor: '#f43f5e'
+  },
+  sustainability: {
+    title: 'Sustainable Future',
+    subtitle: 'Zero-Harm Engineering Framework',
+    desc: 'Minimizing environmental footprints via control-demolition protocols, low-noise scaffolding structures, and energy-conserving MRO.',
+    iconColor: '#10b981'
+  }
+};
+
+interface BlogPost {
+  id: string;
+  tag: string;
+  title: string;
+  desc: string;
+  image: string;
+  date: string;
+  author: string;
+  content: React.ReactNode;
+}
+
+const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 'st-licensing',
+    tag: 'ST Competency & Licensing',
+    title: 'ST Wireman Licensing: Elevating Safety & Standardized Compliance in Malaysia',
+    desc: 'An in-depth look into Suria Dirgahayu\'s professional training framework, Energy Commission (ST) wireman guidelines, and DOSH safety tagging compliance.',
+    image: '/img-blog-st.png',
+    date: 'June 08, 2026',
+    author: 'Ir. Ahmad Zaidi, Chief HSE Director',
+    content: (
+      <>
+        <p>In heavy industrial construction and power engineering, electrical safety is not merely a box to check—it is a critical operational standard. At Suria Dirgahayu, we align every project with the stringent requirements of the Energy Commission (Suruhanjaya Tenaga) and DOSH safety standards.</p>
+        <h3>Why ST Competency Matters</h3>
+        <p>Under Malaysian electrical safety regulations, only ST-certified Wiremen are authorized to inspect, build, and operate high-voltage industrial setups. By establishing our internal SunSeed Academy framework, we ensure that every single site technician receives continuous competency updates and support for ST-1 and ST-3 wireman testing.</p>
+        <blockquote>"Safety is the foundation of structural engineering. Ensuring 100% licensing compliance is how we protect lives and secure heavy MNC industrial assets."</blockquote>
+        <h3>Standardized Safety Protocols</h3>
+        <p>Beyond theoretical knowledge, our hands-on training centers model structural rigging, scaffolding tagging, and mechanical assembly courses to eliminate site errors. This dedication ensures that Suria Dirgahayu remains class-A audited, and compliant across all CIDB G7 engineering operations.</p>
+      </>
+    )
+  },
+  {
+    id: 'solar-microgrids',
+    tag: 'Renewable Infrastructure',
+    title: 'Harnessing Clean Energy: Sowing the Seeds of Rural Microgrid Innovation',
+    desc: 'How Suria Dirgahayu is integrating MRO engineering expertise with solar technology to electrification rural communities and vocational boarding schools.',
+    image: '/img-blog-solar.png',
+    date: 'May 24, 2026',
+    author: 'Chen Wei Ming, Head of Solar Operations',
+    content: (
+      <>
+        <p>Clean energy is a key driver for structural transition and corporate responsibility in Malaysia. Our team is passionate about harnessing solar technologies not only for commercial multi-megawatt setups but also for direct community development.</p>
+        <h3>Connecting Remote Communities</h3>
+        <p>Through the SunSeed Foundation, we leverage our design and MRO expertise to fund, design, and construct standalone microgrids and battery storage setups for rural boarding schools in East Malaysia. These sites previously relied entirely on loud, carbon-heavy diesel generators.</p>
+        <blockquote>"Energy access is the first step toward vocational opportunity. A solar microgrid provides consistent electricity, lighting, and computing labs for remote schools."</blockquote>
+        <h3>Sustaining the Sprout</h3>
+        <p>Our commitment extends beyond installation. We grant academic scholarships to outstanding vocational students, teaching them active solar maintenance, diagnostic telemetry reading, and local battery troubleshooting. This creates a sustainable local human capital ecosystem.</p>
+      </>
+    )
+  },
+  {
+    id: 'zero-harm-civil',
+    tag: 'Civil & Refurbishment MRO',
+    title: 'Zero-Harm Engineering: Scaffolding Quality & Controlled Refurbishment',
+    desc: 'Analyzing zero-noise, dust-controlled operations, industrial scaffolding modular tagging, and CIDB G7 quality controls on active multi-national construction zones.',
+    image: '/img-blog-demolition.png',
+    date: 'April 15, 2026',
+    author: 'Muhammad Haris, Senior Construction Manager',
+    content: (
+      <>
+        <p>Operating inside busy commercial plant facilities demands surgical precision. Industrial refurbishment MRO and mechanical piping upgrades must cause zero interference to active operations and zero risk to plant personnel.</p>
+        <h3>Modular Scaffolding Safety</h3>
+        <p>We implement DOSH-compliant modular scaffolding systems that use a color-coded green-and-red tagging protocol. A green tag means a certified inspector has cleared the scaffold for load-bearing operations, while a red tag stops access, ensuring complete risk mitigation.</p>
+        <blockquote>"In industrial plants, civil engineering is a matter of strict discipline. Noise, dust, and vibrations must be controlled at the source."</blockquote>
+        <h3>Controlled Demolition and Civil MRO</h3>
+        <p>Our specialized teams perform MRO refits utilizing silent, hydraulic crushing gear rather than standard jackhammers. This prevents structural vibration fatigue on neighboring structures and minimizes operational downtime for our corporate partners.</p>
+      </>
+    )
+  }
+];
+
 export default function Home() {
   const activeChoice: string = 'industrial';
+  const [activePill, setActivePill] = useState<string>('academy');
+  const [activeBlog, setActiveBlog] = useState<BlogPost | null>(null);
+
+  useEffect(() => {
+    if (activeBlog) {
+      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('no-scroll');
+    }
+    return () => {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('no-scroll');
+    };
+  }, [activeBlog]);
   
 
 
@@ -247,6 +377,276 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SunSeed Showcase Section */}
+      <section className="sunseed-showcase-section reveal blueprint-grid-light">
+        <div className="container sunseed-showcase-container-layout">
+          
+          {/* Header section split into Left and Right */}
+          <div className="sunseed-showcase-header-grid">
+            <div className="sunseed-showcase-branding">
+              <div className="sunseed-title-wings"></div>
+              <h2 className="showcase-brand-title">SunSeed</h2>
+            </div>
+            <div className="sunseed-showcase-slogan-desc">
+              <h3 className="showcase-slogan">
+                Nurtured. Connected. Sustainable.
+              </h3>
+              <p className="showcase-desc">
+                Operating as one unified ecosystem guided by purpose, empowered by people, and built with the agility to evolve and succeed across industrial engineering and clean energy challenges.
+              </p>
+            </div>
+          </div>
+
+          {/* Central Mascot & Pill Buttons Panel (spans full-width below the header) */}
+          <div className="sunseed-mascot-ecosystem">
+              {/* Floating Holographic Leaf Elements */}
+              <div className="floating-hologram-wrapper float-left-top">
+                <svg viewBox="0 0 100 100" width="45" height="45" style={{ fill: '#22c55e', filter: 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.5))', opacity: 0.5 }}>
+                  <path d="M 50 10 C 25 35, 20 60, 50 85 C 80 60, 75 35, 50 10 Z" />
+                </svg>
+              </div>
+              <div className="floating-hologram-wrapper float-right-bottom">
+                <svg viewBox="0 0 100 100" width="40" height="40" style={{ fill: '#ffd875', filter: 'drop-shadow(0 0 8px rgba(255, 216, 117, 0.5))', opacity: 0.4 }}>
+                  <path d="M 50 20 C 35 40, 30 60, 50 80 C 70 60, 65 40, 50 20 Z" />
+                </svg>
+              </div>
+
+              {/* Full-width absolute SVG for connector paths */}
+              <svg viewBox="0 0 1100 450" className="sunseed-connectors-svg">
+                <defs>
+                  <filter id="neonSunGlowHome" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+
+                {/* Connector lines from pills to central core */}
+                <g>
+                  {/* Left Column connectors (Academy, Talent, Foundation) */}
+                  <path d="M 240 75 C 370 75, 410 160, 460 160" className={`connector-path ${activePill === 'academy' ? 'active-gold' : ''}`} />
+                  <path d="M 240 225 H 460" className={`connector-path ${activePill === 'talent' ? 'active-blue' : ''}`} />
+                  <path d="M 240 375 C 370 375, 410 290, 460 290" className={`connector-path ${activePill === 'foundation' ? 'active-green' : ''}`} />
+
+                  {/* Right Column connectors (Nurturing, Potential, Sustainability) */}
+                  <path d="M 860 75 C 730 75, 690 160, 640 160" className={`connector-path ${activePill === 'nurturing' ? 'active-yellow' : ''}`} />
+                  <path d="M 860 225 H 640" className={`connector-path ${activePill === 'potential' ? 'active-red' : ''}`} />
+                  <path d="M 860 375 C 730 375, 690 290, 640 290" className={`connector-path ${activePill === 'sustainability' ? 'active-emerald' : ''}`} />
+                </g>
+
+                {/* Pulsing endpoint contact indicator dots */}
+                <circle cx="240" cy="75" r="3.5" fill="#ffad01" style={{ opacity: activePill === 'academy' ? 1 : 0.4 }} className={activePill === 'academy' ? 'active-pulse-dot-gold' : ''} />
+                <circle cx="240" cy="225" r="3.5" fill="#38bdf8" style={{ opacity: activePill === 'talent' ? 1 : 0.4 }} className={activePill === 'talent' ? 'active-pulse-dot-blue' : ''} />
+                <circle cx="240" cy="375" r="3.5" fill="#22c55e" style={{ opacity: activePill === 'foundation' ? 1 : 0.4 }} className={activePill === 'foundation' ? 'active-pulse-dot-green' : ''} />
+                
+                <circle cx="860" cy="75" r="3.5" fill="#ffd875" style={{ opacity: activePill === 'nurturing' ? 1 : 0.4 }} className={activePill === 'nurturing' ? 'active-pulse-dot-gold' : ''} />
+                <circle cx="860" cy="225" r="3.5" fill="#f43f5e" style={{ opacity: activePill === 'potential' ? 1 : 0.4 }} className={activePill === 'potential' ? 'active-pulse-dot-red' : ''} />
+                <circle cx="860" cy="375" r="3.5" fill="#10b981" style={{ opacity: activePill === 'sustainability' ? 1 : 0.4 }} className={activePill === 'sustainability' ? 'active-pulse-dot-green' : ''} />
+
+                {/* Central Core Dial Contact Anchors */}
+                <circle cx="460" cy="160" r="3.5" fill="#ffad01" style={{ opacity: activePill === 'academy' ? 1 : 0.2 }} />
+                <circle cx="460" cy="225" r="3.5" fill="#38bdf8" style={{ opacity: activePill === 'talent' ? 1 : 0.2 }} />
+                <circle cx="460" cy="290" r="3.5" fill="#22c55e" style={{ opacity: activePill === 'foundation' ? 1 : 0.2 }} />
+                <circle cx="640" cy="160" r="3.5" fill="#ffd875" style={{ opacity: activePill === 'nurturing' ? 1 : 0.2 }} />
+                <circle cx="640" cy="225" r="3.5" fill="#f43f5e" style={{ opacity: activePill === 'potential' ? 1 : 0.2 }} />
+                <circle cx="640" cy="290" r="3.5" fill="#10b981" style={{ opacity: activePill === 'sustainability' ? 1 : 0.2 }} />
+
+                {/* Active traveling laser particle dot */}
+                {activePill === 'academy' && (
+                  <circle r="4.5" fill="#ffad01" filter="url(#neonSunGlowHome)">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 75 C 370 75, 410 160, 460 160" />
+                  </circle>
+                )}
+                {activePill === 'talent' && (
+                  <circle r="4.5" fill="#38bdf8" filter="url(#neonSunGlowHome)">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 225 H 460" />
+                  </circle>
+                )}
+                {activePill === 'foundation' && (
+                  <circle r="4.5" fill="#22c55e" filter="url(#neonSunGlowHome)">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 375 C 370 375, 410 290, 460 290" />
+                  </circle>
+                )}
+                {activePill === 'nurturing' && (
+                  <circle r="4.5" fill="#ffd875" filter="url(#neonSunGlowHome)">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 75 C 730 75, 690 160, 640 160" />
+                  </circle>
+                )}
+                {activePill === 'potential' && (
+                  <circle r="4.5" fill="#f43f5e" filter="url(#neonSunGlowHome)">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 225 H 640" />
+                  </circle>
+                )}
+                {activePill === 'sustainability' && (
+                  <circle r="4.5" fill="#10b981" filter="url(#neonSunGlowHome)">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 375 C 730 375, 690 290, 640 290" />
+                  </circle>
+                )}
+              </svg>
+              
+              {/* Left Column Pills */}
+              <div className="mascot-pills-col col-left">
+                <button 
+                  className={`mascot-pill-btn glass pill-academy ${activePill === 'academy' ? 'active-pill' : ''}`}
+                  onClick={() => setActivePill('academy')}
+                >
+                  <span className="pill-dot" style={{ backgroundColor: '#ffad01' }}></span>
+                  Academy
+                </button>
+                <button 
+                  className={`mascot-pill-btn glass pill-talent ${activePill === 'talent' ? 'active-pill' : ''}`}
+                  onClick={() => setActivePill('talent')}
+                >
+                  <span className="pill-dot" style={{ backgroundColor: '#38bdf8' }}></span>
+                  Talent Program
+                </button>
+                <button 
+                  className={`mascot-pill-btn glass pill-foundation ${activePill === 'foundation' ? 'active-pill' : ''}`}
+                  onClick={() => setActivePill('foundation')}
+                >
+                  <span className="pill-dot" style={{ backgroundColor: '#22c55e' }}></span>
+                  Foundation
+                </button>
+              </div>
+
+              {/* Center 3D Layered Sun Core with flat background rings */}
+              <div className="mascot-wireframe-container">
+                <div className="wireframe-solar-backdrop"></div>
+                {/* Flat background rotating rings */}
+                <svg viewBox="0 0 400 400" className="wireframe-sun-svg" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                  <circle cx="200" cy="200" r="95" stroke="rgba(184, 134, 11, 0.15)" strokeWidth="1.2" strokeDasharray="3 4" fill="none" className="sunseed-ring-slow" />
+                  <circle cx="200" cy="200" r="125" stroke="rgba(56, 189, 248, 0.12)" strokeWidth="1.2" strokeDasharray="5 7" fill="none" className="sunseed-ring-reverse" />
+                  <circle cx="200" cy="200" r="65" stroke="rgba(184, 134, 11, 0.08)" strokeWidth="0.75" fill="none" />
+                </svg>
+
+                {/* 3D Extruded Sun Core */}
+                <div className="sun-3d-container">
+                  <div className="sun-3d-shield">
+                    {[...Array(8)].map((_, i) => {
+                      const isFront = i === 7;
+                      return (
+                        <svg
+                          key={`sun-layer-home-${i}`}
+                          viewBox="0 0 400 400"
+                          className={`sun-3d-layer-svg ${isFront ? 'sun-layer-front' : 'sun-layer-edge'}`}
+                          style={{ '--layer-index': i } as React.CSSProperties}
+                        >
+                          {i === 0 && (
+                            <defs>
+                              <filter id="neonSunGlowInner" x="-30%" y="-30%" width="160%" height="160%">
+                                <feGaussianBlur stdDeviation="4" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                              </filter>
+                            </defs>
+                          )}
+                          <circle
+                            cx="200"
+                            cy="200"
+                            r="45"
+                            fill={isFront ? "rgba(255, 173, 1, 0.08)" : "rgba(184, 134, 11, 0.12)"}
+                            stroke={isFront ? "var(--secondary)" : "rgba(184, 134, 11, 0.45)"}
+                            strokeWidth="1.2"
+                          />
+                          <g className="sunseed-corona-rays">
+                            {[...Array(16)].map((_, idx) => {
+                              const angle = (idx * 22.5 * Math.PI) / 180;
+                              const rStart = 45;
+                              const rEnd = 60;
+                              const x1 = 200 + rStart * Math.cos(angle);
+                              const y1 = 200 + rStart * Math.sin(angle);
+                              const x2 = 200 + rEnd * Math.cos(angle);
+                              const y2 = 200 + rEnd * Math.sin(angle);
+                              return (
+                                <line
+                                  key={`home-ray-${i}-${idx}`}
+                                  x1={x1}
+                                  y1={y1}
+                                  x2={x2}
+                                  y2={y2}
+                                  stroke={isFront ? "var(--secondary)" : "rgba(184, 134, 11, 0.45)"}
+                                  strokeWidth="1.8"
+                                  strokeLinecap="round"
+                                  opacity={isFront ? 0.95 : 0.55}
+                                  filter={isFront ? "url(#neonSunGlowInner)" : undefined}
+                                  className="corona-ray"
+                                />
+                              );
+                            })}
+                          </g>
+                          <g transform="translate(180, 175) scale(0.85)">
+                            <path
+                              d="M 23 55 C 23 40, 20 28, 23 20"
+                              stroke={isFront ? "#22c55e" : "#166534"}
+                              strokeWidth="3.8"
+                              strokeLinecap="round"
+                              fill="none"
+                            />
+                            <path
+                              d="M 21 28 C 5 20, 3 5, 20 18 Z"
+                              fill={isFront ? "#22c55e" : "#14532d"}
+                              opacity={isFront ? 0.95 : 0.6}
+                            />
+                            <path
+                              d="M 23 24 C 38 14, 40 0, 25 15 Z"
+                              fill={isFront ? "#22c55e" : "#14532d"}
+                              opacity={isFront ? 0.95 : 0.6}
+                            />
+                          </g>
+                        </svg>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column Pills */}
+              <div className="mascot-pills-col col-right">
+                <button 
+                  className={`mascot-pill-btn glass pill-nurturing ${activePill === 'nurturing' ? 'active-pill' : ''}`}
+                  onClick={() => setActivePill('nurturing')}
+                >
+                  <span className="pill-dot" style={{ backgroundColor: '#ffd875' }}></span>
+                  Nurturing Growth
+                </button>
+                <button 
+                  className={`mascot-pill-btn glass pill-potential ${activePill === 'potential' ? 'active-pill' : ''}`}
+                  onClick={() => setActivePill('potential')}
+                >
+                  <span className="pill-dot" style={{ backgroundColor: '#f43f5e' }}></span>
+                  Latent Potential
+                </button>
+                <button 
+                  className={`mascot-pill-btn glass pill-sustainability ${activePill === 'sustainability' ? 'active-pill' : ''}`}
+                  onClick={() => setActivePill('sustainability')}
+                >
+                  <span className="pill-dot" style={{ backgroundColor: '#10b981' }}></span>
+                  Sustainability
+                </button>
+              </div>
+            </div>
+
+          {/* Dynamic details readout console */}
+          <div className="showcase-details-panel blueprint-panel brackets-tl-br" style={{ borderColor: `${SUNSEED_PILL_DETAILS[activePill].iconColor}33` }}>
+            <div className="details-panel-header">
+              <span className="details-panel-badge" style={{ color: SUNSEED_PILL_DETAILS[activePill].iconColor, borderColor: `${SUNSEED_PILL_DETAILS[activePill].iconColor}33` }}>
+                {SUNSEED_PILL_DETAILS[activePill].subtitle.toUpperCase()}
+              </span>
+              <h4 className="details-panel-title">{SUNSEED_PILL_DETAILS[activePill].title}</h4>
+            </div>
+            <p className="details-panel-desc">{SUNSEED_PILL_DETAILS[activePill].desc}</p>
+            <div className="details-panel-action-row">
+              <div className="telemetry-indicator-row">
+                <span className="hud-pulse" style={{ backgroundColor: SUNSEED_PILL_DETAILS[activePill].iconColor, boxShadow: `0 0 10px ${SUNSEED_PILL_DETAILS[activePill].iconColor}` }}></span>
+                <span className="telemetry-status-text">SYSTEM CORE: ONLINE // COMPLIANT</span>
+              </div>
+              <a href="#/sunseed" className="btn btn-primary nav-cta-btn" style={{ padding: '0.5rem 1.25rem', fontSize: '0.8rem' }}>
+                Open Interactive Console
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* Page Navigation Highlights Section (Premium Card Directory) */}
       <section className="section reveal">
         <div className="container">
@@ -326,6 +726,141 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Careers Promo Section */}
+      <section className="careers-promo-section blueprint-grid-light reveal">
+        <div className="container">
+          <div className="careers-grid">
+            
+            {/* Left Card: Team Image Visualizer with border-beam and tilt effect */}
+            <div 
+              className="careers-img-wrapper border-beam-card tilt-card"
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              style={{ '--i': 0 } as React.CSSProperties}
+            >
+              <img src="/img-careers.png" alt="Suria Dirgahayu Team Collaboration" className="careers-img" />
+            </div>
+
+            {/* Right Card: Content Panel */}
+            <div className="careers-content-panel blueprint-panel brackets-tl-br">
+              <div className="badge careers-title-badge animate-glow">
+                <span className="badge-dot"></span>
+                JOIN OUR ENGINEERING ELITE
+              </div>
+              <h2 className="careers-heading">
+                Build Your Career with <br />
+                <span className="gradient-text">Suria Dirgahayu</span>
+              </h2>
+              <p className="careers-desc">
+                At Suria Dirgahayu, we believe human potential is our most vital asset. We cultivate a culture of safety, technical mastery, and shared growth—empowering ST-certified wiremen, mechanical specialists, and renewable energy innovators to lead major clean energy and MRO operations across Malaysia.
+              </p>
+
+              {/* Perks List */}
+              <div className="careers-perks-list">
+                <div className="careers-perk-item">
+                  <div className="careers-perk-icon">
+                    <TrophyIcon size={18} />
+                  </div>
+                  <div className="careers-perk-meta">
+                    <h4 className="careers-perk-title">ST Competency Pathways</h4>
+                    <p className="careers-perk-desc">Direct corporate support for professional Wireman licensing, DOSH rigging training, and CIDB certifications.</p>
+                  </div>
+                </div>
+
+                <div className="careers-perk-item">
+                  <div className="careers-perk-icon">
+                    <ShieldIcon size={18} />
+                  </div>
+                  <div className="careers-perk-meta">
+                    <h4 className="careers-perk-title">Zero-Harm Safety Standards</h4>
+                    <p className="careers-perk-desc">Class-A safety execution, standard medical audits, and top-tier accommodation standards for industrial sites.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <a href="#/contact?subject=careers" className="btn btn-primary nav-cta-btn">
+                Explore Open Careers <ChevronRightIcon size={18} style={{ marginLeft: '4px' }} />
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* News & Blogs Section */}
+      <section className="blog-section blueprint-grid-light reveal">
+        <div className="container">
+          <div className="section-header blueprint-panel brackets-tl-br" style={{ marginBottom: '4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
+            <div>
+              <div className="badge animate-glow" style={{ marginBottom: '0.75rem' }}>
+                <span className="badge-dot"></span>
+                INSIGHTS & LATEST NEWS
+              </div>
+              <h2 className="section-title" style={{ fontSize: '2.5rem' }}>News and Blogs</h2>
+              <p className="section-subtitle" style={{ margin: '0.5rem 0 0 0', maxWidth: '700px' }}>
+                Stay updated with our research papers, engineering compliance diagnostics, and corporate social responsibility (CSR) microgrid benchmarks.
+              </p>
+            </div>
+            <div>
+              <a href="#/journey" className="btn btn-secondary" style={{ padding: '0.75rem 1.75rem', fontSize: '0.88rem' }}>
+                More Insights
+              </a>
+            </div>
+          </div>
+
+          <div className="blog-grid">
+            {BLOG_POSTS.map((post, idx) => (
+              <div
+                key={post.id}
+                className="blog-card border-beam-card tilt-card"
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
+                onClick={() => setActiveBlog(post)}
+                style={{ '--i': idx } as React.CSSProperties}
+              >
+                <div className="blog-card-img-wrap">
+                  <img src={post.image} alt={post.title} className="blog-card-img" />
+                </div>
+                <div className="blog-card-content">
+                  <span className="blog-card-tag">{post.tag}</span>
+                  <h3 className="blog-card-title">{post.title}</h3>
+                  <p className="blog-card-desc">{post.desc}</p>
+                  <span className="blog-card-action">
+                    Read Insight <ChevronRightIcon size={14} />
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Classy Modal Reader Overlay */}
+      {activeBlog && createPortal(
+        <div className="blog-modal-overlay" onClick={() => setActiveBlog(null)}>
+          <div className="blog-modal-container blueprint-panel brackets-tl-br" onClick={(e) => e.stopPropagation()}>
+            <button className="blog-modal-close-btn" onClick={() => setActiveBlog(null)} aria-label="Close Modal">
+              ✕
+            </button>
+            <div className="blog-modal-header">
+              <span className="blog-modal-tag">{activeBlog.tag}</span>
+              <h2 className="blog-modal-title">{activeBlog.title}</h2>
+              <div className="blog-modal-meta">
+                <span>By {activeBlog.author}</span> • <span>{activeBlog.date}</span>
+              </div>
+            </div>
+            <div className="blog-modal-body">
+              <div style={{ width: '100%', aspectRatio: '1.8', borderRadius: 'var(--radius-sm)', overflow: 'hidden', marginBottom: '2rem', border: '1px solid var(--border-color)' }}>
+                <img src={activeBlog.image} alt={activeBlog.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              {activeBlog.content}
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

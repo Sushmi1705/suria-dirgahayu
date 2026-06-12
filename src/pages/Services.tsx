@@ -121,10 +121,8 @@ export default function Services({
 
             {/* Active Details Card */}
             <div 
-              className={`service-details-card glass-spotlight spotlight-border tilt-card border-beam-card ${serviceTransitioning ? 'transition-hidden' : ''}`} 
+              className={`service-details-card glass-spotlight spotlight-border border-beam-card ${serviceTransitioning ? 'transition-hidden' : ''}`} 
               style={{ borderLeft: '4px solid var(--secondary)' }}
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
             >
               {/* Technical Blueprint Corner Crosshairs */}
               <div className="blueprint-crosshair crosshair-tl"></div>
@@ -151,18 +149,7 @@ export default function Services({
               
               <div className="capabilities-checklist-wrap" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '2.5rem' }}>
                 <h4 style={{ marginBottom: '1.5rem', fontWeight: 800, letterSpacing: '0.02em', color: 'var(--text-main)' }}>Key Deliverables &amp; Focus Area:</h4>
-                <div style={{ display: 'grid', gridTemplateColumns: activeServiceDetails.image ? '1.2fr 0.8fr' : '1fr', gap: '2.5rem', alignItems: 'start' }}>
-                  <ul className="capabilities-list">
-                    {activeServiceDetails.capabilities.map((cap, i) => (
-                      <li key={i} className="capability-item" style={{ '--i': i } as React.CSSProperties}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                          <span className="capability-index">0{i + 1}</span>
-                          <span className="capability-text">{cap}</span>
-                        </div>
-                        <ChevronRightIcon size={16} className="capability-chevron gold-text flex-shrink-0" />
-                      </li>
-                    ))}
-                  </ul>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
                   
                   {activeServiceDetails.image && (
                     <div 
@@ -173,7 +160,9 @@ export default function Services({
                         border: '1px solid var(--border-color)',
                         boxShadow: 'var(--shadow-md)',
                         position: 'relative',
-                        aspectRatio: '4/3',
+                        width: '100%',
+                        aspectRatio: '16/7',
+                        maxHeight: '320px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -185,13 +174,24 @@ export default function Services({
                         style={{ 
                           width: '100%', 
                           height: '100%', 
-                          objectFit: 'cover',
-                          transition: 'transform var(--transition-normal)'
+                          objectFit: 'cover'
                         }}
                         className="service-showcase-img"
                       />
                     </div>
                   )}
+
+                  <ul className="capabilities-list">
+                    {activeServiceDetails.capabilities.map((cap, i) => (
+                      <li key={i} className="capability-item" style={{ '--i': i } as React.CSSProperties}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                          <span className="capability-index">0{i + 1}</span>
+                          <span className="capability-text">{cap}</span>
+                        </div>
+                        <ChevronRightIcon size={16} className="capability-chevron gold-text flex-shrink-0" />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
