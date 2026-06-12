@@ -403,17 +403,14 @@
 .reveal {
   opacity: 0;
   transform: translateY(18px);
-  filter: blur(4px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity, filter;
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
 .reveal-active {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
 }
 
 /* Staggered card/timeline element entry upon parent intersection */
@@ -3668,6 +3665,9 @@ select.floating-input ~ .floating-label {
   height: 100vh;
   pointer-events: none;
   z-index: 1; /* Above blobs, below content panels */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 /* Page Intro Header Styling */
@@ -4418,6 +4418,7 @@ select.floating-input ~ .floating-label {
   position: absolute;
   inset: 0;
   width: 100%;
+  will-change: transform;
   height: 100%;
 }
 

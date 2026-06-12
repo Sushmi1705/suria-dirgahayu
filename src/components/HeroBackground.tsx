@@ -37,6 +37,9 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
     <div className="hero-bg-vfx">
       {/* Self-contained CSS animations to keep App.css clean and maintain high-fidelity VFX */}
       <style>{`
+        .hero-bg-vfx {
+          will-change: transform;
+        }
         .hero-bg-image {
           position: absolute;
           inset: 0;
@@ -49,6 +52,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
           mix-blend-mode: multiply;
           pointer-events: none;
           transition: opacity var(--transition-normal), filter var(--transition-normal);
+          will-change: transform, opacity, filter;
         }
         [data-theme="dark"] .hero-bg-image {
           opacity: 0.65; /* Rich gold depth in dark theme */
@@ -91,6 +95,11 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
           border-radius: 50%;
           box-shadow: 0 0 8px 1px rgba(255, 173, 1, 0.4);
           animation: float-up-drift linear infinite;
+          will-change: transform, opacity;
+        }
+        .gold-glow-effect {
+          filter: drop-shadow(0 0 6px rgba(255, 173, 1, 0.85)) drop-shadow(0 0 12px rgba(255, 173, 1, 0.4));
+          will-change: filter, transform;
         }
         @keyframes float-up-drift {
           0% {
@@ -120,27 +129,35 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
         }
         .gear-cw {
           animation: bg-rotate-cw 40s linear infinite;
+          will-change: transform;
         }
         .gear-ccw {
           animation: bg-rotate-ccw 45s linear infinite;
+          will-change: transform;
         }
         .gear-fast-cw {
           animation: bg-rotate-cw 22s linear infinite;
+          will-change: transform;
         }
         .gear-fast-ccw {
           animation: bg-rotate-ccw 26s linear infinite;
+          will-change: transform;
         }
         .turbine-blades {
           animation: bg-rotate-cw 8s linear infinite;
+          will-change: transform;
         }
         .turbine-blades-slow {
           animation: bg-rotate-cw 12s linear infinite;
+          will-change: transform;
         }
         .radar-sweep {
           animation: bg-rotate-cw 5.5s linear infinite;
+          will-change: transform;
         }
         .solar-rays-spin {
           animation: bg-rotate-cw 90s linear infinite;
+          will-change: transform;
         }
         
         /* Pulse node animation */
@@ -170,12 +187,12 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
         @keyframes eq-scale-5 { 0%, 100% { transform: scaleY(0.48); } 50% { transform: scaleY(0.6); } }
         @keyframes eq-scale-6 { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1.0); } }
         
-        .eq-bar-1 { animation: eq-scale-1 1.3s ease-in-out infinite; transform-origin: bottom; }
-        .eq-bar-2 { animation: eq-scale-2 0.9s ease-in-out infinite; transform-origin: bottom; }
-        .eq-bar-3 { animation: eq-scale-3 1.6s ease-in-out infinite; transform-origin: bottom; }
-        .eq-bar-4 { animation: eq-scale-4 1.1s ease-in-out infinite; transform-origin: bottom; }
-        .eq-bar-5 { animation: eq-scale-5 1.4s ease-in-out infinite; transform-origin: bottom; }
-        .eq-bar-6 { animation: eq-scale-6 0.8s ease-in-out infinite; transform-origin: bottom; }
+        .eq-bar-1 { animation: eq-scale-1 1.3s ease-in-out infinite; transform-origin: bottom; will-change: transform; }
+        .eq-bar-2 { animation: eq-scale-2 0.9s ease-in-out infinite; transform-origin: bottom; will-change: transform; }
+        .eq-bar-3 { animation: eq-scale-3 1.6s ease-in-out infinite; transform-origin: bottom; will-change: transform; }
+        .eq-bar-4 { animation: eq-scale-4 1.1s ease-in-out infinite; transform-origin: bottom; will-change: transform; }
+        .eq-bar-5 { animation: eq-scale-5 1.4s ease-in-out infinite; transform-origin: bottom; will-change: transform; }
+        .eq-bar-6 { animation: eq-scale-6 0.8s ease-in-out infinite; transform-origin: bottom; will-change: transform; }
 
         /* Floating Technical coordinates */
         @keyframes tech-bob {
@@ -184,10 +201,12 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
         }
         .tech-bob-group {
           animation: tech-bob 6s ease-in-out infinite;
+          will-change: transform;
         }
         .tech-bob-group-delayed {
           animation: tech-bob 7.5s ease-in-out infinite;
           animation-delay: 2.2s;
+          will-change: transform;
         }
       `}</style>
 
@@ -210,17 +229,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
             <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0.05" />
           </linearGradient>
 
-          {/* Glow Filter */}
-          <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="5.5" result="blur" />
-            <feComponentTransfer in="blur" result="boost">
-              <feFuncA type="linear" slope="2.0"/>
-            </feComponentTransfer>
-            <feMerge>
-              <feMergeNode in="boost" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
+          {/* SVG Glow Filter removed in favor of GPU-accelerated CSS drop-shadow class */}
         </defs>
       </svg>
 
@@ -275,7 +284,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
               </g>
 
               {/* Orbital Nodes revolving along paths */}
-              <g fill="#ffd700" filter="url(#goldGlow)">
+              <g fill="#ffd700" className="gold-glow-effect">
                 {/* Node on orbit 1 path */}
                 <circle r="5.5" className="breath-node">
                   <animateMotion dur="24s" repeatCount="indefinite" path="M 140 300 A 360 120 -15 1 1 860 300 A 360 120 -15 1 1 140 300" />
@@ -288,7 +297,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
 
               {/* Central Premium 3D-feeling Sun Core */}
               <g>
-                <circle cx="500" cy="300" r="40" fill="url(#goldGrad)" filter="url(#goldGlow)" />
+                <circle cx="500" cy="300" r="40" fill="url(#goldGrad)" className="gold-glow-effect" />
                 <circle cx="500" cy="300" r="48" stroke="var(--secondary)" strokeWidth="1" strokeDasharray="6,12" className="gear-cw" style={{ transformOrigin: '500px 300px' }} />
                 <circle cx="500" cy="300" r="54" stroke="rgba(255, 173, 1, 0.4)" strokeWidth="0.8" strokeDasharray="3,6" className="gear-ccw" style={{ transformOrigin: '500px 300px' }} />
               </g>
@@ -429,7 +438,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
               </g>
 
               {/* Glowing Active Energy Laser Pulses running along lines */}
-              <g stroke="var(--secondary)" strokeWidth="2.5" strokeLinecap="round" filter="url(#goldGlow)">
+              <g stroke="var(--secondary)" strokeWidth="2.5" strokeLinecap="round" className="gold-glow-effect">
                 {/* Pulse A -> B */}
                 <line x1="160" y1="180" x2="400" y2="140" strokeDasharray="30, 260">
                   <animate attributeName="stroke-dashoffset" values="290;0" dur="4s" repeatCount="indefinite" />
@@ -559,7 +568,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
               {/* Fading Sweep radar block using rotated elements */}
               <g className="radar-sweep" style={{ transformOrigin: '700px 300px' }}>
                 {/* Main pointer line */}
-                <line x1="700" y1="300" x2="930" y2="300" stroke="var(--secondary)" strokeWidth="1.8" filter="url(#goldGlow)" />
+                <line x1="700" y1="300" x2="930" y2="300" stroke="var(--secondary)" strokeWidth="1.8" className="gold-glow-effect" />
                 {/* Sweep trails (fading lines) */}
                 <line x1="700" y1="300" x2="929" y2="288" stroke="var(--secondary)" strokeWidth="1.5" opacity="0.6" transform="rotate(-3 700 300)" />
                 <line x1="700" y1="300" x2="926" y2="276" stroke="var(--secondary)" strokeWidth="1.2" opacity="0.4" transform="rotate(-6 700 300)" />
@@ -620,7 +629,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
               </g>
 
               {/* Breathing timeline nodes */}
-              <g fill="var(--bg-secondary)" stroke="var(--secondary)" strokeWidth="3" filter="url(#goldGlow)">
+              <g fill="var(--bg-secondary)" stroke="var(--secondary)" strokeWidth="3" className="gold-glow-effect">
                 <circle cx="175" cy="205" r="7.5" className="pulse-node" />
                 <circle cx="300" cy="300" r="5" />
                 <circle cx="425" cy="395" r="7.5" className="pulse-node" />
@@ -655,7 +664,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
           {page === 'contact' && (
             <svg className="animated-bg-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" fill="none">
               {/* Corner tech bracing frames */}
-              <g stroke="var(--secondary)" strokeWidth="1.5" filter="url(#goldGlow)">
+              <g stroke="var(--secondary)" strokeWidth="1.5" className="gold-glow-effect">
                 <path d="M 60 80 H 130 M 60 80 V 150" />
                 <path d="M 940 80 H 870 M 940 80 V 150" />
                 <path d="M 60 520 H 130 M 60 520 V 450" />
