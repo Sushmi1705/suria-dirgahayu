@@ -36,7 +36,7 @@ export const SERVICES_DATA: Service[] = [
       'Controlled Demolition & Structural Upgrades'
     ],
     icon: WrenchIcon,
-    image: '/img-civil.jpg'
+    image: '/img-hero.jpg'
   },
   {
     id: 'cx-outsourcing',
@@ -51,7 +51,7 @@ export const SERVICES_DATA: Service[] = [
       'Customer Retention & Credit Support'
     ],
     icon: UsersIcon,
-    image: '/img-team.jpg'
+    image: '/img-mro-alignment.jpg'
   },
   {
     id: 'digital-enablement',
@@ -66,7 +66,7 @@ export const SERVICES_DATA: Service[] = [
       'Branding & Digital Marketing Materials'
     ],
     icon: LaptopIcon,
-    image: '/img-electrical.jpg'
+    image: '/img-blog-solar.png'
   },
 
   // --- SUB-SERVICES FOR ENGINEERING ---
@@ -84,7 +84,7 @@ export const SERVICES_DATA: Service[] = [
       'Site Preparation & Earthworks'
     ],
     icon: HammerIcon,
-    image: '/img-civil.jpg'
+    image: '/img-demolition.jpg'
   },
   {
     id: 'interior-design',
@@ -118,7 +118,7 @@ export const SERVICES_DATA: Service[] = [
       'IT Support & Maintenance Services'
     ],
     icon: LaptopIcon,
-    image: '/img-electrical.jpg'
+    image: '/hero-esg.png'
   },
   {
     id: 'ict-management',
@@ -134,7 +134,7 @@ export const SERVICES_DATA: Service[] = [
       'ICT Recruitment & Talent Sourcing'
     ],
     icon: NetworkIcon,
-    image: '/img-team.jpg'
+    image: '/hero-about.png'
   },
   {
     id: 'branding',
@@ -166,7 +166,7 @@ export const SERVICES_DATA: Service[] = [
       'On-site Workforce Management'
     ],
     icon: UsersIcon,
-    image: '/img-careers.png'
+    image: '/img-fabrication.jpg'
   },
   {
     id: 'hr-payroll',
@@ -182,7 +182,7 @@ export const SERVICES_DATA: Service[] = [
       'Employee Record Management'
     ],
     icon: BriefcaseIcon,
-    image: '/img-team.jpg'
+    image: '/hero-contact.png'
   },
   {
     id: 'debt-collection',
@@ -216,7 +216,7 @@ export const SERVICES_DATA: Service[] = [
       'Trademark Logo Preparation'
     ],
     icon: TrophyIcon,
-    image: '/img-blog-st.png'
+    image: '/hero-wizard.png'
   },
   {
     id: 'branding-collateral',
@@ -232,7 +232,7 @@ export const SERVICES_DATA: Service[] = [
       'Annual Reports & Print Layouts'
     ],
     icon: BriefcaseIcon,
-    image: '/img-careers.png'
+    image: '/hero-quality.png'
   },
   {
     id: 'branding-digital',
@@ -248,7 +248,7 @@ export const SERVICES_DATA: Service[] = [
       'Interactive Web Prototypes'
     ],
     icon: LaptopIcon,
-    image: '/img-blog-solar.png'
+    image: '/hero-journey.png'
   }
 ];
 

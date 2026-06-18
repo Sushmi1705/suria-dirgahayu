@@ -216,21 +216,21 @@ export default function Home({ handleSelectService }: HomeProps) {
                 title: 'Engineering',
                 desc: 'Innovative engineering solutions for complex challenges.',
                 icon: SERVICES_DATA.find(s => s.id === 'engineering')!.icon,
-                image: '/img-civil.jpg'
+                image: '/img-hero.jpg'
               },
               {
                 id: 'cx-outsourcing',
                 title: 'Customer Experience (CX) Outsourcing',
                 desc: 'Elevate your brand with world-class CX services.',
                 icon: SERVICES_DATA.find(s => s.id === 'cx-outsourcing')!.icon,
-                image: '/img-team.jpg'
+                image: '/img-mro-alignment.jpg'
               },
               {
                 id: 'digital-enablement',
                 title: 'Digital Enablement',
                 desc: 'Accelerate your digital transformation journey.',
                 icon: SERVICES_DATA.find(s => s.id === 'digital-enablement')!.icon,
-                image: '/img-electrical.jpg'
+                image: '/img-blog-solar.png'
               }
             ].map((b, index) => {
               const Icon = b.icon;

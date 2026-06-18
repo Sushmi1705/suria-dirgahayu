@@ -640,7 +640,7 @@ export default function Home() {
               style={{ '--i': 1, display: 'flex', flexDirection: 'column' } as React.CSSProperties}
             >
               <div style={{ height: '160px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', marginBottom: '1.5rem', border: '1px solid var(--border-color)', position: 'relative' }}>
-                <img src="/img-team.jpg" alt="ESG Commitments" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src="/img-welding.jpg" alt="ESG Commitments" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div className="value-icon-wrap" style={{ position: 'absolute', bottom: '10px', left: '10px', margin: 0, width: '40px', height: '40px' }}>
                   <GlobeIcon size={20} />
                 </div>
