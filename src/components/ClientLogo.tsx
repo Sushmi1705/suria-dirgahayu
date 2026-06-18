@@ -151,6 +151,71 @@ export default function ClientLogo({ id, className = '', height = 36 }: ClientLo
           <text x="62" y="48" fontFamily="var(--font-sans)" fontWeight="400" fontSize="22" className="brand-dark-fill" letterSpacing="3">JW MARRIOTT</text>
         </svg>
       );
+    case 'simedarby':
+      return (
+        <svg viewBox="0 0 200 200" style={svgStyle} className={`client-logo-svg ${className}`}>
+          <defs>
+            <linearGradient id="sdShieldGrad" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ffa000" />
+              <stop offset="30%" stopColor="#ff3000" />
+              <stop offset="100%" stopColor="#b30000" />
+            </linearGradient>
+            <linearGradient id="sdInnerBorderGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="rgba(255, 215, 0, 0)" />
+              <stop offset="50%" stopColor="rgba(255, 215, 0, 0.3)" />
+              <stop offset="100%" stopColor="#ffd700" />
+            </linearGradient>
+          </defs>
+          {/* Shield cushion shape */}
+          <path 
+            d="M 60,25 Q 100,15 140,25 C 155,25 165,35 165,50 Q 172,85 165,120 C 165,135 155,145 140,145 Q 100,155 60,145 C 45,145 35,135 35,120 Q 28,85 35,50 C 35,35 45,25 60,25 Z" 
+            fill="url(#sdShieldGrad)" 
+          />
+          {/* Inner gold border highlight */}
+          <path 
+            d="M 60,25 Q 100,15 140,25 C 155,25 165,35 165,50 Q 172,85 165,120 C 165,135 155,145 140,145 Q 100,155 60,145 C 45,145 35,135 35,120 Q 28,85 35,50 C 35,35 45,25 60,25 Z" 
+            fill="none" 
+            stroke="url(#sdInnerBorderGrad)" 
+            strokeWidth="3.5" 
+            transform="translate(8, 6.8) scale(0.92)"
+          />
+          {/* Sime Darby text inside shield */}
+          <text x="100" y="75" fontFamily="var(--font-sans)" fontWeight="800" fontSize="40" fill="#ffffff" textAnchor="middle" letterSpacing="-1.5">Sime</text>
+          <text x="100" y="115" fontFamily="var(--font-sans)" fontWeight="800" fontSize="40" fill="#ffffff" textAnchor="middle" letterSpacing="-1.5">Darby</text>
+          {/* Property text below shield */}
+          <text x="100" y="182" fontFamily="var(--font-sans)" fontWeight="800" fontSize="28" className="brand-dark-fill" textAnchor="middle" letterSpacing="-0.5">Property</text>
+        </svg>
+      );
+    case 'kendek':
+      return (
+        <svg viewBox="0 0 200 200" style={svgStyle} className={`client-logo-svg ${className}`}>
+          {/* Concentric borders */}
+          {/* Outer blue circle */}
+          <circle cx="100" cy="90" r="62" stroke="#0038a8" strokeWidth="6" fill="none" />
+          {/* Inner red circle */}
+          <circle cx="100" cy="90" r="51" stroke="#dc2626" strokeWidth="3" fill="none" />
+          
+          {/* Monogram inside inner circle */}
+          {/* Middle vertical line */}
+          <line x1="101" y1="48" x2="101" y2="132" stroke="#0038a8" strokeWidth="8.5" strokeLinecap="round" />
+          {/* Right vertical line */}
+          <line x1="131" y1="48" x2="131" y2="132" stroke="#0038a8" strokeWidth="8.5" strokeLinecap="round" />
+          {/* Horizontal connector line */}
+          <line x1="101" y1="90" x2="131" y2="90" stroke="#0038a8" strokeWidth="8.5" />
+          {/* Left loop (elliptical arc to left, centered at 100) */}
+          <path d="M 101,48 A 31,42 0 0,0 101,132" fill="none" stroke="#0038a8" strokeWidth="8.5" strokeLinecap="round" />
+          
+          {/* TM Symbol */}
+          <text x="160" y="44" fontFamily="var(--font-sans)" fontWeight="800" fontSize="11" fill="#0038a8">TM</text>
+          
+          {/* Subtitles KIS and KDI */}
+          <text x="50" y="157" fontFamily="var(--font-sans)" fontWeight="800" fontSize="16" fill="#0038a8" textAnchor="end">KIS</text>
+          <text x="150" y="157" fontFamily="var(--font-sans)" fontWeight="800" fontSize="16" fill="#0038a8" textAnchor="start">KDI</text>
+          
+          {/* KENDEK main text underneath */}
+          <text x="100" y="193" fontFamily="var(--font-sans)" fontWeight="900" fontSize="30" fill="#0038a8" textAnchor="middle" letterSpacing="1">KENDEK</text>
+        </svg>
+      );
     default:
       return null;
   }

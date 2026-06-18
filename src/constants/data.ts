@@ -1,12 +1,12 @@
-import React from 'react';
 import {
-  BuildingIcon,
+  WrenchIcon,
   UsersIcon,
-  PaintbrushIcon,
-  DollarIcon,
   LaptopIcon,
+  HammerIcon,
+  PaintbrushIcon,
   NetworkIcon,
-  UserCheckIcon,
+  BriefcaseIcon,
+  DollarIcon,
   TrophyIcon
 } from '../components/Icons';
 
@@ -18,130 +18,240 @@ export interface Service {
   capabilities: string[];
   icon: React.ComponentType<{ size?: number; className?: string }>;
   image?: string;
+  parentId?: string;
 }
 
 export const SERVICES_DATA: Service[] = [
+  // --- ROOT DIVISIONS ---
   {
-    id: 'construction',
-    title: 'Construction Services',
-    shortDesc: 'End-to-end building and structural engineering solutions.',
-    description: 'Surya Dhirgahyu delivers high-quality construction services. From demolition and structural works to scaffolding, heavy machinery supply, and transportation haulage, we execute building and civil works to standard safety and quality norms.',
+    id: 'engineering',
+    title: 'Engineering',
+    shortDesc: 'Innovative engineering solutions for complex challenges',
+    description: 'Discover our comprehensive engineering capabilities and state-of-the-art facilities. Suria Dirgahayu delivers high-quality construction, electrical setups, and mechanical MRO solutions compliant with strict DOSH, OSHA, and Suruhanjaya Tenaga licensing requirements.',
     capabilities: [
-      'Demolition & Dismantling Works',
-      'Civil & Structural Works',
-      'Renovation & Refurbishment Works',
-      'Fabrication & Metal Works',
-      'Scaffolding & Temporary Works',
-      'Heavy Machinery Supply',
-      'Transportation & Haulage Services'
+      'Civil & Structural Engineering',
+      'Electrical Installation & ST Licensing',
+      'Scaffolding & Rigging Solutions',
+      'Mechanical Equipment MRO',
+      'Controlled Demolition & Structural Upgrades'
     ],
-    icon: BuildingIcon,
+    icon: WrenchIcon,
     image: '/img-civil.jpg'
   },
   {
-    id: 'it-solutions',
-    title: 'IT Software & Hardware Solutions',
-    shortDesc: 'Custom software development, hardware installation, and cyber security.',
-    description: 'Providing integrated IT solutions to keep business operations secure, optimized, and connected. We supply hardware, deploy server networks, and implement cyber security and cloud backup infrastructure.',
+    id: 'cx-outsourcing',
+    title: 'Customer Experience (CX) Outsourcing',
+    shortDesc: 'Elevate your brand with world-class CX services',
+    description: 'Providing global customer support, technical assistance, and outsourced operations. We optimize client relations, handle professional contact center management, and provide secure, compliant credit recovery operations.',
     capabilities: [
-      'Software Development',
-      'Hardware Supply & Installation',
-      'Network & Infrastructure Solutions',
-      'Cloud & Cyber security Services',
-      'IT Support & Maintenance'
+      'Omnichannel Customer Support',
+      'Technical Helpdesk & SLA Management',
+      'Outsourced Business Processes',
+      'Quality Assurance & Training',
+      'Customer Retention & Credit Support'
+    ],
+    icon: UsersIcon,
+    image: '/img-team.jpg'
+  },
+  {
+    id: 'digital-enablement',
+    title: 'Digital Enablement',
+    shortDesc: 'Accelerate your digital transformation journey',
+    description: 'Driving tech-forward evolution through cloud infrastructure, software development, and systems integration. We configure server networks, deploy custom client applications, and provide continuous ICT resource staffing.',
+    capabilities: [
+      'Custom Software & App Development',
+      'Network Infrastructure & Cloud Deployment',
+      'Cybersecurity Audits & Risk Assessment',
+      'ICT Resource Augmentation & Managed Staff',
+      'Branding & Digital Marketing Materials'
+    ],
+    icon: LaptopIcon,
+    image: '/img-electrical.jpg'
+  },
+
+  // --- SUB-SERVICES FOR ENGINEERING ---
+  {
+    id: 'construction',
+    parentId: 'engineering',
+    title: 'Construction Services',
+    shortDesc: 'End-to-end structural development, site preparation, and civil engineering',
+    description: 'Suria Dirgahayu delivers high-quality construction services. From structural framing and foundation works to specialized industrial building designs, we ensure safety, regulatory compliance (CIDB), and precision engineering.',
+    capabilities: [
+      'Civil & Structural Engineering',
+      'Industrial Plant & Facility Build',
+      'Foundation & Piling Works',
+      'Demolition & Dismantling',
+      'Site Preparation & Earthworks'
+    ],
+    icon: HammerIcon,
+    image: '/img-civil.jpg'
+  },
+  {
+    id: 'interior-design',
+    parentId: 'engineering',
+    title: 'Interior Design Solutions',
+    shortDesc: 'Premium commercial and residential interior design and fit-out',
+    description: 'Transforming empty spaces into modern, functional environments. We offer end-to-end interior layout design, material selection, custom carpentry, and space fit-out services for offices, retail, and homes.',
+    capabilities: [
+      'Space Planning & Layout Design',
+      'Commercial & Office Fit-Outs',
+      'Custom Joinery & Furniture Design',
+      '3D Visualisation & Rendering',
+      'Material & Finish Procurement'
+    ],
+    icon: PaintbrushIcon,
+    image: '/hero-home.png'
+  },
+
+  // --- SUB-SERVICES FOR DIGITAL ENABLEMENT ---
+  {
+    id: 'it-solutions',
+    parentId: 'digital-enablement',
+    title: 'IT Software & Hardware Solutions',
+    shortDesc: 'Integrated enterprise software development and hardware supply',
+    description: 'Empowering businesses with custom software applications, web and mobile platforms, paired with premium enterprise hardware setups, server maintenance, and infrastructure procurement.',
+    capabilities: [
+      'Custom Software & Web Development',
+      'Enterprise Hardware Procurement',
+      'Network Architecture & Infrastructure',
+      'Server & Datacenter Setup',
+      'IT Support & Maintenance Services'
     ],
     icon: LaptopIcon,
     image: '/img-electrical.jpg'
   },
   {
-    id: 'interior-design',
-    title: 'Interior Design Solutions',
-    shortDesc: 'Creative space planning, carpentry works, and office fit-outs.',
-    description: 'Transforming spaces with smart interior planning, custom cabinetry, quality carpentry, and professional refurbishment. We create high-quality corporate workspaces, offices, and commercial interiors.',
-    capabilities: [
-      'Interior Design & Consultation',
-      'Space Planning',
-      'Office Fit-Out Works',
-      'Furniture & Carpentry Works',
-      'Renovation & Refurbishment'
-    ],
-    icon: PaintbrushIcon,
-    image: '/img-scaffolding.jpg'
-  },
-  {
     id: 'ict-management',
+    parentId: 'digital-enablement',
     title: 'ICT External Resources Management',
-    shortDesc: 'Managed ICT resources, staffing, and system administration.',
-    description: 'Fulfilling resource gaps with expert technical support, system administrators, and project staffing. Our external resource team optimizes IT service delivery and IT infrastructure management.',
+    shortDesc: 'Managed IT staffing, resource augmentation, and vendor management',
+    description: 'Providing specialized IT personnel, system analysts, developers, and project managers to support your software projects. We manage external vendors, SLAs, and technical recruitment to keep your digital operations seamless.',
     capabilities: [
-      'ICT Resource Outsourcing',
-      'IT Project Staffing',
-      'Technical Support Services',
-      'System Administration',
-      'Managed ICT Services'
+      'IT Staff Augmentation & Placement',
+      'Technical Project Management Outsourcing',
+      'Vendor SLA & Compliance Management',
+      'Managed IT Operations & Helpdesk',
+      'ICT Recruitment & Talent Sourcing'
     ],
     icon: NetworkIcon,
-    image: '/img-mechanical.jpg'
+    image: '/img-team.jpg'
   },
   {
-    id: 'manpower',
-    title: 'Manpower Supply & Outsourcing',
-    shortDesc: 'Skilled workforce, contract staffing, and technical specialist supply.',
-    description: 'Connecting organizations with key professional talent, technical specialists, and contract staff. We support general workforce management and specialized personnel supply across core industries.',
+    id: 'branding',
+    parentId: 'digital-enablement',
+    title: 'Corporate Identity & Branding Solutions',
+    shortDesc: 'Premium branding, corporate identity, and visual marketing assets',
+    description: 'Crafting impactful brand identities that connect with your audience. We offer three specialized branches of branding solutions: Logo Design, Company Profiles, and Digital Design to build a cohesive visual presence.',
     capabilities: [
-      'Skilled & General Workforce Supply',
-      'Technical Specialist Supply',
-      'Contract Staffing',
-      'Recruitment Services',
-      'Workforce Management'
+      'Logo & Visual Identity Design',
+      'Corporate Profile & Stationery',
+      'Digital Branding & Web Design'
+    ],
+    icon: TrophyIcon,
+    image: '/img-blog-st.png'
+  },
+
+  // --- SUB-SERVICES FOR CX OUTSOURCING ---
+  {
+    id: 'manpower',
+    parentId: 'cx-outsourcing',
+    title: 'Manpower Supply & Outsourcing',
+    shortDesc: 'Skilled, semi-skilled, and general labor solutions for industrial and engineering sectors',
+    description: 'Mobilizing qualified candidates at scale for construction, engineering, manufacturing, and oil & gas projects. We handle complete recruiting, screening, payroll administration, housing, and regulatory compliance.',
+    capabilities: [
+      'Skilled Engineers & Technicians Supply',
+      'General Labor & Factory Operators',
+      'Recruitment & Screening Operations',
+      'Work Permit & Visa Processing',
+      'On-site Workforce Management'
     ],
     icon: UsersIcon,
-    image: '/img-hero.jpg'
+    image: '/img-careers.png'
   },
   {
     id: 'hr-payroll',
+    parentId: 'cx-outsourcing',
     title: 'Human Resource & Payroll Services',
-    shortDesc: 'Comprehensive HR administration, payroll systems, and onboarding.',
-    description: 'Streamlining employee payroll and HR administration. We handle executive search, training, developmental programs, and outsourced human resource services to ensure operational excellence.',
+    shortDesc: 'End-to-end payroll processing, employee benefits, and HR compliance',
+    description: 'Streamlining your HR administrative burden with secure payroll outsourcing. We manage salary computations, statutory contributions (EPF, SOCSO, EIS, PCB), employee onboarding, and labor law advisory.',
     capabilities: [
-      'Payroll Management',
-      'HR Administration',
-      'Recruitment & Onboarding',
-      'Training & Development',
-      'HR Outsourcing Services'
+      'Automated Payroll Calculation',
+      'Statutory Submissions & Compliance',
+      'Employee Benefits Administration',
+      'HR Compliance & Labor Law Advisory',
+      'Employee Record Management'
     ],
-    icon: UserCheckIcon,
+    icon: BriefcaseIcon,
     image: '/img-team.jpg'
   },
   {
     id: 'debt-collection',
+    parentId: 'cx-outsourcing',
     title: 'Debt Collection & Recovery Management',
-    shortDesc: 'Professional credit management and recovery analytics.',
-    description: 'Protecting company cash flows through compliant, professional corporate collections. We optimize debt recovery and provide collection reporting, credit risk audit, and analytics.',
+    shortDesc: 'Professional credit recovery, collection operations, and risk management',
+    description: 'Delivering compliant, ethical, and efficient credit recovery solutions. Our trained recovery officers utilize custom customer relation platforms and telephone systems to maximize recovery while preserving client-customer relationships.',
     capabilities: [
-      'Debt Recovery Services',
-      'Collection Management',
-      'Recovery Reporting & Analytics'
+      'Amicable Debt Resolution',
+      'Skip Tracing & Debtor Tracking',
+      'Receivable Aging Analysis',
+      'Legal Recovery Support',
+      'Call Center Credit Recovery'
     ],
     icon: DollarIcon,
-    image: '/img-demolition.jpg'
+    image: '/img-mechanical.jpg'
   },
+
+  // --- SUB-SUB-SERVICES FOR BRANDING ---
   {
-    id: 'branding',
-    title: 'Corporate Identity & Branding Solutions',
-    shortDesc: 'Branding strategy, logo design, and digital marketing materials.',
-    description: 'Building distinct, memorable brands. We create corporate profiles, logos, digital branding layouts, and marketing materials that align corporate identity with strategic vision.',
+    id: 'branding-logo',
+    parentId: 'branding',
+    title: 'Logo & Visual Identity Design',
+    shortDesc: 'Professional brand assets, guidelines, and typography setup',
+    description: 'Every business needs a unique signature. We design professional logos, define custom color palettes, choose typography, and compile comprehensive brand guidelines (brand books) to maintain identity consistency across all channels.',
     capabilities: [
-      'Branding Strategy',
-      'Logo & Identity Design',
-      'Corporate Profile Design',
-      'Marketing Materials',
-      'Digital Branding Solutions'
+      'Custom Logo Design & Concepts',
+      'Brand Typography & Color Palette',
+      'Brand Identity Guideline (Brand Book)',
+      'Iconography & Visual Assets Creation',
+      'Trademark Logo Preparation'
     ],
     icon: TrophyIcon,
-    image: '/img-fabrication.jpg'
+    image: '/img-blog-st.png'
+  },
+  {
+    id: 'branding-collateral',
+    parentId: 'branding',
+    title: 'Corporate Profile & Materials',
+    shortDesc: 'Premium company profiles, brochures, and business stationery',
+    description: 'Elevate your physical and digital handouts with professional designs. We write, format, and design stunning company profiles, marketing brochures, annual reports, presentation templates, and corporate business cards.',
+    capabilities: [
+      'Premium Company Profile Writing & Design',
+      'Business Stationery & Letterheads',
+      'Marketing Brochures & Product Catalogs',
+      'Corporate Presentation Slides',
+      'Annual Reports & Print Layouts'
+    ],
+    icon: BriefcaseIcon,
+    image: '/img-careers.png'
+  },
+  {
+    id: 'branding-digital',
+    parentId: 'branding',
+    title: 'Digital Branding & Website Design',
+    shortDesc: 'Custom web interface design, digital banners, and social media styling',
+    description: 'Bring your brand online with premium digital presence. We build stunning, responsive landing pages and user interfaces, design social media templates, email newsletters, and display advertising banners.',
+    capabilities: [
+      'Premium UI/UX Website Design',
+      'Social Media Template Design',
+      'Digital Advertising & Banner Assets',
+      'Email Newsletter Layout Design',
+      'Interactive Web Prototypes'
+    ],
+    icon: LaptopIcon,
+    image: '/img-blog-solar.png'
   }
 ];
+
 
 export interface CapabilitySector {
   title: string;
@@ -202,5 +312,8 @@ export const CLIENTS = [
   { name: 'TechnoMech Malaysia', sector: 'Engineering & MRO Solutions', logoKey: 'technomech' },
   { name: 'Maxeon Solar Malaysia', sector: 'Renewables Manufacturing', logoKey: 'maxeon' },
   { name: 'Medilaund (M) Sdn. Bhd.', sector: 'Healthcare & Laundry Services', logoKey: 'medilaund' },
-  { name: 'JW Marriott Kuala Lumpur', sector: 'Hospitality & Services', logoKey: 'jwmarriott' }
+  { name: 'JW Marriott Kuala Lumpur', sector: 'Hospitality & Services', logoKey: 'jwmarriott' },
+  { name: 'Sime Darby Property', sector: 'Property & Infrastructure Development', logoKey: 'simedarby' },
+  { name: 'Kendek Products Sdn Bhd (534403-D)', sector: 'Industrial Products & Manufacturing', logoKey: 'kendek' }
 ];
+

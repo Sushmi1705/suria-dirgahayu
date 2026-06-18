@@ -34,8 +34,17 @@ export default function App() {
     return 'home';
   });
 
-  const [activeService, setActiveService] = useState<string>('demolition');
-  const [serviceTransitioning, setServiceTransitioning] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/services/')) {
+      return hash.replace('#/services/', '');
+    }
+    return null;
+  });
+
+
+  const [activeService, setActiveService] = useState<string>('engineering');
+  const [serviceTransitioning] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
@@ -44,14 +53,21 @@ export default function App() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       let path: 'home' | 'about' | 'services' | 'wizard' | 'contact' | 'quality' | 'journey' = 'home';
+      let serviceId: string | null = null;
       if (hash.startsWith('#/about')) path = 'about';
-      else if (hash.startsWith('#/services')) path = 'services';
+      else if (hash.startsWith('#/services')) {
+        path = 'services';
+        if (hash.startsWith('#/services/')) {
+          serviceId = hash.replace('#/services/', '');
+        }
+      }
       else if (hash.startsWith('#/wizard')) path = 'wizard';
       else if (hash.startsWith('#/contact')) path = 'contact';
       else if (hash.startsWith('#/quality')) path = 'quality';
       else if (hash.startsWith('#/journey')) path = 'journey';
 
       setCurrentPath(path);
+      setSelectedServiceId(serviceId);
       setMobileMenuOpen(false);
       setMobileServicesOpen(false);
       window.scrollTo(0, 0);
@@ -60,6 +76,7 @@ export default function App() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -126,19 +143,13 @@ export default function App() {
     return () => observer.disconnect();
   }, [currentPath]);
 
-  const handleSwitchService = (serviceId: string) => {
-    if (serviceId === activeService) return;
-    setServiceTransitioning(true);
-    setTimeout(() => {
-      setActiveService(serviceId);
-      setServiceTransitioning(false);
-    }, 250);
-  };
+
 
   const handleSelectServiceFromMenu = (serviceId: string) => {
     setActiveService(serviceId);
-    window.location.hash = `#/services`;
+    window.location.hash = `#/services/${serviceId}`;
   };
+
 
   const renderPage = () => {
     switch (currentPath) {
@@ -147,12 +158,14 @@ export default function App() {
       case 'services':
         return (
           <Services
-            activeService={activeService}
-            handleSwitchService={handleSwitchService}
+            activeService={selectedServiceId || activeService}
             serviceTransitioning={serviceTransitioning}
             handleConfigureService={handleSelectServiceFromMenu}
+            isSubPage={selectedServiceId !== null}
           />
         );
+
+
       case 'wizard':
         return <Wizard />;
       case 'quality':
@@ -184,7 +197,6 @@ export default function App() {
               className="tm-logo-img" 
               alt="Suria Dirgahayu Logo" 
             />
-            <span className="tm-logo-text">SURIA DIRGAHAYU</span>
             <span className="tm-status-pulse" title="System Online"></span>
           </a>
 
@@ -197,7 +209,6 @@ export default function App() {
                   className="tm-logo-img" 
                   alt="Suria Dirgahayu Logo" 
                 />
-                <span className="tm-logo-text">SURIA DIRGAHAYU</span>
               </a>
               <button className="tm-mobile-menu-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close Mobile Menu">
                 <svg viewBox="0 0 24 24" fill="none" width="24" height="24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -235,33 +246,27 @@ export default function App() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--gold)' }}></span>
                     <span style={{ fontWeight: 800, fontSize: '0.78rem', color: 'var(--primary)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                      SURIA CAPABILITIES // EPCC ENGINEERING
+                      SURIA CAPABILITIES // DEPARTMENTS
                     </span>
                   </div>
                   <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>SELECT A DEPT FOR DETAILS</span>
                 </div>
-                {[
-                  SERVICES_DATA.find(s => s.id === 'demolition')!,
-                  SERVICES_DATA.find(s => s.id === 'civil')!,
-                  SERVICES_DATA.find(s => s.id === 'mechanical')!,
-                  SERVICES_DATA.find(s => s.id === 'electrical')!,
-                  SERVICES_DATA.find(s => s.id === 'fabrication')!,
-                  SERVICES_DATA.find(s => s.id === 'scaffolding')!
-                ].map(s => {
+                 {SERVICES_DATA.filter(s => !s.parentId).map(s => {
                   const IconComp = s.icon;
                   return (
                     <a
                       key={s.id}
-                      href="#/services"
+                      href={`#/services/${s.id}`}
                       className="tm-mega-item"
                       onClick={() => handleSelectServiceFromMenu(s.id)}
+
                     >
                       <div className="tm-mega-icon-box">
                         <IconComp size={18} />
                       </div>
                       <div className="tm-mega-text-block">
                         <div className="tm-mega-title">
-                          {s.title.split(' & ')[0]}
+                          {s.title}
                         </div>
                         <div className="tm-mega-desc">{s.shortDesc}</div>
                       </div>
@@ -320,29 +325,21 @@ export default function App() {
                 src="/logo.svg" 
                 className="tm-logo-img" 
                 alt="Suria Dirgahayu Logo" 
-                style={{ filter: 'brightness(0) invert(1)' }} 
+                style={{ filter: 'brightness(0) invert(1)', height: '64px' }} 
               />
-              <span className="tm-logo-text" style={{ color: '#ffffff' }}>SURIA DIRGAHAYU</span>
             </a>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.6, maxWidth: '350px' }}>
               Suria Dirgahayu Sdn. Bhd. delivers EPCC industrial engineering, safety structures, and civil works with high efficiency and ESG standards.
             </p>
           </div>
           <div>
-            <div className="tm-footer-title">Our Focus</div>
+            <div className="tm-footer-title">Our Business</div>
             <ul className="tm-footer-links">
-              <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('demolition')} className="tm-footer-link">Demolition Works</a></li>
-              <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('civil')} className="tm-footer-link">Civil &amp; Structure</a></li>
-              <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('mechanical')} className="tm-footer-link">Mechanical MRO</a></li>
+              <li><a href="#/services/engineering" onClick={() => handleSelectServiceFromMenu('engineering')} className="tm-footer-link">Engineering</a></li>
+              <li><a href="#/services/cx-outsourcing" onClick={() => handleSelectServiceFromMenu('cx-outsourcing')} className="tm-footer-link">CX Outsourcing</a></li>
+              <li><a href="#/services/digital-enablement" onClick={() => handleSelectServiceFromMenu('digital-enablement')} className="tm-footer-link">Digital Enablement</a></li>
             </ul>
-          </div>
-          <div>
-            <div className="tm-footer-title">Engineering</div>
-            <ul className="tm-footer-links">
-              <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('electrical')} className="tm-footer-link">Electrical Solutions</a></li>
-              <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('scaffolding')} className="tm-footer-link">Scaffolding Systems</a></li>
-              <li><a href="#/services" onClick={() => handleSelectServiceFromMenu('fabrication')} className="tm-footer-link">Metal Fabrication</a></li>
-            </ul>
+
           </div>
           <div>
             <div className="tm-footer-title">Contact Us</div>
@@ -353,11 +350,11 @@ export default function App() {
               </li>
               <li>
                 <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 800, color: 'var(--gold)', letterSpacing: '0.05em', marginBottom: '0.15rem' }}>PROPOSALS DESK</span>
-                <a href="mailto:eng.proposals@suriadirgahayu.com" style={{ color: '#ffffff', fontWeight: 700, textDecoration: 'underline' }}>eng.proposals@suriadirgahayu.com</a>
+                <a href="mailto:suriadirgahayusdnbhd@gmail.com" style={{ color: '#ffffff', fontWeight: 700, textDecoration: 'underline' }}>suriadirgahayusdnbhd@gmail.com</a>
               </li>
               <li>
-                <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 800, color: 'var(--gold)', letterSpacing: '0.05em', marginBottom: '0.15rem' }}>KUALA LUMPUR HQ</span>
-                <span style={{ color: '#ffffff', fontSize: '0.82rem' }}>Vertical Corporate Tower, Bangsar South City</span>
+                <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 800, color: 'var(--gold)', letterSpacing: '0.05em', marginBottom: '0.15rem' }}>HQ OFFICE</span>
+                <span style={{ color: '#ffffff', fontSize: '0.82rem' }}>Bandar Pinggiran Subang, Shah Alam</span>
               </li>
             </ul>
           </div>

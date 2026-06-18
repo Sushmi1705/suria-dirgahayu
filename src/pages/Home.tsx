@@ -7,51 +7,16 @@ import {
   GlobeIcon,
   ShieldIcon,
   TrophyIcon,
-  CloseIcon
+  CloseIcon,
+  SunIcon,
+  LeafIcon,
+  UserCheckIcon
 } from '../components/Icons';
 import { CLIENTS } from '../constants/data';
 import { handleCardMouseMove, handleCardMouseLeave } from '../utils/tilt';
 import HeroBackground from '../components/HeroBackground';
 import ClientLogo from '../components/ClientLogo';
 
-const SUNSEED_PILL_DETAILS: Record<string, { title: string; subtitle: string; desc: string; iconColor: string }> = {
-  academy: {
-    title: 'SunSeed Academy',
-    subtitle: 'Technical Training & Vocational Skills',
-    desc: 'Empowering local workforces with ST wireman licenses, scaffolding rigging standards, OSHA safety tag compliance, and mechanical assembly courses.',
-    iconColor: '#ffad01'
-  },
-  talent: {
-    title: 'SunSeed Talent Program',
-    subtitle: 'Ethical Resource Stewardship',
-    desc: 'Managing workforce welfare, medical audits, safe housing standards, and competitive transparent wage scales for heavy industrial projects.',
-    iconColor: '#38bdf8'
-  },
-  foundation: {
-    title: 'SunSeed Foundation',
-    subtitle: 'Renewable Community Electrification',
-    desc: 'Donating microgrids and solar setups to rural boarding schools, granting student technical scholarships, and providing local family support.',
-    iconColor: '#22c55e'
-  },
-  nurturing: {
-    title: 'Nurturing Growth',
-    subtitle: 'Ecosystem Vitality & Support',
-    desc: 'Providing industrial tools, guidance, safety tags, and structural guidance before demanding high-performance output.',
-    iconColor: '#ffd875'
-  },
-  potential: {
-    title: 'Latent Potential',
-    subtitle: 'Human & Material Assets',
-    desc: 'Unlocking hidden mechanical talent and harvesting abundant solar resources to drive national industrial self-sufficiency.',
-    iconColor: '#f43f5e'
-  },
-  sustainability: {
-    title: 'Sustainable Future',
-    subtitle: 'Zero-Harm Engineering Framework',
-    desc: 'Minimizing environmental footprints via control-demolition protocols, low-noise scaffolding structures, and energy-conserving MRO.',
-    iconColor: '#10b981'
-  }
-};
 
 interface BlogPost {
   id: string;
@@ -126,7 +91,6 @@ const BLOG_POSTS: BlogPost[] = [
 
 export default function Home() {
   const activeChoice: string = 'industrial';
-  const [activePill, setActivePill] = useState<string>('academy');
   const [activeBlog, setActiveBlog] = useState<BlogPost | null>(null);
 
   useEffect(() => {
@@ -186,9 +150,10 @@ export default function Home() {
                 ESG <ChevronRightIcon size={18} />
               </a>
               <a href="#/services" className="btn btn-secondary">
-                Explore 9 Core Services
+                Explore Our Services
               </a>
             </div>
+
           </div>
 
           <div className="hero-visual animate-radar-entry" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -390,10 +355,10 @@ export default function Home() {
             </div>
             <div className="sunseed-showcase-slogan-desc">
               <h3 className="showcase-slogan">
-                Nurtured. Connected. Sustainable.
+                The Sun symbolizes many powerful qualities that we can adopt in our daily lives:
               </h3>
               <p className="showcase-desc">
-                Operating as one unified ecosystem guided by purpose, empowered by people, and built with the agility to evolve and succeed across industrial engineering and clean energy challenges.
+                Consistency, Leadership, Selflessness, Strength &amp; Resilience, Positivity, and Growth &amp; Nurturing. We adopt these guiding values in our daily operations, technical execution, and community engagement.
               </p>
             </div>
           </div>
@@ -424,89 +389,86 @@ export default function Home() {
                 {/* Connector lines from pills to central core */}
                 <g>
                   {/* Left Column connectors (Academy, Talent, Foundation) */}
-                  <path d="M 240 75 C 370 75, 410 160, 460 160" className={`connector-path ${activePill === 'academy' ? 'active-gold' : ''}`} />
-                  <path d="M 240 225 H 460" className={`connector-path ${activePill === 'talent' ? 'active-blue' : ''}`} />
-                  <path d="M 240 375 C 370 375, 410 290, 460 290" className={`connector-path ${activePill === 'foundation' ? 'active-green' : ''}`} />
+                  <path d="M 240 75 C 370 75, 410 160, 460 160" className="connector-path active-gold" />
+                  <path d="M 240 225 H 460" className="connector-path active-blue" />
+                  <path d="M 240 375 C 370 375, 410 290, 460 290" className="connector-path active-green" />
 
                   {/* Right Column connectors (Nurturing, Potential, Sustainability) */}
-                  <path d="M 860 75 C 730 75, 690 160, 640 160" className={`connector-path ${activePill === 'nurturing' ? 'active-yellow' : ''}`} />
-                  <path d="M 860 225 H 640" className={`connector-path ${activePill === 'potential' ? 'active-red' : ''}`} />
-                  <path d="M 860 375 C 730 375, 690 290, 640 290" className={`connector-path ${activePill === 'sustainability' ? 'active-emerald' : ''}`} />
+                  <path d="M 860 75 C 730 75, 690 160, 640 160" className="connector-path active-yellow" />
+                  <path d="M 860 225 H 640" className="connector-path active-red" />
+                  <path d="M 860 375 C 730 375, 690 290, 640 290" className="connector-path active-emerald" />
                 </g>
 
                 {/* Pulsing endpoint contact indicator dots */}
-                <circle cx="240" cy="75" r="3.5" fill="#ffad01" style={{ opacity: activePill === 'academy' ? 1 : 0.4 }} className={activePill === 'academy' ? 'active-pulse-dot-gold' : ''} />
-                <circle cx="240" cy="225" r="3.5" fill="#38bdf8" style={{ opacity: activePill === 'talent' ? 1 : 0.4 }} className={activePill === 'talent' ? 'active-pulse-dot-blue' : ''} />
-                <circle cx="240" cy="375" r="3.5" fill="#22c55e" style={{ opacity: activePill === 'foundation' ? 1 : 0.4 }} className={activePill === 'foundation' ? 'active-pulse-dot-green' : ''} />
+                <circle cx="240" cy="75" r="3.5" fill="#ffad01" style={{ opacity: 1 }} className="active-pulse-dot-gold" />
+                <circle cx="240" cy="225" r="3.5" fill="#38bdf8" style={{ opacity: 1 }} className="active-pulse-dot-blue" />
+                <circle cx="240" cy="375" r="3.5" fill="#22c55e" style={{ opacity: 1 }} className="active-pulse-dot-green" />
                 
-                <circle cx="860" cy="75" r="3.5" fill="#ffd875" style={{ opacity: activePill === 'nurturing' ? 1 : 0.4 }} className={activePill === 'nurturing' ? 'active-pulse-dot-gold' : ''} />
-                <circle cx="860" cy="225" r="3.5" fill="#f43f5e" style={{ opacity: activePill === 'potential' ? 1 : 0.4 }} className={activePill === 'potential' ? 'active-pulse-dot-red' : ''} />
-                <circle cx="860" cy="375" r="3.5" fill="#10b981" style={{ opacity: activePill === 'sustainability' ? 1 : 0.4 }} className={activePill === 'sustainability' ? 'active-pulse-dot-green' : ''} />
+                <circle cx="860" cy="75" r="3.5" fill="#ffd875" style={{ opacity: 1 }} className="active-pulse-dot-gold" />
+                <circle cx="860" cy="225" r="3.5" fill="#f43f5e" style={{ opacity: 1 }} className="active-pulse-dot-red" />
+                <circle cx="860" cy="375" r="3.5" fill="#10b981" style={{ opacity: 1 }} className="active-pulse-dot-green" />
 
                 {/* Central Core Dial Contact Anchors */}
-                <circle cx="460" cy="160" r="3.5" fill="#ffad01" style={{ opacity: activePill === 'academy' ? 1 : 0.2 }} />
-                <circle cx="460" cy="225" r="3.5" fill="#38bdf8" style={{ opacity: activePill === 'talent' ? 1 : 0.2 }} />
-                <circle cx="460" cy="290" r="3.5" fill="#22c55e" style={{ opacity: activePill === 'foundation' ? 1 : 0.2 }} />
-                <circle cx="640" cy="160" r="3.5" fill="#ffd875" style={{ opacity: activePill === 'nurturing' ? 1 : 0.2 }} />
-                <circle cx="640" cy="225" r="3.5" fill="#f43f5e" style={{ opacity: activePill === 'potential' ? 1 : 0.2 }} />
-                <circle cx="640" cy="290" r="3.5" fill="#10b981" style={{ opacity: activePill === 'sustainability' ? 1 : 0.2 }} />
+                <circle cx="460" cy="160" r="3.5" fill="#ffad01" style={{ opacity: 1 }} />
+                <circle cx="460" cy="225" r="3.5" fill="#38bdf8" style={{ opacity: 1 }} />
+                <circle cx="460" cy="290" r="3.5" fill="#22c55e" style={{ opacity: 1 }} />
+                <circle cx="640" cy="160" r="3.5" fill="#ffd875" style={{ opacity: 1 }} />
+                <circle cx="640" cy="225" r="3.5" fill="#f43f5e" style={{ opacity: 1 }} />
+                <circle cx="640" cy="290" r="3.5" fill="#10b981" style={{ opacity: 1 }} />
 
-                {/* Active traveling laser particle dot */}
-                {activePill === 'academy' && (
-                  <circle r="4.5" fill="#ffad01" style={{ filter: 'drop-shadow(0 0 6px #ffad01)' }}>
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 75 C 370 75, 410 160, 460 160" />
-                  </circle>
-                )}
-                {activePill === 'talent' && (
-                  <circle r="4.5" fill="#38bdf8" style={{ filter: 'drop-shadow(0 0 6px #38bdf8)' }}>
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 225 H 460" />
-                  </circle>
-                )}
-                {activePill === 'foundation' && (
-                  <circle r="4.5" fill="#22c55e" style={{ filter: 'drop-shadow(0 0 6px #22c55e)' }}>
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 375 C 370 375, 410 290, 460 290" />
-                  </circle>
-                )}
-                {activePill === 'nurturing' && (
-                  <circle r="4.5" fill="#ffd875" style={{ filter: 'drop-shadow(0 0 6px #ffd875)' }}>
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 75 C 730 75, 690 160, 640 160" />
-                  </circle>
-                )}
-                {activePill === 'potential' && (
-                  <circle r="4.5" fill="#f43f5e" style={{ filter: 'drop-shadow(0 0 6px #f43f5e)' }}>
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 225 H 640" />
-                  </circle>
-                )}
-                {activePill === 'sustainability' && (
-                  <circle r="4.5" fill="#10b981" style={{ filter: 'drop-shadow(0 0 6px #10b981)' }}>
-                    <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 375 C 730 375, 690 290, 640 290" />
-                  </circle>
-                )}
+                {/* Active traveling laser particle dots */}
+                <circle r="4.5" fill="#ffad01" style={{ filter: 'drop-shadow(0 0 6px #ffad01)' }}>
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 75 C 370 75, 410 160, 460 160" />
+                </circle>
+                <circle r="4.5" fill="#38bdf8" style={{ filter: 'drop-shadow(0 0 6px #38bdf8)' }}>
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 225 H 460" />
+                </circle>
+                <circle r="4.5" fill="#22c55e" style={{ filter: 'drop-shadow(0 0 6px #22c55e)' }}>
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M 240 375 C 370 375, 410 290, 460 290" />
+                </circle>
+                <circle r="4.5" fill="#ffd875" style={{ filter: 'drop-shadow(0 0 6px #ffd875)' }}>
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 75 C 730 75, 690 160, 640 160" />
+                </circle>
+                <circle r="4.5" fill="#f43f5e" style={{ filter: 'drop-shadow(0 0 6px #f43f5e)' }}>
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 225 H 640" />
+                </circle>
+                <circle r="4.5" fill="#10b981" style={{ filter: 'drop-shadow(0 0 6px #10b981)' }}>
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M 860 375 C 730 375, 690 290, 640 290" />
+                </circle>
               </svg>
               
               {/* Left Column Pills */}
               <div className="mascot-pills-col col-left">
-                <button 
-                  className={`mascot-pill-btn glass pill-academy ${activePill === 'academy' ? 'active-pill' : ''}`}
-                  onClick={() => setActivePill('academy')}
-                >
-                  <span className="pill-dot" style={{ backgroundColor: '#ffad01' }}></span>
-                  Academy
-                </button>
-                <button 
-                  className={`mascot-pill-btn glass pill-talent ${activePill === 'talent' ? 'active-pill' : ''}`}
-                  onClick={() => setActivePill('talent')}
-                >
-                  <span className="pill-dot" style={{ backgroundColor: '#38bdf8' }}></span>
-                  Talent Program
-                </button>
-                <button 
-                  className={`mascot-pill-btn glass pill-foundation ${activePill === 'foundation' ? 'active-pill' : ''}`}
-                  onClick={() => setActivePill('foundation')}
-                >
-                  <span className="pill-dot" style={{ backgroundColor: '#22c55e' }}></span>
-                  Foundation
-                </button>
+                <div className="mascot-pill-card glass pill-academy">
+                  <div className="pill-card-header">
+                    <div className="pill-card-icon-wrapper" style={{ color: '#ffad01' }}>
+                      <UserCheckIcon size={14} />
+                    </div>
+                    <h4 className="pill-card-title">Consistency</h4>
+                  </div>
+                  <div className="pill-card-subtitle">Discipline &amp; Reliability</div>
+                  <p className="pill-card-desc">The Sun rises every day without fail, teaching us discipline and reliability.</p>
+                </div>
+                <div className="mascot-pill-card glass pill-talent">
+                  <div className="pill-card-header">
+                    <div className="pill-card-icon-wrapper" style={{ color: '#38bdf8' }}>
+                      <TrophyIcon size={14} />
+                    </div>
+                    <h4 className="pill-card-title">Leadership</h4>
+                  </div>
+                  <div className="pill-card-subtitle">Illumination &amp; Guidance</div>
+                  <p className="pill-card-desc">It illuminates and guides everything around it, reflecting the qualities of a true leader.</p>
+                </div>
+                <div className="mascot-pill-card glass pill-foundation">
+                  <div className="pill-card-header">
+                    <div className="pill-card-icon-wrapper" style={{ color: '#22c55e' }}>
+                      <GlobeIcon size={14} />
+                    </div>
+                    <h4 className="pill-card-title">Selflessness</h4>
+                  </div>
+                  <div className="pill-card-subtitle">Giving &amp; Community Stewardship</div>
+                  <p className="pill-card-desc">The Sun gives light, warmth, and energy without expecting anything in return.</p>
+                </div>
               </div>
 
               {/* Center 3D Layered Sun Core with flat background rings */}
@@ -601,49 +563,38 @@ export default function Home() {
 
               {/* Right Column Pills */}
               <div className="mascot-pills-col col-right">
-                <button 
-                  className={`mascot-pill-btn glass pill-nurturing ${activePill === 'nurturing' ? 'active-pill' : ''}`}
-                  onClick={() => setActivePill('nurturing')}
-                >
-                  <span className="pill-dot" style={{ backgroundColor: '#ffd875' }}></span>
-                  Nurturing Growth
-                </button>
-                <button 
-                  className={`mascot-pill-btn glass pill-potential ${activePill === 'potential' ? 'active-pill' : ''}`}
-                  onClick={() => setActivePill('potential')}
-                >
-                  <span className="pill-dot" style={{ backgroundColor: '#f43f5e' }}></span>
-                  Latent Potential
-                </button>
-                <button 
-                  className={`mascot-pill-btn glass pill-sustainability ${activePill === 'sustainability' ? 'active-pill' : ''}`}
-                  onClick={() => setActivePill('sustainability')}
-                >
-                  <span className="pill-dot" style={{ backgroundColor: '#10b981' }}></span>
-                  Sustainability
-                </button>
+                <div className="mascot-pill-card glass pill-nurturing">
+                  <div className="pill-card-header">
+                    <div className="pill-card-icon-wrapper" style={{ color: '#ffd875' }}>
+                      <ShieldIcon size={14} />
+                    </div>
+                    <h4 className="pill-card-title">Strength &amp; Resilience</h4>
+                  </div>
+                  <div className="pill-card-subtitle">Strong Through Obstacles</div>
+                  <p className="pill-card-desc">It continues to shine despite storms, clouds, or obstacles, reminding us to stay strong through challenges.</p>
+                </div>
+                <div className="mascot-pill-card glass pill-potential">
+                  <div className="pill-card-header">
+                    <div className="pill-card-icon-wrapper" style={{ color: '#f43f5e' }}>
+                      <SunIcon size={14} />
+                    </div>
+                    <h4 className="pill-card-title">Positivity</h4>
+                  </div>
+                  <div className="pill-card-subtitle">Brightness &amp; Hope</div>
+                  <p className="pill-card-desc">Sunlight brings brightness and hope, encouraging an optimistic outlook on life.</p>
+                </div>
+                <div className="mascot-pill-card glass pill-sustainability">
+                  <div className="pill-card-header">
+                    <div className="pill-card-icon-wrapper" style={{ color: '#10b981' }}>
+                      <LeafIcon size={14} />
+                    </div>
+                    <h4 className="pill-card-title">Growth &amp; Nurturing</h4>
+                  </div>
+                  <div className="pill-card-subtitle">Uplifting Human Capital</div>
+                  <p className="pill-card-desc">Just as the Sun helps plants grow, we can support and uplift others around us.</p>
+                </div>
               </div>
             </div>
-
-          {/* Dynamic details readout console */}
-          <div className="showcase-details-panel blueprint-panel brackets-tl-br" style={{ borderColor: `${SUNSEED_PILL_DETAILS[activePill].iconColor}33` }}>
-            <div className="details-panel-header">
-              <span className="details-panel-badge" style={{ color: SUNSEED_PILL_DETAILS[activePill].iconColor, borderColor: `${SUNSEED_PILL_DETAILS[activePill].iconColor}33` }}>
-                {SUNSEED_PILL_DETAILS[activePill].subtitle.toUpperCase()}
-              </span>
-              <h4 className="details-panel-title">{SUNSEED_PILL_DETAILS[activePill].title}</h4>
-            </div>
-            <p className="details-panel-desc">{SUNSEED_PILL_DETAILS[activePill].desc}</p>
-            <div className="details-panel-action-row">
-              <div className="telemetry-indicator-row">
-                <span className="hud-pulse" style={{ backgroundColor: SUNSEED_PILL_DETAILS[activePill].iconColor, boxShadow: `0 0 10px ${SUNSEED_PILL_DETAILS[activePill].iconColor}` }}></span>
-                <span className="telemetry-status-text">SYSTEM CORE: ONLINE // COMPLIANT</span>
-              </div>
-              <a href="#/sunseed" className="btn btn-primary nav-cta-btn" style={{ padding: '0.5rem 1.25rem', fontSize: '0.8rem' }}>
-                Open Interactive Console
-              </a>
-            </div>
-          </div>
 
         </div>
       </section>
@@ -672,7 +623,7 @@ export default function Home() {
                   <WrenchIcon size={20} />
                 </div>
               </div>
-              <h3 className="value-title">9 Core Verticals</h3>
+              <h3 className="value-title">3 Core Divisions</h3>
               <p className="value-desc" style={{ marginBottom: '2rem', flex: 1 }}>
                 Analyze our mechanical MRO, ST-approved electrical engineering, modular scaffolding tagging, and controlled demolition workflows.
               </p>

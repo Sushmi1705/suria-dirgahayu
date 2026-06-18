@@ -54,7 +54,7 @@ export default function Contact({
               <div className="contact-details">
                 {/* Address Card Link */}
                 <a 
-                  href="https://maps.google.com/?q=Menara+Suria+Kuala+Lumpur+Malaysia"
+                  href="https://maps.google.com/?q=NO.23-G,+JALAN+BULAN+BL+U5/BL,+BANDAR+PINGGIRAN+SUBANG,+SEKSYEN+U5,+40150+SHAH+ALAM,+SELANGOR+DARUL+EHSAN."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-card-link glass-spotlight spotlight-border tilt-card border-beam-card"
@@ -67,7 +67,9 @@ export default function Contact({
                   </div>
                   <div className="contact-card-text-group">
                     <span className="contact-card-label">Registered Office</span>
-                    <div className="contact-card-value">Menara Suria, Level 24, Kuala Lumpur, Malaysia</div>
+                    <div className="contact-card-value" style={{ fontSize: '0.8rem', lineHeight: '1.4' }}>
+                      NO.23-G, JALAN BULAN BL U5/BL, BANDAR PINGGIRAN SUBANG, SEKSYEN U5, 40150 SHAH ALAM, SELANGOR DARUL EHSAN.
+                    </div>
                   </div>
                 </a>
 
@@ -90,7 +92,7 @@ export default function Contact({
 
                 {/* Email Card Link */}
                 <a 
-                  href="mailto:engineering@suriadirgahayu.com"
+                  href="mailto:suriadirgahayusdnbhd@gmail.com"
                   className="contact-card-link glass-spotlight spotlight-border tilt-card border-beam-card"
                   onMouseMove={handleCardMouseMove}
                   onMouseLeave={handleCardMouseLeave}
@@ -101,7 +103,7 @@ export default function Contact({
                   </div>
                   <div className="contact-card-text-group">
                     <span className="contact-card-label">Direct Email Support</span>
-                    <div className="contact-card-value">engineering@suriadirgahayu.com</div>
+                    <div className="contact-card-value">suriadirgahayusdnbhd@gmail.com</div>
                   </div>
                 </a>
               </div>
@@ -222,14 +224,14 @@ export default function Contact({
             <div className="map-header">
               <div className="map-header-title">
                 <MapPinIcon size={18} className="gold-text" />
-                <span>Kuala Lumpur HQ Operations Console</span>
+                <span>HQ Operations Console</span>
               </div>
-              <span className="badge">GPS: 3.1390° N, 101.6869° E</span>
+              <span className="badge">GPS: 3.1664° N, 101.5360° E</span>
             </div>
             <div className="map-iframe-wrapper">
               <iframe 
-                title="Suria Dirgahayu Kuala Lumpur Office Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15935.158309199587!2d101.686855!3d3.139003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362abd7ed77d%3A0x67c29015c7e14a6!2sMenara%20Suria!5e0!3m2!1sen!2smy!4v1700000000000!5m2!1sen!2smy"
+                title="Suria Dirgahayu Office Map"
+                src="https://maps.google.com/maps?q=NO.23-G,%20JALAN%20BULAN%20BL%20U5/BL,%20BANDAR%20PINGGIRAN%20SUBANG,%2040150%20SHAH%20ALAM,%20SELANGOR&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 className="dark-map-iframe"
                 allowFullScreen
                 loading="lazy"

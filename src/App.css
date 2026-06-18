@@ -52,7 +52,7 @@
 }
 
 .logo-img {
-  height: 40px;
+  height: 52px;
   width: auto;
   transition: transform var(--transition-normal);
 }
@@ -917,6 +917,11 @@
   gap: 3.5rem;
   align-items: stretch;
 }
+
+.services-explorer-layout.single-page {
+  grid-template-columns: 1fr;
+}
+
 
 .services-list-nav {
   display: flex;
@@ -5473,17 +5478,17 @@ body.no-scroll {
     align-items: flex-end !important;
   }
 
-  /* Absolute position individual pills to match connection coordinates exactly */
-  .mascot-pills-col .mascot-pill-btn {
+  /* Absolute position individual cards to match connection coordinates exactly */
+  .mascot-pills-col .mascot-pill-card {
     position: absolute !important;
     width: 100% !important;
-    height: 60px !important;
+    height: 130px !important;
     left: 0 !important;
   }
 
-  .mascot-pills-col .mascot-pill-btn:nth-child(1) { top: 45px !important; }
-  .mascot-pills-col .mascot-pill-btn:nth-child(2) { top: 195px !important; }
-  .mascot-pills-col .mascot-pill-btn:nth-child(3) { top: 345px !important; }
+  .mascot-pills-col .mascot-pill-card:nth-child(1) { top: 10px !important; }
+  .mascot-pills-col .mascot-pill-card:nth-child(2) { top: 160px !important; }
+  .mascot-pills-col .mascot-pill-card:nth-child(3) { top: 310px !important; }
 
   .mascot-wireframe-container {
     position: absolute !important;
@@ -5559,6 +5564,7 @@ body.no-scroll {
     gap: 1.25rem !important;
   }
   .mascot-pill-btn,
+  .mascot-pill-card,
   .sunseed-node-btn {
     position: relative !important;
     top: auto !important;
@@ -5700,6 +5706,162 @@ body.no-scroll {
 @keyframes ledPulse {
   0%, 100% { opacity: 0.65; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.35); }
+}
+
+/* Glassmorphism cards styling - Light Premium Gold */
+.mascot-pill-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0.85rem 1.25rem;
+  border-radius: 16px;
+  border: 1px solid rgba(184, 134, 11, 0.15);
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  color: #475569;
+  font-family: var(--font-heading);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  box-shadow: 0 4px 20px rgba(184, 134, 11, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.mascot-pill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s;
+}
+
+.mascot-pill-card:hover::before {
+  left: 150%;
+}
+
+.mascot-pill-card:hover {
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: #001543;
+  transform: translateY(-3px);
+}
+
+/* Colored glowing styles for active states and accent borders */
+.mascot-pill-card.pill-academy {
+  border-color: #ffad01 !important;
+  border-left: 4px solid #ffad01 !important;
+  box-shadow: 0 0 25px rgba(255, 173, 1, 0.2), inset 0 0 12px rgba(255, 173, 1, 0.1);
+}
+.mascot-pill-card.pill-academy:hover {
+  box-shadow: 0 0 30px rgba(255, 173, 1, 0.3), inset 0 0 12px rgba(255, 173, 1, 0.15);
+}
+
+.mascot-pill-card.pill-talent {
+  border-color: #38bdf8 !important;
+  border-left: 4px solid #38bdf8 !important;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.2), inset 0 0 12px rgba(56, 189, 248, 0.1);
+}
+.mascot-pill-card.pill-talent:hover {
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.3), inset 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+.mascot-pill-card.pill-foundation {
+  border-color: #22c55e !important;
+  border-left: 4px solid #22c55e !important;
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.2), inset 0 0 12px rgba(34, 197, 94, 0.1);
+}
+.mascot-pill-card.pill-foundation:hover {
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.3), inset 0 0 12px rgba(34, 197, 94, 0.15);
+}
+
+.mascot-pill-card.pill-nurturing {
+  border-color: #ffd875 !important;
+  border-right: 4px solid #ffd875 !important;
+  box-shadow: 0 0 25px rgba(255, 216, 117, 0.2), inset 0 0 12px rgba(255, 216, 117, 0.1);
+}
+.mascot-pill-card.pill-nurturing:hover {
+  box-shadow: 0 0 30px rgba(255, 216, 117, 0.3), inset 0 0 12px rgba(255, 216, 117, 0.15);
+}
+
+.mascot-pill-card.pill-potential {
+  border-color: #f43f5e !important;
+  border-right: 4px solid #f43f5e !important;
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.2), inset 0 0 12px rgba(244, 63, 94, 0.1);
+}
+.mascot-pill-card.pill-potential:hover {
+  box-shadow: 0 0 30px rgba(244, 63, 94, 0.3), inset 0 0 12px rgba(244, 63, 94, 0.15);
+}
+
+.mascot-pill-card.pill-sustainability {
+  border-color: #10b981 !important;
+  border-right: 4px solid #10b981 !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.2), inset 0 0 12px rgba(16, 185, 129, 0.1);
+}
+.mascot-pill-card.pill-sustainability:hover {
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.3), inset 0 0 12px rgba(16, 185, 129, 0.15);
+}
+
+.pill-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.25rem;
+}
+
+.pill-card-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid currentColor;
+  background-color: rgba(255, 255, 255, 0.4);
+  opacity: 0.85;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
+  transition: all 0.3s ease;
+}
+
+.mascot-pill-card:hover .pill-card-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.pill-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #001543;
+  margin: 0;
+}
+
+.pill-card-subtitle {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-left: 36px;
+}
+
+.pill-card-desc {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: #475569;
+  margin: 0;
+  padding-left: 36px;
 }
 
 /* Center Mascot wireframe circular container */
@@ -6593,6 +6755,236 @@ body.no-scroll {
 @keyframes modalScaleUp {
   from { transform: scale(0.96) translateY(12px); opacity: 0; }
   to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ESG Page Planet Grid and Animations */
+.esg-page-container .gradient-text {
+  background: linear-gradient(135deg, #001543 30%, #10b981 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.esg-page-container .badge {
+  background-color: rgba(16, 185, 129, 0.06) !important;
+  color: #10b981 !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+.esg-page-container .badge-dot {
+  background-color: #10b981 !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5) !important;
+}
+
+
+.esg-planet-wrapper {
+  width: 260px;
+  height: 260px;
+  max-width: 100%;
+  position: relative;
+  filter: drop-shadow(0 15px 35px rgba(16, 185, 129, 0.2));
+  animation: esgPlanetFloat 6s ease-in-out infinite;
+}
+
+.esg-planet-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+  pointer-events: none;
+}
+
+.esg-video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15), 
+              inset 0 0 15px rgba(16, 185, 129, 0.1);
+  overflow: hidden;
+  animation: esgVideoFloat 6s ease-in-out infinite;
+  background-color: #00040a;
+}
+
+.esg-tree-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+@keyframes esgVideoFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.005); }
+}
+
+.esg-video-bezel {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(255, 255, 255, 0.04);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes esgPlanetFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.esg-planet-canopy {
+  transform-origin: 200px 200px;
+  animation: esgCanopyRotate 100s linear infinite;
+}
+
+.esg-planet-clouds {
+  transform-origin: 200px 200px;
+  animation: esgCloudsRotate 60s linear infinite;
+}
+
+@keyframes esgCanopyRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes esgCloudsRotate {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* ESG Hero Section 2-Column Grid Layout */
+.esg-page-container .page-header-card {
+  max-width: 1150px;
+  padding: 3.5rem 4rem;
+}
+
+.esg-header-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .esg-header-grid {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 3.5rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 991px) {
+  .esg-page-container .page-header-card {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+/* Restructured Mega Menu Styles */
+.mega-menu-dropdown {
+  width: 900px !important;
+  padding: 2rem 2.25rem !important;
+}
+
+.mega-menu-container {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2.5rem !important;
+}
+
+.mega-menu-preview {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  padding: 1.5rem;
+  text-align: left;
+  transition: all var(--transition-normal);
+  height: 100%;
+}
+
+[data-theme="dark"] .mega-menu-preview {
+  background-color: #000c24;
+}
+
+.mega-preview-img-wrap {
+  width: 100%;
+  height: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border-color);
+}
+
+.mega-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.mega-menu-preview:hover .mega-preview-img {
+  transform: scale(1.04);
+}
+
+.mega-preview-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.mega-preview-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.mega-preview-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--secondary);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  text-decoration: none;
+}
+
+.mega-preview-btn:hover {
+  color: var(--secondary-hover);
+  transform: translateX(4px);
+}
+
+/* Subpage Compact Hero Banner Styling */
+.page-header-section.subpage-header-section {
+  min-height: 320px !important;
+  height: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+  padding: 100px 0 40px 0 !important;
+}
+
+.page-header-card.subpage-header-card {
+  padding: 1.75rem 2.5rem !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
 }
 
 

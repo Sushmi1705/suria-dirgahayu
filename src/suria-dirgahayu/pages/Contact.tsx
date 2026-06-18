@@ -71,15 +71,16 @@ export default function Contact() {
 
                 <div>
                   <div style={{ color: 'var(--primary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>EMAIL INQUIRIES</div>
-                  <div style={{ color: 'var(--text-main)' }}>eng.proposals@suriadirgahayu.com</div>
+                  <div style={{ color: 'var(--text-main)' }}>suriadirgahayusdnbhd@gmail.com</div>
                 </div>
 
                 <div>
                   <div style={{ color: 'var(--primary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>OFFICE ADDRESS</div>
                   <div style={{ color: 'var(--text-main)', fontWeight: 500, lineHeight: 1.5 }}>
                     Suria Dirgahayu Sdn. Bhd.<br/>
-                    Unit 12-4, Level 12, Tower A, Vertical Corporate Tower,<br/>
-                    Bangsar South City, 59200 Kuala Lumpur, Malaysia
+                    NO.23-G, JALAN BULAN BL U5/BL,<br/>
+                    BANDAR PINGGIRAN SUBANG, SEKSYEN U5,<br/>
+                    40150 SHAH ALAM, SELANGOR DARUL EHSAN.
                   </div>
                 </div>
               </div>

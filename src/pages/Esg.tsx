@@ -7,25 +7,45 @@ import {
 import { handleCardMouseMove, handleCardMouseLeave } from '../utils/tilt';
 import HeroBackground from '../components/HeroBackground';
 
+export const EsgPlanet: React.FC = () => {
+  return (
+    <div className="esg-planet-wrapper">
+      <video
+        src="/esg-tree-animation.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="esg-planet-video"
+      />
+    </div>
+  );
+};
+
 export default function Esg() {
   return (
     <div className="esg-page-container animate-fade-in">
       {/* Page Introduction Header */}
       <section className="page-header-section">
-        <HeroBackground page="esg" />
+        <HeroBackground page="esg" backgroundImage="/bg-esg-growth.jpg" />
         <div className="container page-header animate-slide-up">
           <div className="page-header-card">
-            <div style={{ position: 'relative', zIndex: 5 }}>
-              <div className="badge" style={{ marginBottom: '1rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                <span className="badge-dot"></span>
-                Sustainability Framework
+            <div className="esg-header-grid" style={{ position: 'relative', zIndex: 5 }}>
+              <div>
+                <div className="badge" style={{ marginBottom: '1.25rem' }}>
+                  <span className="badge-dot"></span>
+                  Sustainability Framework
+                </div>
+                <h1 className="page-title gradient-text" style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1.25rem', lineHeight: 1.2 }}>
+                  Environmental, Social &amp; Governance (ESG)
+                </h1>
+                <p className="page-subtitle" style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: 1.7, margin: 0 }}>
+                  At Suria Dirgahayu, we are committed to integrating Environmental, Social, and Governance (ESG) principles into our core industrial operations. Our sustainability initiatives prioritize mechanical safety, wireman competency licensing, and low-impact MRO workflows, ensuring long-term value for our partners, employees, and communities.
+                </p>
               </div>
-              <h1 className="page-title gradient-text" style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1.25rem' }}>
-                Environmental, Social & Governance (ESG)
-              </h1>
-              <p className="page-subtitle" style={{ color: 'var(--text-muted)', fontSize: '1.25rem', maxWidth: '800px', margin: '0 auto', lineHeight: 1.7 }}>
-                At Suria Dirgahayu, we align technical excellence with sustainable business practices, safety compliance, and rigorous corporate governance.
-              </p>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <EsgPlanet />
+              </div>
             </div>
           </div>
         </div>
@@ -130,6 +150,40 @@ export default function Esg() {
                   <span><strong>Ethical Recovery:</strong> Clean corporate credit support preserving business dignity.</span>
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Circular Mascot Ecosystem Section */}
+      <section className="section reveal">
+        <div className="container">
+          <div className="section-header blueprint-panel brackets-tl-br" style={{ maxWidth: '850px', margin: '0 auto 3rem auto' }}>
+            <div className="badge" style={{ marginBottom: '1.25rem' }}>
+              Ecosystem Mascot
+            </div>
+            <h2 className="section-title">Our Circular Commitment</h2>
+            <p className="section-subtitle" style={{ fontSize: '1.1rem', lineHeight: 1.75, maxWidth: 'none' }}>
+              Our circular ESG ecosystem mascot represents this balanced commitment to structural progression. The inner infinity recycling loop symbolizes our focus on minimizing waste and carbon emissions, while the nurturing green leaf highlights our dedication to continuous technical workforce growth and community stewardship.
+            </p>
+          </div>
+          
+          <div className="grid-cols-2" style={{ gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
+            <div className="footer-hud-console blueprint-panel brackets-tl-br" style={{ padding: '2rem', border: '1px solid var(--border-color)', height: '100%' }}>
+              <h4 style={{ fontSize: '1.15rem', color: '#10b981', marginBottom: '0.75rem', fontWeight: 'bold' }}>
+                ♻️ The Infinity Recycling Loop
+              </h4>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>
+                Symbolizes our core industrial focus on minimizing waste, reducing carbon emissions, and optimizing resource efficiency across MRO workflows.
+              </p>
+            </div>
+            <div className="footer-hud-console blueprint-panel brackets-tl-br" style={{ padding: '2rem', border: '1px solid var(--border-color)', height: '100%' }}>
+              <h4 style={{ fontSize: '1.15rem', color: '#10b981', marginBottom: '0.75rem', fontWeight: 'bold' }}>
+                🌱 The Nurturing Green Leaf
+              </h4>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>
+                Highlights our dedication to continuous technical workforce growth, OSHA compliance, safety competency, and community development.
+              </p>
             </div>
           </div>
         </div>

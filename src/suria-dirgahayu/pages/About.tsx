@@ -46,7 +46,7 @@ export default function About() {
                 Engineered for Safety. Built for Integrity.
               </h2>
               <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: '1.75', marginBottom: '2rem' }}>
-                With a robust framework of skilled professionals and Energy Commission (Suruhanjaya Tenaga) certified personnel, Suria Dirgahayu Sdn. Bhd. offers end-to-end engineering, refurbishment, and credit consultation works across Malaysia.
+                With a robust framework of skilled professionals and Energy Commission (Suruhanjaya Tenaga) certified personnel, Suria Dirgahayu Sdn. Bhd. (BRN: 202101045180 (1445480-H)) offers end-to-end engineering, refurbishment, and credit consultation works across Malaysia.
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

@@ -40,11 +40,21 @@ function App() {
     return 'home';
   });
 
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/services/')) {
+      return hash.replace('#/services/', '');
+    }
+    return null;
+  });
+
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [megaMenuHovered, setMegaMenuHovered] = useState(false);
-  const [activeService, setActiveService] = useState<string>('construction');
-  const [serviceTransitioning, setServiceTransitioning] = useState(false);
+  const [activeService, setActiveService] = useState<string>('engineering');
+  const [hoveredServiceMenu, setHoveredServiceMenu] = useState<string>('engineering');
+  const [serviceTransitioning] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
 
@@ -94,8 +104,14 @@ function App() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       let path: 'home' | 'about' | 'services' | 'esg' | 'contact' | 'quality' | 'journey' | 'sunseed' = 'home';
+      let serviceId: string | null = null;
       if (hash.startsWith('#/about')) path = 'about';
-      else if (hash.startsWith('#/services')) path = 'services';
+      else if (hash.startsWith('#/services')) {
+        path = 'services';
+        if (hash.startsWith('#/services/')) {
+          serviceId = hash.replace('#/services/', '');
+        }
+      }
       else if (hash.startsWith('#/esg')) path = 'esg';
       else if (hash.startsWith('#/contact')) path = 'contact';
       else if (hash.startsWith('#/quality')) path = 'quality';
@@ -103,6 +119,7 @@ function App() {
       else if (hash.startsWith('#/sunseed')) path = 'sunseed';
       
       setCurrentPath(path);
+      setSelectedServiceId(serviceId);
       setMobileMenuOpen(false);
       setMobileServicesOpen(false);
       
@@ -114,6 +131,7 @@ function App() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
 
   // Global Scroll-Driven Reveal Animation Observer (UP and DOWN support)
   useEffect(() => {
@@ -324,31 +342,16 @@ function App() {
     }, 4000);
   };
 
-  // Switch Active Service with animation
-  const handleSwitchService = (serviceId: string) => {
-    if (serviceId === activeService) return;
-    setServiceTransitioning(true);
-    setTimeout(() => {
-      setActiveService(serviceId);
-      setServiceTransitioning(false);
-    }, 250);
-  };
+
 
   // Pre-select service from dropdown and redirect
   const handleSelectServiceFromMenu = (serviceId: string) => {
     setActiveService(serviceId);
     setMegaMenuHovered(false);
     setMobileMenuOpen(false);
-    window.location.hash = `#/services`;
-    
-    // Smooth scroll directly to the services explorer section
-    setTimeout(() => {
-      const element = document.getElementById('services');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 200);
+    window.location.hash = `#/services/${serviceId}`;
   };
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -388,12 +391,14 @@ function App() {
       case 'services':
         return (
           <Services
-            activeService={activeService}
-            handleSwitchService={handleSwitchService}
+            activeService={selectedServiceId || activeService}
             serviceTransitioning={serviceTransitioning}
             showToast={showToast}
+            isSubPage={selectedServiceId !== null}
           />
         );
+
+
       case 'esg':
         return <Esg />;
       case 'sunseed':
@@ -450,7 +455,6 @@ function App() {
               className="logo-img" 
               alt="Suria Dirgahayu Logo" 
             />
-            <span className="logo-text">SURIA DIRGAHAYU</span>
           </a>
           
           <nav className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
@@ -460,10 +464,9 @@ function App() {
                 <img 
                   src={theme === 'dark' ? '/logo-dark.svg' : '/logo.svg'} 
                   className="logo-img" 
-                  style={{ height: '32px' }} 
+                  style={{ height: '48px' }} 
                   alt="Suria Dirgahayu Logo" 
                 />
-                <span className="logo-text">SURIA DIRGAHAYU</span>
               </a>
             </div>
 
@@ -522,104 +525,68 @@ function App() {
               {/* Mega Dropdown Panel */}
               <div className={`mega-menu-dropdown ${(megaMenuHovered && window.innerWidth > 900) || mobileServicesOpen ? 'active' : ''}`}>
                 <div className="mega-menu-container">
-                  <div className="mega-menu-sidebar">
-                    <div className="mega-sidebar-title">Our Capabilities</div>
-                    <div className="mega-sidebar-badge">NAVY & GOLD THEME</div>
-                    <p className="mega-sidebar-desc">
-                      Multi-disciplinary services designed to address engineering, refurbishment, and credit requirements for heavy industrial projects.
-                    </p>
-                    <a href="#/esg" className="btn btn-primary" style={{ padding: '0.65rem 1.15rem', fontSize: '0.85rem' }} onClick={() => setMegaMenuHovered(false)}>
-                      ESG Pillars
-                    </a>
-                  </div>
-                  <div className="mega-menu-grid-categorized">
-                    <div className="mega-menu-column">
-                      <div className="mega-column-header">Engineering &amp; Design</div>
-                      <div className="mega-menu-items">
-                        {[
-                          SERVICES_DATA.find(s => s.id === 'construction')!,
-                          SERVICES_DATA.find(s => s.id === 'interior-design')!,
-                          SERVICES_DATA.find(s => s.id === 'manpower')!
-                        ].map((s, idx) => {
-                          const IconComp = s.icon;
-                          return (
-                            <a 
-                              key={s.id} 
-                              href="#/services" 
-                              className="mega-menu-item"
-                              onClick={() => handleSelectServiceFromMenu(s.id)}
-                              style={{ '--i': idx } as React.CSSProperties}
-                            >
-                              <div className="mega-item-icon-box">
-                                <IconComp size={16} />
-                              </div>
-                              <div className="mega-item-text">
-                                <div className="mega-item-title">{s.title}</div>
-                                <div className="mega-item-desc">{s.shortDesc}</div>
-                              </div>
-                            </a>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <div className="mega-menu-column">
-                      <div className="mega-column-header">Technology &amp; Talent</div>
-                      <div className="mega-menu-items">
-                        {[
-                          SERVICES_DATA.find(s => s.id === 'it-solutions')!,
-                          SERVICES_DATA.find(s => s.id === 'ict-management')!,
-                          SERVICES_DATA.find(s => s.id === 'hr-payroll')!
-                        ].map((s, idx) => {
-                          const IconComp = s.icon;
-                          return (
-                            <a 
-                              key={s.id} 
-                              href="#/services" 
-                              className="mega-menu-item"
-                              onClick={() => handleSelectServiceFromMenu(s.id)}
-                              style={{ '--i': idx + 3 } as React.CSSProperties}
-                            >
-                              <div className="mega-item-icon-box">
-                                <IconComp size={16} />
-                              </div>
-                              <div className="mega-item-text">
-                                <div className="mega-item-title">{s.title}</div>
-                                <div className="mega-item-desc">{s.shortDesc}</div>
-                              </div>
-                            </a>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <div className="mega-menu-column">
-                      <div className="mega-column-header">Business &amp; Operations</div>
-                      <div className="mega-menu-items">
-                        {[
-                          SERVICES_DATA.find(s => s.id === 'debt-collection')!,
-                          SERVICES_DATA.find(s => s.id === 'branding')!
-                        ].map((s, idx) => {
-                          const IconComp = s.icon;
-                          return (
-                            <a 
-                              key={s.id} 
-                              href="#/services" 
-                              className="mega-menu-item"
-                              onClick={() => handleSelectServiceFromMenu(s.id)}
-                              style={{ '--i': idx + 6 } as React.CSSProperties}
-                            >
-                              <div className="mega-item-icon-box">
-                                <IconComp size={16} />
-                              </div>
-                              <div className="mega-item-text">
-                                <div className="mega-item-title">{s.title}</div>
-                                <div className="mega-item-desc">{s.shortDesc}</div>
-                              </div>
-                            </a>
-                          );
-                        })}
-                      </div>
+                  <div className="mega-menu-column">
+                    <div className="mega-column-header">Our Business Divisions</div>
+                    <div className="mega-menu-items">
+                      {SERVICES_DATA.filter(s => !s.parentId).map((s, idx) => {
+                        const IconComp = s.icon;
+                        const isHovered = hoveredServiceMenu === s.id;
+                        return (
+                          <a 
+                            key={s.id} 
+                            href={`#/services/${s.id}`} 
+                            className={`mega-menu-item ${isHovered ? 'hovered' : ''}`}
+                            onMouseEnter={() => setHoveredServiceMenu(s.id)}
+                            onClick={() => handleSelectServiceFromMenu(s.id)}
+
+                            style={{ 
+                              '--i': idx,
+                              backgroundColor: isHovered ? 'rgba(255, 173, 1, 0.05)' : 'transparent',
+                              borderColor: isHovered ? 'rgba(255, 173, 1, 0.2)' : 'transparent'
+                            } as React.CSSProperties}
+                          >
+                            <div className="mega-item-icon-box" style={{ backgroundColor: isHovered ? 'var(--secondary)' : 'rgba(255, 173, 1, 0.08)', color: isHovered ? '#ffffff' : 'var(--secondary)' }}>
+                              <IconComp size={16} />
+                            </div>
+                            <div className="mega-item-text">
+                              <div className="mega-item-title" style={{ color: isHovered ? 'var(--secondary)' : 'var(--text-main)', fontWeight: 'bold' }}>{s.title}</div>
+                              <div className="mega-item-desc">{s.shortDesc}</div>
+                            </div>
+                          </a>
+                        );
+                      })}
                     </div>
                   </div>
+                  
+                  {/* Right Side: Dynamic Service Preview Panel */}
+                  {(() => {
+                    const hoveredServiceDetails = SERVICES_DATA.find(s => s.id === hoveredServiceMenu) || SERVICES_DATA[0];
+                    return (
+                      <div className="mega-menu-preview">
+                        {hoveredServiceDetails.image && (
+                          <div className="mega-preview-img-wrap">
+                            <img 
+                              src={hoveredServiceDetails.image} 
+                              alt={hoveredServiceDetails.title}
+                              className="mega-preview-img"
+                            />
+                          </div>
+                        )}
+                        <h4 className="mega-preview-title">{hoveredServiceDetails.title}</h4>
+                        <p className="mega-preview-desc">
+                          {hoveredServiceDetails.description}
+                        </p>
+                        <a 
+                          href={`#/services/${hoveredServiceDetails.id}`} 
+                          className="mega-preview-btn"
+                          onClick={() => handleSelectServiceFromMenu(hoveredServiceDetails.id)}
+                        >
+                          Explore {hoveredServiceDetails.title} →
+                        </a>
+
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             </div>
@@ -712,10 +679,9 @@ function App() {
                 <img 
                   src={theme === 'dark' ? '/logo-dark.svg' : '/logo.svg'} 
                   className="logo-img" 
-                  style={{ height: '36px' }} 
+                  style={{ height: '64px' }} 
                   alt="Suria Dirgahayu Logo" 
                 />
-                <span className="logo-text">SURIA DIRGAHAYU</span>
               </div>
               <p className="footer-desc">
                 Suria Dirgahayu Sdn. Bhd. is a multi-disciplinary engineering contractor and services partner committed to safety, engineering quality, and corporate integrity.

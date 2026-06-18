@@ -212,25 +212,25 @@ export default function Home({ handleSelectService }: HomeProps) {
           <div className="tm-grid-3">
             {[
               {
-                id: 'construction',
-                title: 'Construction Services',
-                desc: 'End-to-end building and structural engineering solutions.',
-                icon: SERVICES_DATA.find(s => s.id === 'construction')!.icon,
+                id: 'engineering',
+                title: 'Engineering',
+                desc: 'Innovative engineering solutions for complex challenges.',
+                icon: SERVICES_DATA.find(s => s.id === 'engineering')!.icon,
                 image: '/img-civil.jpg'
               },
               {
-                id: 'it-solutions',
-                title: 'IT & Technology Solutions',
-                desc: 'Custom software development, hardware supply, server infrastructure, and network solutions.',
-                icon: SERVICES_DATA.find(s => s.id === 'it-solutions')!.icon,
-                image: '/img-electrical.jpg'
+                id: 'cx-outsourcing',
+                title: 'Customer Experience (CX) Outsourcing',
+                desc: 'Elevate your brand with world-class CX services.',
+                icon: SERVICES_DATA.find(s => s.id === 'cx-outsourcing')!.icon,
+                image: '/img-team.jpg'
               },
               {
-                id: 'manpower',
-                title: 'Manpower & Support',
-                desc: 'Highly skilled professionals, contract staffing, technical specialist supply, and workforce management.',
-                icon: SERVICES_DATA.find(s => s.id === 'manpower')!.icon,
-                image: '/img-hero.jpg'
+                id: 'digital-enablement',
+                title: 'Digital Enablement',
+                desc: 'Accelerate your digital transformation journey.',
+                icon: SERVICES_DATA.find(s => s.id === 'digital-enablement')!.icon,
+                image: '/img-electrical.jpg'
               }
             ].map((b, index) => {
               const Icon = b.icon;

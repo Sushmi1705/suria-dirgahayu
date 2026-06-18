@@ -96,7 +96,7 @@
 }
 
 .tm-logo-img {
-  height: 38px;
+  height: 52px;
   width: auto;
   display: block;
 }
@@ -1260,6 +1260,11 @@ input[type="range"]::-webkit-slider-thumb:hover {
   gap: 3rem;
   align-items: stretch;
 }
+
+.tm-services-explorer-layout.single-page {
+  grid-template-columns: 1fr;
+}
+
 
 .tm-services-sidebar {
   display: flex;

@@ -35,7 +35,7 @@ export default function About() {
             <div style={{ position: 'relative', zIndex: 5 }}>
               <div className="badge" style={{ marginBottom: '1rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                 <span className="badge-dot"></span>
-                Surya Dirgahayu at a Glance
+                Suria Dirgahayu at a Glance
               </div>
               <h1 className="page-title gradient-text" style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1.25rem' }}>
                 About Us
@@ -53,10 +53,10 @@ export default function About() {
         <div className="container">
           <div className="blueprint-panel brackets-tl-br" style={{ padding: '3rem', maxWidth: '1000px', margin: '0 auto' }}>
             <p className="lead-text" style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-main)', lineHeight: '1.8', marginBottom: '2rem' }}>
-              Surya Dhirgahyu is a Malaysian diversified solutions provider delivering excellence across construction, interior design, engineering, workforce solutions, and corporate support services. Founded in December 2021, we are committed to helping organizations achieve sustainable growth through innovative solutions, skilled talent, and operational excellence. Our integrated approach enables clients to focus on their core business while we deliver reliable, scalable, and value-driven services.
+              Suria Dirgahayu Sdn. Bhd. (BRN: 202101045180 (1445480-H)) is a Malaysian diversified solutions provider delivering excellence across construction, interior design, engineering, workforce solutions, and corporate support services. Founded in December 2021, we are committed to helping organizations achieve sustainable growth through innovative solutions, skilled talent, and operational excellence. Our integrated approach enables clients to focus on their core business while we deliver reliable, scalable, and value-driven services.
             </p>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: '1.8' }}>
-              Driven by our people-first philosophy and ESG principles, we believe that long-term success is built on integrity, collaboration, and responsible business practices. From sourcing highly qualified professionals and executive leaders to delivering engineering, business, and support services, we strive to create meaningful impact for our clients, employees, communities, and stakeholders. At Surya Dhirgahyu, we don't just provide services—we build partnerships, develop opportunities, and create lasting value for the future.
+              Driven by our people-first philosophy and ESG principles, we believe that long-term success is built on integrity, collaboration, and responsible business practices. From sourcing highly qualified professionals and executive leaders to delivering engineering, business, and support services, we strive to create meaningful impact for our clients, employees, communities, and stakeholders. At Suria Dirgahayu, we don't just provide services—we build partnerships, develop opportunities, and create lasting value for the future.
             </p>
           </div>
         </div>
@@ -162,13 +162,13 @@ export default function About() {
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-muted)', lineHeight: '1.8' }}>
                 <p>
-                  Founded in December 2021, Surya Dhirgahyu is a Malaysian diversified solutions provider delivering integrated services across construction, interior design, engineering, workforce solutions, and corporate support services. We are committed to helping businesses achieve operational excellence through innovative solutions, skilled professionals, and sustainable business practices.
+                  Founded in December 2021, Suria Dirgahayu Sdn. Bhd. (BRN: 202101045180 (1445480-H)) is a Malaysian diversified solutions provider delivering integrated services across construction, interior design, engineering, workforce solutions, and corporate support services. We are committed to helping businesses achieve operational excellence through innovative solutions, skilled professionals, and sustainable business practices.
                 </p>
                 <p>
                   Since our establishment, we have experienced steady growth, expanding our workforce from 100 employees in 2020 to over 650 professionals today. This growth reflects the trust placed in us by our clients and our ability to deliver scalable, people-centric solutions that adapt to the evolving needs of industries and organizations.
                 </p>
                 <p>
-                  At our core, Surya Dhirgahyu is ESG-driven, integrating Environmental, Social, and Governance principles into the way we operate, engage our stakeholders, and create long-term value. Through innovation, integrity, and collaboration, we continue to build stronger partnerships, empower talent, and contribute to sustainable growth for businesses and communities.
+                  At our core, Suria Dirgahayu is ESG-driven, integrating Environmental, Social, and Governance principles into the way we operate, engage our stakeholders, and create long-term value. Through innovation, integrity, and collaboration, we continue to build stronger partnerships, empower talent, and contribute to sustainable growth for businesses and communities.
                 </p>
               </div>
             </div>

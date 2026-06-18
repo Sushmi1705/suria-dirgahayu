@@ -132,7 +132,7 @@ export default function SunSeed() {
                 SunSeed Ecosystem
               </h1>
               <p className="page-subtitle" style={{ color: 'var(--text-muted)', fontSize: '1.25rem', maxWidth: '800px', margin: '0 auto', lineHeight: 1.7 }}>
-                "Growing Sustainable Futures" — Our finalized framework where the Sun nurtures growth and a seed represents latent human and green potential.
+                The Sun symbolizes many powerful qualities that we can adopt in our daily lives: Consistency, Leadership, Selflessness, Strength &amp; Resilience, Positivity, and Growth &amp; Nurturing.
               </p>
             </div>
           </div>
@@ -468,6 +468,86 @@ export default function SunSeed() {
         </div>
       </section>
 
+      {/* Sun Symbolism Section */}
+      <section className="section bg-light-trans reveal">
+        <div className="container">
+          <div className="section-header blueprint-panel brackets-tl-br" style={{ marginBottom: '3.5rem', display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '2rem', textAlign: 'left', alignItems: 'center' }}>
+            <h2 className="section-title" style={{ margin: 0 }}>Sun Symbolism &amp; Core Virtues</h2>
+            <p className="section-subtitle" style={{ margin: 0, fontSize: '1.1rem', lineHeight: 1.6 }}>
+              The Sun symbolizes many powerful qualities that we can adopt in our daily lives: Consistency, Leadership, Selflessness, Strength &amp; Resilience, Positivity, and Growth &amp; Nurturing.
+            </p>
+          </div>
+
+          <div className="grid-cols-3" style={{ gap: '2rem' }}>
+            <div className="value-card glass-spotlight spotlight-border tilt-card border-beam-card brackets-tl-br" onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={{ '--i': 0 } as React.CSSProperties}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="gold-text" style={{ fontSize: '0.85rem', fontWeight: 800, fontFamily: 'monospace' }}>[ VIRTUE // 01 ]</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 900, opacity: 0.15 }}>01</span>
+              </div>
+              <h3 className="value-title" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Consistency</h3>
+              <p className="value-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                The Sun rises every day without fail, teaching us discipline and reliability.
+              </p>
+            </div>
+
+            <div className="value-card glass-spotlight spotlight-border tilt-card border-beam-card brackets-tl-br" onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={{ '--i': 1 } as React.CSSProperties}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="gold-text" style={{ fontSize: '0.85rem', fontWeight: 800, fontFamily: 'monospace' }}>[ VIRTUE // 02 ]</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 900, opacity: 0.15 }}>02</span>
+              </div>
+              <h3 className="value-title" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Leadership</h3>
+              <p className="value-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                It illuminates and guides everything around it, reflecting the qualities of a true leader.
+              </p>
+            </div>
+
+            <div className="value-card glass-spotlight spotlight-border tilt-card border-beam-card brackets-tl-br" onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={{ '--i': 2 } as React.CSSProperties}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="gold-text" style={{ fontSize: '0.85rem', fontWeight: 800, fontFamily: 'monospace' }}>[ VIRTUE // 03 ]</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 900, opacity: 0.15 }}>03</span>
+              </div>
+              <h3 className="value-title" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Selflessness</h3>
+              <p className="value-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                The Sun gives light, warmth, and energy without expecting anything in return.
+              </p>
+            </div>
+
+            <div className="value-card glass-spotlight spotlight-border tilt-card border-beam-card brackets-tl-br" onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={{ '--i': 3 } as React.CSSProperties}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="gold-text" style={{ fontSize: '0.85rem', fontWeight: 800, fontFamily: 'monospace' }}>[ VIRTUE // 04 ]</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 900, opacity: 0.15 }}>04</span>
+              </div>
+              <h3 className="value-title" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Strength &amp; Resilience</h3>
+              <p className="value-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                It continues to shine despite storms, clouds, or obstacles, reminding us to stay strong through challenges.
+              </p>
+            </div>
+
+            <div className="value-card glass-spotlight spotlight-border tilt-card border-beam-card brackets-tl-br" onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={{ '--i': 4 } as React.CSSProperties}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="gold-text" style={{ fontSize: '0.85rem', fontWeight: 800, fontFamily: 'monospace' }}>[ VIRTUE // 05 ]</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 900, opacity: 0.15 }}>05</span>
+              </div>
+              <h3 className="value-title" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Positivity</h3>
+              <p className="value-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                Sunlight brings brightness and hope, encouraging an optimistic outlook on life.
+              </p>
+            </div>
+
+            <div className="value-card glass-spotlight spotlight-border tilt-card border-beam-card brackets-tl-br" onMouseMove={handleCardMouseMove} onMouseLeave={handleCardMouseLeave} style={{ '--i': 5 } as React.CSSProperties}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="gold-text" style={{ fontSize: '0.85rem', fontWeight: 800, fontFamily: 'monospace' }}>[ VIRTUE // 06 ]</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 900, opacity: 0.15 }}>06</span>
+              </div>
+              <h3 className="value-title" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Growth &amp; Nurturing</h3>
+              <p className="value-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                Just as the Sun helps plants grow, we can support and uplift others around us.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Quote Banner */}
       <section className="section reveal" style={{ paddingTop: '2rem' }}>
         <div className="container">
@@ -475,7 +555,7 @@ export default function SunSeed() {
             <div style={{ position: 'relative', zIndex: 5 }}>
               <SunIcon size={44} className="animate-spin-slow" style={{ color: 'var(--secondary)', marginBottom: '1.5rem', opacity: 0.8 }} />
               <blockquote style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-heading)', color: 'var(--text-main)', margin: '0 auto 1.5rem', maxWidth: '900px', lineHeight: '1.45' }}>
-                "The Sun nurtures growth, and a seed represents potential. By harnessing renewable energy and vocational guidance, we grow sustainable futures for local industries."
+                "Be like the Sun—shine consistently, give selflessly, and inspire growth wherever you go."
               </blockquote>
               <cite style={{ fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--secondary)', letterSpacing: '0.12em', fontStyle: 'normal' }}>
                 — Executive Board, Suria Dirgahayu Sdn. Bhd.
