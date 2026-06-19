@@ -253,10 +253,11 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/suria-dirgahayu_bg.png');
+  background: linear-gradient(135deg, rgba(244, 248, 252, 0.35) 0%, rgba(0, 176, 217, 0.08) 100%),
+              url('/hero-journey.png');
   background-size: cover;
   background-position: center;
-  opacity: 0.55;
+  opacity: 0.85;
   animation: tm-bg-movement 38s ease-in-out infinite;
 }
 
@@ -353,7 +354,7 @@
   top: 0;
   width: 50%;
   height: 100%;
-  opacity: 0.55;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 1;
   transform-origin: center right;
@@ -1621,4 +1622,172 @@ input[type="range"]::-webkit-slider-thumb:hover {
     width: 100% !important;
     margin-top: 1rem !important;
   }
+}
+
+/* Enhanced Timeline and Accordion Drawer Elements */
+.timeline-card-highlights {
+  margin: 1.25rem 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.timeline-card-highlights li {
+  display: flex;
+  gap: 0.65rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.timeline-card-expanded-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s ease-out;
+}
+
+.timeline-card-expanded-content.active {
+  max-height: 600px;
+  opacity: 1;
+}
+
+.timeline-divider-dashed {
+  height: 1px;
+  background-image: linear-gradient(to right, var(--border-color) 40%, transparent 40%);
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+  margin: 1.25rem 0;
+}
+
+.timeline-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .timeline-details-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.details-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.details-heading {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: var(--secondary);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.details-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.details-list li {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  position: relative;
+  padding-left: 0.75rem;
+}
+
+.details-list li::before {
+  content: '▪';
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+  font-size: 0.6rem;
+  top: 1px;
+}
+
+.details-metrics-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.metric-chip {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.65rem;
+  border-radius: 4px;
+  background-color: rgba(255, 173, 1, 0.03);
+  border: 1px dashed rgba(255, 173, 1, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.metric-val {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--secondary);
+}
+
+.metric-lbl {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.15rem;
+}
+
+.timeline-card-details-btn {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: var(--secondary);
+  cursor: pointer;
+  width: 100%;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.85rem;
+  transition: color 0.25s ease;
+}
+
+.timeline-card-details-btn:hover {
+  color: #ffffff;
+}
+
+.expander-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.25s ease;
+}
+
+.bullet-gold-mini {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  box-shadow: 0 0 8px var(--secondary);
+  flex-shrink: 0;
 }

@@ -1,20 +1,24 @@
 import React, { useMemo } from 'react';
+import luxuryBg from '../assets/luxury-bg.png';
 
 interface HeroBackgroundProps {
   isStatic?: boolean;
-  page?: 'home' | 'about' | 'services' | 'esg' | 'quality' | 'journey' | 'contact' | 'wizard';
+  page?: 'home' | 'about' | 'services' | 'esg' | 'quality' | 'journey' | 'contact' | 'wizard' | 'engineering' | 'cx' | 'digital';
   backgroundImage?: string;
 }
 
-const BG_IMAGES: Record<string, string> = {
-  home: '/bg-home-gold.png',
-  about: '/bg-about-gold.png',
-  services: '/bg-services-gold.png',
-  esg: '/bg-esg-gold.png',
-  wizard: '/bg-esg-gold.png',
-  quality: '/bg-quality-gold.png',
-  journey: '/bg-journey-gold.png',
-  contact: '/bg-contact-gold.png'
+const PHOTO_BG_IMAGES: Record<string, string> = {
+  home: luxuryBg,
+  about: '/hero-about.jpg',
+  services: '/img-civil.jpg',
+  esg: '/bg-esg-growth.jpg',
+  wizard: '/img-electrical.jpg',
+  quality: '/hero-quality.png',
+  journey: '/hero-journey.png',
+  contact: '/hero-contact.png',
+  engineering: '/hero-engineering.jpg',
+  cx: '/hero-cx.png',
+  digital: '/hero-digital.png'
 };
 
 export default function HeroBackground({ isStatic = false, page = 'home', backgroundImage }: HeroBackgroundProps) {
@@ -29,7 +33,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
       left: Math.random() * 100, // 0% to 100%
       delay: Math.random() * 12, // 0s to 12s delay
       duration: Math.random() * 12 + 14, // 14s to 26s duration
-      opacity: Math.random() * 0.45 + 0.25
+      opacity: Math.random() * 0.08 + 0.02
     }));
   }, []);
 
@@ -40,6 +44,14 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
         .hero-bg-vfx {
           will-change: transform;
         }
+        :root {
+          --bg-overlay-start: rgba(255, 255, 255, 0.12);
+          --bg-overlay-end: rgba(255, 248, 238, 0.05);
+        }
+        [data-theme="dark"] {
+          --bg-overlay-start: rgba(4, 9, 26, 0.25);
+          --bg-overlay-end: rgba(255, 173, 1, 0.02);
+        }
         .hero-bg-image {
           position: absolute;
           inset: 0;
@@ -47,16 +59,17 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
           height: 100%;
           background-size: cover;
           background-position: center;
+          background-repeat: no-repeat;
           z-index: 0;
-          opacity: 0.28; /* Premium golden-watermark blend for light theme */
-          mix-blend-mode: multiply;
+          opacity: 0.92; /* Increased opacity from 0.85 to make image more visible */
+          mix-blend-mode: normal;
           pointer-events: none;
           transition: opacity var(--transition-normal), filter var(--transition-normal);
           will-change: transform, opacity, filter;
         }
         [data-theme="dark"] .hero-bg-image {
-          opacity: 0.65; /* Rich gold depth in dark theme */
-          filter: brightness(0.62) contrast(1.15) saturate(0.95) hue-rotate(-12deg);
+          opacity: 0.88; /* Highly visible gold depth in dark theme */
+          filter: brightness(0.68) contrast(1.05) saturate(0.95);
           mix-blend-mode: normal;
         }
         .animated-bg-container {
@@ -71,11 +84,11 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
         .animated-bg-svg {
           width: 100%;
           height: 100%;
-          opacity: 0.88; /* High fidelity visibility */
+          opacity: 0.04; /* Extremely soft elegant watermark line visibility */
           pointer-events: none;
         }
         [data-theme="dark"] .animated-bg-svg {
-          opacity: 0.72;
+          opacity: 0.08;
         }
         
         /* Floating Gold Dust Particles */
@@ -253,11 +266,14 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
         </div>
       )}
 
-      {/* Premium menu-specific or custom gold background image */}
+      {/* Premium menu-specific or custom gold background image with gold wash overlay */}
       <div 
-        className="hero-bg-image bg-movement-anim"
+        className={`hero-bg-image bg-movement-anim page-${page}`}
         style={{ 
-          backgroundImage: `url(${hasCustomBg ? backgroundImage : (BG_IMAGES[page] || '/bg-home-gold.png')})` 
+          backgroundImage: `linear-gradient(var(--bg-overlay-start, rgba(255, 255, 255, 0.15)) 0%, var(--bg-overlay-end, rgba(255, 248, 238, 0.08)) 100%), url(${hasCustomBg && backgroundImage ? backgroundImage : (PHOTO_BG_IMAGES[page] || '/img-hero.jpg')})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       ></div>
 
@@ -317,8 +333,8 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
             </svg>
           )}
 
-          {/* ==================== ABOUT PAGE BACKGROUND ==================== */}
-          {page === 'about' && (
+          {/* ==================== ABOUT & ENGINEERING PAGE BACKGROUND ==================== */}
+          {(page === 'about' || page === 'engineering') && (
             <svg className="animated-bg-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" fill="none">
               {/* Technical graticule reference background lines */}
               <g stroke="rgba(255, 173, 1, 0.05)" strokeWidth="0.8">
@@ -395,8 +411,8 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
             </svg>
           )}
 
-          {/* ==================== SERVICES PAGE BACKGROUND ==================== */}
-          {page === 'services' && (
+          {/* ==================== SERVICES & DIGITAL ENABLEMENT PAGE BACKGROUND ==================== */}
+          {(page === 'services' || page === 'digital') && (
             <svg className="animated-bg-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" fill="none">
               {/* Background fine grid overlay */}
               <g stroke="rgba(255, 173, 1, 0.04)" strokeWidth="0.8">
@@ -661,7 +677,7 @@ export default function HeroBackground({ isStatic = false, page = 'home', backgr
           )}
 
           {/* ==================== CONTACT / HUD PAGE BACKGROUND ==================== */}
-          {page === 'contact' && (
+          {(page === 'contact' || page === 'cx') && (
             <svg className="animated-bg-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" fill="none">
               {/* Corner tech bracing frames */}
               <g stroke="var(--secondary)" strokeWidth="1.5" className="gold-glow-effect">

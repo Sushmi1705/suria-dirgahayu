@@ -455,6 +455,7 @@ function App() {
               className="logo-img" 
               alt="Suria Dirgahayu Logo" 
             />
+            <span className="logo-text">SURIA DIRGAHAYU</span>
           </a>
           
           <nav className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
@@ -467,6 +468,7 @@ function App() {
                   style={{ height: '48px' }} 
                   alt="Suria Dirgahayu Logo" 
                 />
+                <span className="logo-text">SURIA DIRGAHAYU</span>
               </a>
             </div>
 
@@ -682,6 +684,7 @@ function App() {
                   style={{ height: '64px' }} 
                   alt="Suria Dirgahayu Logo" 
                 />
+                <span className="logo-text">SURIA DIRGAHAYU</span>
               </div>
               <p className="footer-desc">
                 Suria Dirgahayu Sdn. Bhd. is a multi-disciplinary engineering contractor and services partner committed to safety, engineering quality, and corporate integrity.

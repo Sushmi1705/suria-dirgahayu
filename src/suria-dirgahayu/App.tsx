@@ -197,6 +197,7 @@ export default function App() {
               className="tm-logo-img" 
               alt="Suria Dirgahayu Logo" 
             />
+            <span className="tm-logo-text">SURIA DIRGAHAYU</span>
             <span className="tm-status-pulse" title="System Online"></span>
           </a>
 
@@ -209,6 +210,7 @@ export default function App() {
                   className="tm-logo-img" 
                   alt="Suria Dirgahayu Logo" 
                 />
+                <span className="tm-logo-text">SURIA DIRGAHAYU</span>
               </a>
               <button className="tm-mobile-menu-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close Mobile Menu">
                 <svg viewBox="0 0 24 24" fill="none" width="24" height="24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -327,6 +329,7 @@ export default function App() {
                 alt="Suria Dirgahayu Logo" 
                 style={{ filter: 'brightness(0) invert(1)', height: '64px' }} 
               />
+              <span className="tm-logo-text" style={{ color: '#ffffff' }}>SURIA DIRGAHAYU</span>
             </a>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.6, maxWidth: '350px' }}>
               Suria Dirgahayu Sdn. Bhd. delivers EPCC industrial engineering, safety structures, and civil works with high efficiency and ESG standards.

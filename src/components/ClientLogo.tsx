@@ -5,7 +5,9 @@ interface ClientLogoProps {
 }
 
 export default function ClientLogo({ id, className = '', height = 36 }: ClientLogoProps) {
-  const svgStyle = { height, width: 'auto', display: 'inline-block', verticalAlign: 'middle' };
+  const isSquare = ['annjoo', 'humecemboard', 'simedarby', 'kendek'].includes(id);
+  const adjustedHeight = isSquare ? height * 1.45 : height;
+  const svgStyle = { height: adjustedHeight, width: 'auto', display: 'inline-block', verticalAlign: 'middle' };
 
   switch (id) {
     case 'annjoo':

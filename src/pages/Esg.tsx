@@ -36,10 +36,10 @@ export default function Esg() {
                   <span className="badge-dot"></span>
                   Sustainability Framework
                 </div>
-                <h1 className="page-title gradient-text" style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1.25rem', lineHeight: 1.2 }}>
+                <h1 className="page-title gradient-text" style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1.25rem', lineHeight: 1.25 }}>
                   Environmental, Social &amp; Governance (ESG)
                 </h1>
-                <p className="page-subtitle" style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: 1.7, margin: 0 }}>
+                <p className="page-subtitle" style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: 1.7, margin: 0 }}>
                   At Suria Dirgahayu, we are committed to integrating Environmental, Social, and Governance (ESG) principles into our core industrial operations. Our sustainability initiatives prioritize mechanical safety, wireman competency licensing, and low-impact MRO workflows, ensuring long-term value for our partners, employees, and communities.
                 </p>
               </div>

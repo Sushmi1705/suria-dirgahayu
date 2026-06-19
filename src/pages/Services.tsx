@@ -26,9 +26,9 @@ export default function Services({
   };
 
   const getHeroBgPage = (serviceId: string) => {
-    if (serviceId === 'engineering') return 'about';
-    if (serviceId === 'cx-outsourcing') return 'contact';
-    if (serviceId === 'digital-enablement') return 'services';
+    if (serviceId === 'engineering') return 'engineering';
+    if (serviceId === 'cx-outsourcing') return 'cx';
+    if (serviceId === 'digital-enablement') return 'digital';
     return 'services';
   };
 
