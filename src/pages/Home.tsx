@@ -157,20 +157,22 @@ export default function Home() {
 
           <div className="hero-visual animate-radar-entry" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div className="radar-container energy-core-container">
-              {/* Premium Luxury Handcrafted Energy Sphere */}
+              {/* Premium Luxury Handcrafted Energy Sphere with Planet video centerpiece */}
               <div className="premium-energy-sphere">
-                {/* 3D Specular Highlight Overlay */}
-                <div className="sphere-specular-highlight"></div>
-
-                {/* 1. Deepest Layer: Ambient Glow (Breathes softly) */}
-                <div className="sphere-interior-layer sphere-layer-glow">
-                  <div className="sphere-ambient-glow"></div>
-                </div>
-
-                {/* 2. Middle Layer: Rotating Luminous Sun Image */}
-                <div className="sphere-interior-layer sphere-layer-image">
-                  <img src="/hero-sun.png" alt="Luminous Sun" className="sphere-rotating-image" />
-                </div>
+                <video
+                  src="/hero-sustainability.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: '50%',
+                    pointerEvents: 'none'
+                  }}
+                />
               </div>
             </div>
         </div>
